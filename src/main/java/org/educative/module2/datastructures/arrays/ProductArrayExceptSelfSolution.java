@@ -1,4 +1,4 @@
-package org.educative.module2.datastructures;
+package org.educative.module2.datastructures.arrays;
 
 public class ProductArrayExceptSelfSolution {
     public static void main(String[] args) {

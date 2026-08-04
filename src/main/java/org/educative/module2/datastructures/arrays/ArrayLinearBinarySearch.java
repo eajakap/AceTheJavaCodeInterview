@@ -1,4 +1,4 @@
-package org.educative.module2.datastructures;
+package org.educative.module2.datastructures.arrays;
 
 import java.util.ArrayList;
 import java.util.Arrays;

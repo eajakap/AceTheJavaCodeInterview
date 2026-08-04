@@ -1,4 +1,4 @@
-package org.educative.module2.datastructures;
+package org.educative.module2.datastructures.arrays;
 
 public class MaxWaterTrapSolution {
     // Time Complexity: O(n), Space Complexity: O(1)

@@ -1,4 +1,4 @@
-package org.educative.module2.datastructures;
+package org.educative.module2.datastructures.arrays;
 
 public class FirstMissingPostiveSolution {
     public int firstMissingPositive(int[] nums) {
