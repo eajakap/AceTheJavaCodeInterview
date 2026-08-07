@@ -1,73 +1,45 @@
-package org.educative.modules.module2.stacks.linkedlist;
+package org.educative.modules.module2.queues.puzzles;
 
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+class MyStack {
+    // Use a single queue to simulate stack behavior (LIFO)
+    private Queue<Integer> queue;
 
-public class LinkedListStack {
-    private static class StackNode {
-        int data;
-        StackNode next;
+    public MyStack() {
+        this.queue = new LinkedList<>();
+    }
 
-        public StackNode(int data) {
-            this.data = data;
-            this.next = null;
+    public void push(int x) {
+        // Add the new element to the back of the queue
+        queue.add(x);
+        // Rotate the queue so the new element becomes the front
+        // Move all previous elements behind the new element
+        for (int i = 0; i < queue.size() - 1; i++) {
+            // removes the element from the front of the queue and
+            // adds it again at the back, effectively rotating the queue
+            queue.add(queue.poll());
         }
-    }
-
-    private StackNode top;
-
-    public LinkedListStack() {
-        this.top = null;
-    }
-
-    // Stack operations (push, pop, peek, etc.) will be discussed in the next lesson
-    public boolean isEmpty() {
-        return top == null;
-    }
-
-    public StackNode peek() {
-        return top;
-    }
-
-    public int top() {
-        if (top == null) {
-            return -1; // or throw an exception
-        }
-        return top.data;
-    }
-
-    public int size() {
-        int size = 0;
-        StackNode current = top;
-        while (current != null) {
-            size++;
-            current = current.next;
-        }
-        return size;
-    }
-    public void push(int val) {
-        if (top == null) {
-            top = new StackNode(val);
-        } else {
-            StackNode newNode = new StackNode(val);
-            newNode.next = top;
-            top = newNode;
-        }
+        // After rotation: newest element is at front (stack top position)
     }
 
     public int pop() {
-        if (top == null) {
-            return -1;
-        }
-        int val = top.data;
-        top = top.next;
-        return val;
+        // Remove and return the front element (which is the stack top)
+        return queue.poll();
+    }
+
+    public int top() {
+        // Return the front element without removing it
+        return queue.peek();
+    }
+
+    public boolean empty() {
+        // Check if the queue is empty
+        return queue.isEmpty();
     }
 
     public static void main(String[] args) {
-        LinkedListStack stack;
+        MyStack stack;
 
         String[][] testCases = {
                 {"push", "push", "push", "pop", "top", "empty"},
@@ -88,7 +60,7 @@ public class LinkedListStack {
 
         int y = 1;
         for (int t = 0; t < testCases.length; t++) {
-            stack = new LinkedListStack();
+            stack = new MyStack();
             List<String> results = new ArrayList<>();
             results.add("null");
             int pushIdx = 0;
@@ -109,7 +81,7 @@ public class LinkedListStack {
                         results.add(String.valueOf(stack.top()));
                         break;
                     case "empty":
-                        results.add(String.valueOf(stack.isEmpty()));
+                        results.add(String.valueOf(stack.empty()));
                         break;
                 }
             }
