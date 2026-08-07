@@ -1,4 +1,4 @@
-package org.educative.module3.datastructures.linklists;
+package org.educative.module3.datastructures.linklists.doubly;
 
 import java.util.ArrayList;
 import java.util.List;

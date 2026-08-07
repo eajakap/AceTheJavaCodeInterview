@@ -1,4 +1,4 @@
-package org.educative.module3.datastructures.linklists;
+package org.educative.module3.datastructures.linklists.single;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,26 @@ class LinkedList {
 
     public LinkedList() {
         this.head = null;
+    }
+
+    public LinkedList(List<Integer> list) {
+        this.head = null;
+        createLinkedList(list);
+    }
+
+    // Function to create a linked list from a list of values
+    private void createLinkedList(List<Integer> values) {
+        if (values.isEmpty()) {
+            head = null;
+            return;
+        }
+
+        head = new ListNode(values.get(0));
+        ListNode current = head;
+        for (int i = 1; i < values.size(); i++) {
+            current.next = new ListNode(values.get(i));
+            current = current.next;
+        }
     }
 
     public void insertAtEnd(int value) {
