@@ -1,6 +1,8 @@
 package org.educative.modules.module2.stacks.puzzles;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Stack;
 
 public class BracketValidatorStack {
 
@@ -35,6 +37,46 @@ public class BracketValidatorStack {
             return stack.isEmpty();
         }
 
+        public static int minRemovalsToBalance(String s) {
+            Stack<Character> stack = new Stack<>();
+
+            for (char ch : s.toCharArray()) {
+                if (ch == '(') {
+                    stack.push(ch);
+                } else { // ch == ')'
+                    if (!stack.isEmpty() && stack.peek() == '(') {
+                        stack.pop(); // matched pair
+                    } else {
+                        stack.push(ch); // unmatched ')'
+                    }
+                }
+            }
+
+            return stack.size(); // all remaining are unmatched
+        }
+
+        public static boolean isParenBalanced(String parenString) {
+            Stack<Character> stack = new Stack<>();
+            HashMap<Character, Character> openingParen = new HashMap<>();
+            openingParen.put(')', '(');
+            openingParen.put(']', '[');
+            openingParen.put('}', '{');
+
+            for (char paren : parenString.toCharArray()) {
+                if (openingParen.containsValue(paren)) {
+                    // We met an opening parenthesis, just putting it on the stack
+                    stack.push(paren);
+                } else if (openingParen.containsKey(paren)) {
+                    // We met a closing parenthesis
+                    if (stack.isEmpty() || stack.pop() != openingParen.get(paren)) {
+                        return false;
+                    }
+                }
+            }
+
+            return stack.isEmpty();
+        }
+
         public static void main(String[] args) {
             Solution sol = new Solution();
 
@@ -58,5 +100,11 @@ public class BracketValidatorStack {
 
     public static void main(String[] args) {
         Solution.main(args);
+        System.out.println(Solution.isParenBalanced("(())")); // Outputs: true
+        System.out.println(Solution.isParenBalanced("({[)}")); // Outputs: false
+        String invalidParentheses = "()))(()";
+        int removalsNeeded = Solution.minRemovalsToBalance(invalidParentheses);
+        System.out.println(removalsNeeded);  // Expected output: 3
+
     }
 }

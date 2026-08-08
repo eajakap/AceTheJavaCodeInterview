@@ -3,17 +3,18 @@ package org.educative.modules.module2.graphs;
 import java.util.ArrayList;
 import java.util.List;
 
-class Node {
-    String value;
-    List<Node> neighbors;
-
-    public Node(String value) {
-        this.value = value;
-        this.neighbors = new ArrayList<>();
-    }
-}
 
 public class BasicGraph {
+
+    static class Node {
+        String value;
+        List<Node> neighbors;
+
+        public Node(String value) {
+            this.value = value;
+            this.neighbors = new ArrayList<>();
+        }
+    }
 
     private static void printNeighbours(Node node) {
         for (Node neighbor : node.neighbors) {
@@ -21,6 +22,7 @@ public class BasicGraph {
         }
 
     }
+
     public static void main(String[] args) {
         // Create nodes
         Node a = new Node("A");
