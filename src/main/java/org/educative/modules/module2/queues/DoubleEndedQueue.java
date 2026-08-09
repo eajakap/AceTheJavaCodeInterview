@@ -6,6 +6,18 @@ import java.util.Deque;
 public class DoubleEndedQueue {
     public static void main(String[] args) {
         Main.main(args);
+        // Create a deque
+        Deque<String> d = new ArrayDeque<>();
+        d.addLast("Apple");
+        d.addLast("Banana");
+        d.addLast("Cherry");
+
+        // Rotate the deque to the right by 1 place
+        for (int i = 0; i < 1; i++) {
+            d.addFirst(d.removeLast());
+        }
+        System.out.println(d);  // Expects [Cherry, Apple, Banana]
+
     }
 }
 
