@@ -30,6 +30,10 @@ public class BinaryTreeMain2 {
             this.root = null;
         }
 
+        public BinaryTree(TreeNode root) {
+            this.root = root;
+        }
+
         public boolean search(TreeNode root, String target) {
             if (root == null) {
                 return false;
@@ -123,9 +127,114 @@ public class BinaryTreeMain2 {
         }
 
         // --- Display tree methods ---
-        private int height(TreeNode node) {
+        private int treeHeight(TreeNode node) {
             if (node == null) return 0;
-            return 1 + Math.max(height(node.left), height(node.right));
+            return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
+        }
+
+        public int height(TreeNode node) {
+            // Base case:
+            // If the node is null (empty subtree),
+            // we return -1 so that leaf nodes have height 0
+            if (node == null) {
+                return -1;
+            }
+
+            // Recursively calculate the height of the left subtree
+            int leftHeight = height(node.left);
+
+            // Recursively calculate the height of the right subtree
+            int rightHeight = height(node.right);
+
+            // The height of the current node is:
+            // 1 (for the current node) + the maximum height of its subtrees
+            return 1 + Math.max(leftHeight, rightHeight);
+        }
+
+        public int height() {
+            return heightHelper(root);
+        }
+
+        private int heightHelper(TreeNode node) {
+            if (node == null) {
+                return -1;
+            }
+            int leftHeight = heightHelper(node.left);
+            int rightHeight = heightHelper(node.right);
+            return 1 + Math.max(leftHeight, rightHeight);
+        }
+
+        public int size(TreeNode node) {
+            // Base case:
+            // If the node is null, it contributes 0 to the size
+            // (i.e., no nodes in an empty subtree)
+            if (node == null) {
+                return 0;
+            }
+
+            // Count:
+            // 1 for the current node
+            // + size of left subtree
+            // + size of right subtree
+            return 1 + size(node.left) + size(node.right);
+        }
+
+        public int size() {
+            return sizeHelper(root);
+        }
+
+        private int sizeHelper(TreeNode node) {
+            if (node == null) {
+                return 0;
+            }
+            return 1 + sizeHelper(node.left) + sizeHelper(node.right);
+        }
+
+        public int depth(TreeNode root, String target, int currentDepth) {
+            // Base case:
+            // If the current node is null, the target does not exist
+            // in this path, so return -1
+            if (root == null) {
+                return -1;
+            }
+
+            // If the current node contains the target value,
+            // return the current depth
+            if (root.data.equals(target)) {
+                return currentDepth;
+            }
+
+            // Recursively search for the target in the left subtree,
+            // increasing the depth by 1
+            int leftResult = depth(root.left, target, currentDepth + 1);
+
+            // If the target was found in the left subtree,
+            // return that depth immediately
+            if (leftResult != -1) {
+                return leftResult;
+            }
+
+            // Otherwise, search for the target in the right subtree,
+            // also increasing the depth by 1
+            return depth(root.right, target, currentDepth + 1);
+        }
+
+        public int depth(String target) {
+            return depthHelper(root, target, 0);
+        }
+
+        private int depthHelper(TreeNode node, String target, int currentDepth) {
+            if (node == null) {
+                return -1;
+            }
+            if (node.data.equals(target)) {
+                return currentDepth;
+            }
+            int leftResult = depthHelper(node.left, target, currentDepth + 1);
+            if (leftResult != -1) {
+                return leftResult;
+            }
+            return depthHelper(node.right, target, currentDepth + 1);
         }
 
         private void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
@@ -170,7 +279,7 @@ public class BinaryTreeMain2 {
                 System.out.println("\tnull");
                 return;
             }
-            int h = height(root);
+            int h = treeHeight(root);
             List<StringBuilder> output = new ArrayList<>();
             List<StringBuilder> linkAbove = new ArrayList<>();
             for (int i = 0; i < h; i++) {
@@ -230,6 +339,26 @@ public class BinaryTreeMain2 {
             bt.delete("A");
             System.out.println("After deleting A:");
             bt.displayTree(bt.root);
+
+            TreeNode root = new TreeNode("A");
+            root.left = new TreeNode("B");
+            root.right = new TreeNode("C");
+            root.left.left = new TreeNode("D");
+            root.left.right = new TreeNode("E");
+            root.right.left = new TreeNode("F");
+
+            BinaryTree tree = new BinaryTree(root);
+            tree.displayTree(tree.root);
+
+            System.out.println("Height of tree: " + tree.height());
+            System.out.println("Size of tree: " + tree.size());
+
+            System.out.println("Depth of A: " + tree.depth("A"));
+            System.out.println("Depth of B: " + tree.depth("B"));
+            System.out.println("Depth of E: " + tree.depth("E"));
+            System.out.println("Depth of F: " + tree.depth("F"));
+            System.out.println("Depth of X: " + tree.depth("X"));
+
         }
     }
     public static void main(String[] args) {
