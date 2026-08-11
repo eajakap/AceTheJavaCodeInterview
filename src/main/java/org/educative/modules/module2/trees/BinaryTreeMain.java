@@ -270,7 +270,7 @@ public class BinaryTreeMain {
                 System.out.println("\tnull");
                 return;
             }
-            int h = height(root);
+            int h = treeHeight(root);
             List<StringBuilder> output = new ArrayList<>();
             List<StringBuilder> linkAbove = new ArrayList<>();
             for (int i = 0; i < h; i++) {
@@ -422,6 +422,8 @@ public class BinaryTreeMain {
 
             bt.displayTree(bt.root);
 
+            System.out.println("_".repeat(100));
+
             System.out.println("Inorder Traversal:");
             bt.inorder(bt.root);
             System.out.println();
@@ -438,6 +440,7 @@ public class BinaryTreeMain {
             bt.levelOrder();
             System.out.println();
 
+            System.out.println("_".repeat(100));
             System.out.println("Initial tree");
             bt.displayTree(bt.root);
 
@@ -453,14 +456,14 @@ public class BinaryTreeMain {
             bt.displayTree(bt.root);
 
             TreeNode root2 = new TreeNode(11);
-            root.left = new TreeNode(12);
-            root.right = new TreeNode(13);
-            root.left.left = new TreeNode(14);
-            root.left.right = new TreeNode(15);
-            root.right.left = new TreeNode(16);
+            root2.left = new TreeNode(12);
+            root2.right = new TreeNode(13);
+            root2.left.left = new TreeNode(14);
+            root2.left.right = new TreeNode(15);
+            root2.right.left = new TreeNode(16);
 
             BinaryTree tree2 = new BinaryTree(root2);
-            tree.displayTree(tree.root);
+            tree2.displayTree(tree2.root);
 
             System.out.println("Height of tree: " + tree2.height());
             System.out.println("Size of tree: " + tree2.size());
