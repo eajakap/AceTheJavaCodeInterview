@@ -39,8 +39,19 @@ public class MaxHeapMain {
                 return false;
             }
             data[size] = value;
-            heapifyUp(size);
             size++;
+            int index = size - 1;
+            while (index > 0) {
+                int parent = (index - 1) / 2;
+                if (data[index] > data[parent]) {
+                    int temp = data[index];
+                    data[index] = data[parent];
+                    data[parent] = temp;
+                    index = parent;
+                } else {
+                    break;
+                }
+            }
             return true;
         }
 
@@ -52,97 +63,30 @@ public class MaxHeapMain {
             }
             int maxValue = data[0]; // save the maximum value to return
             size--;
-            if (size > 0) {
-                data[0] = data[size];
-                heapifyDown(0);
-            }
-            data[size] = 0;
-            return maxValue;
-        }
-
-        public boolean remove(int value) {
-            if (isEmpty()) {
-                return false;
-            }
-
-            int index = -1;
-            for (int i = 0; i < size; i++) {
-                if (data[i] == value) {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index == -1) {
-                return false;
-            }
-
-            size--;
-            if (index == size) {
-                data[size] = 0;
-                return true;
-            }
-
-            data[index] = data[size];
-            data[size] = 0;
-
-            if (index > 0 && data[index] > data[parent(index)]) {
-                heapifyUp(index);
-            } else {
-                heapifyDown(index);
-            }
-            return true;
-        }
-
-        private void heapifyUp(int index) {
-            while (index > 0) {
-                int parentIndex = parent(index);
-                if (data[index] <= data[parentIndex]) {
-                    break;
-                }
-                swap(index, parentIndex);
-                index = parentIndex;
-            }
-        }
-
-        private void heapifyDown(int index) {
+            data[0] = data[size]; // swap the last element to the root
+            int index = 0;
             while (true) {
-                int leftChildIndex = leftChild(index);
-                int rightChildIndex = rightChild(index);
+                int leftChildIndex = 2 * index + 1; // left child index
+                int rightChildIndex = 2 * index + 2; // right child index
                 int largestIndex = index;
-
+                // compare the values of the current node and its children to find the largest
                 if (leftChildIndex < size && data[leftChildIndex] > data[largestIndex]) {
                     largestIndex = leftChildIndex;
                 }
                 if (rightChildIndex < size && data[rightChildIndex] > data[largestIndex]) {
                     largestIndex = rightChildIndex;
                 }
-
-                if (largestIndex == index) {
+                // if the largest is not the current node, swap and continue
+                if (largestIndex != index) {
+                    int temp = data[index];
+                    data[index] = data[largestIndex];
+                    data[largestIndex] = temp;
+                    index = largestIndex;
+                } else {
                     break;
                 }
-
-                swap(index, largestIndex);
-                index = largestIndex;
             }
-        }
-
-        private int parent(int index) {
-            return (index - 1) / 2;
-        }
-
-        private int leftChild(int index) {
-            return 2 * index + 1;
-        }
-
-        private int rightChild(int index) {
-            return 2 * index + 2;
-        }
-
-        private void swap(int i, int j) {
-            int temp = data[i];
-            data[i] = data[j];
-            data[j] = temp;
+            return maxValue;
         }
 
         public int peek() {
