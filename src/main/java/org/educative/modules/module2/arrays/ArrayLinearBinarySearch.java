@@ -23,12 +23,15 @@ public class ArrayLinearBinarySearch {
         int high = array.length - 1;
         while (low <= high) {
             int mid = (low + high) / 2;
+            // check if mid is the value we are looking for
             if (array[mid] == value) {
                 return mid;
             }
+            // if mid is greater than the value we are looking for, then the value must be in the left half of the array
             if (array[mid] > value) {
                 high = mid - 1;
             } else {
+                // if mid is less than the value we are looking for, then the value must be in the right half of the array
                 low = mid + 1;
             }
         }

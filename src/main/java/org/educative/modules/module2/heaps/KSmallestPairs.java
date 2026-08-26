@@ -1,9 +1,7 @@
 package org.educative.modules.module2.heaps;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
+
 /**
  * This class provides a solution to find the k pairs with the smallest sums from two sorted integer arrays.
  * Given two integer arrays A and B sorted in ascending order, and an integer k.
@@ -19,7 +17,7 @@ public class KSmallestPairs {
         if (A.length == 0 || B.length == 0 || k == 0) return result;
 
         PriorityQueue<int[]> minHeap = new PriorityQueue<>(
-                (x, y) -> (A[x[0]] + B[x[1]]) - (A[y[0]] + B[y[1]])
+                Comparator.comparingInt(x -> (A[x[0]] + B[x[1]]))
         );
 
         // Push first column: (i, 0)
