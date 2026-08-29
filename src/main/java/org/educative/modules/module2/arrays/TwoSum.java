@@ -7,6 +7,7 @@ public class TwoSum {
     // Space Complexity - O(1)
     public static int[] twosum(int[]nums, int target) {
         for (int i = 0; i < nums.length; i++) {
+            // linear search for the complement of nums[i] in the rest of the array
             for (int j = i + 1; j < nums.length; j++) {
                 if (nums[i] + nums[j] == target) {
                     return new int[]{i, j};
@@ -16,17 +17,22 @@ public class TwoSum {
         return new int[]{};
     }
 
-    // Time complexity - O(n)
+    // Time complexity - O(n log n)
     // Space Complexity - O(1)
     public static int[] twosumV2(int[]nums, int target) {
         int left = 0;
         int right = nums.length - 1;
+        // sort the array first
+        Arrays.sort(nums);
         while (left < right) {
             if (nums[left] + nums[right] == target) {
+                // we found the pair, return their indices
                 return new int[]{left, right};
             } else if (nums[left] + nums[right] < target) {
+                // less than target, move left pointer to the right to increase the sum
                 left++;
             } else {
+                // greater than target, move right pointer to the left to decrease the sum
                 right--;
             }
         }
@@ -60,18 +66,23 @@ public class TwoSum {
                 {{-1, -2, -3, -4, -5}, {-8}},
                 {{1000000000, -1000000000, 3, 4}, {0}}
         };
-        System.out.println("-".repeat(100));
+//        System.out.println("-".repeat(100));
 
         int y = 1;
         for (int[][] tc : testCases) {
             int[] nums4 = tc[0];
             int target4 = tc[1][0];
-            int[] result4 = twosumV2(nums4, target4);
-
-            System.out.println(y++ + ".\tInput array: " + Arrays.toString(nums4));
+            System.out.println("-".repeat(100));
+            int ctr = y++;
+            System.out.println(ctr + ".\tLinear Approach: Input array: " + Arrays.toString(nums4));
+            int[] result4 = twosum(nums4, target4);
             System.out.println("\tTarget: " + target4);
             System.out.println("\n \tResult: " + Arrays.toString(result4));
             System.out.println("-".repeat(100));
+            System.out.println(ctr + ".\tTwo Pointer Approach: Input array: " + Arrays.toString(nums4));
+            int[] result5 = twosumV2(nums4, target4);
+            System.out.println("\tTarget: " + target4);
+            System.out.println("\n \tResult: " + Arrays.toString(result5));
         }
 
     }
