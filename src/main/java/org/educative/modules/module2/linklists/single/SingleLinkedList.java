@@ -40,16 +40,39 @@ class LinkedList {
         }
     }
 
+    private ListNode lastNode() {
+        ListNode current = head;
+        if (current == null) {
+            throw new IllegalStateException("List is empty");
+        }
+        while (current.next != null) {
+            current = current.next;
+        }
+        return current;
+    }
+
+    private ListNode findNodeAtPosition(int position) {
+        ListNode current = head;
+        if (current == null) {
+            throw new IllegalStateException("List is empty");
+        }
+        int index = 0;
+        while (current != null && index < position) {
+            current = current.next;
+            index++;
+        }
+        if (current == null) {
+            throw new IllegalArgumentException("Position out of range");
+        }
+        return current;
+    }
+
     public void insertAtEnd(int value) {
         ListNode newNode = new ListNode(value);
         if (this.head == null) {
             this.head = newNode;
         } else  {
-            ListNode current = this.head;
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = newNode;
+            lastNode().next = newNode;
         }
     }
 
@@ -69,12 +92,8 @@ class LinkedList {
             return;
         }
         ListNode newNode = new ListNode(value);
-        ListNode  current = this.head;
-        int index = 0;
-        while (current != null && index < position - 1) {
-            current = current.next;
-            index++;
-        }
+        ListNode  current = findNodeAtPosition(position - 1);
+
         if (current == null) {
             throw new IndexOutOfBoundsException("Position is out of bounds");
         }
@@ -233,6 +252,7 @@ class LinkedListWithTail {
             insertAtBegin(value);
             return;
         }
+        // Traverse to the node just before the desired position
         ListNode newNode = new ListNode(value);
         ListNode  current = this.head;
         int index = 0;
