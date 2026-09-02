@@ -53,8 +53,9 @@ public class SortedCircularLinkedList {
 
             // Case 1: Empty list - create a single-node circular list
             if (head == null) {
+                head = newNode;
                 newNode.next = newNode;
-                return newNode;
+                return head;
             }
 
             // Case 2: Single node list
@@ -69,6 +70,7 @@ public class SortedCircularLinkedList {
             while (true) {
                 // Condition A: insertVal fits between curr and curr.next in sorted order
                 if (curr.val <= insertVal && insertVal <= curr.next.val) {
+                    // valid insertion point found
                     break;
                 }
 
@@ -76,6 +78,7 @@ public class SortedCircularLinkedList {
                 // and insertVal is either >= max or <= min
                 if (curr.val > curr.next.val) {
                     if (insertVal >= curr.val || insertVal <= curr.next.val) {
+                        // valid insertion point found
                         break;
                     }
                 }
