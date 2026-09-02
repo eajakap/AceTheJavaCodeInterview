@@ -47,6 +47,7 @@ public class LinkedListStack {
         }
         return size;
     }
+
     public void push(int val) {
         if (top == null) {
             top = new StackNode(val);
