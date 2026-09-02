@@ -2,6 +2,13 @@ package org.educative.modules.module2.linklists.lrucache;
 
 import java.util.HashMap;
 
+/**
+ * Time Complexity: O(1) for both get and put operations.
+ * Space Complexity: O(capacity) for storing the cache.
+ *
+ * The LRUCache class implements a Least Recently Used (LRU) cache using a combination of a HashMap and a doubly linked list.
+ * The HashMap provides O(1) access to cache entries, while the doubly linked list maintains the order of usage, allowing for efficient eviction of the least recently used items when the cache reaches its capacity.
+ */
 public class LRUCache {
     HashMap<Integer, Node> cache;
     int capacity;
@@ -71,5 +78,6 @@ public class LRUCache {
 
     public void clear() {
         cache.clear();
+        size = 0;
     }
 }
