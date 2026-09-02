@@ -13,6 +13,9 @@ public class FirstMissingPostiveSolution {
         // Using cyclic sort approach
         for (int i = 0; i < n; i++) {
             // Keep swapping nums[i] to its correct position while possible
+            // The correct position for a number x is at index x - 1, but we only care about numbers in the range [1, n]
+            // So to check positive missing number - nums[i] should be in the range [1, n] and if it's not already in the correct position
+            // If nums[i] is out of range or already in the correct position, we skip it
             while (nums[i] >= 1 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
                 // Swap nums[i] with nums[nums[i] - 1]
                 int correctIdx = nums[i] - 1;
