@@ -193,6 +193,20 @@ class Linked4List {
         }
         return list;
     }
+
+    public static List4Node middleNode(List4Node head) {
+
+        List4Node slow = head;
+        List4Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
 }
 
 class Linked4ListWithTail {

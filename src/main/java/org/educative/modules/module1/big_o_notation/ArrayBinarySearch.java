@@ -1,6 +1,11 @@
 package org.educative.modules.module1.big_o_notation;
 
+/* Time Complexity: O(log n), where n is the length of the array.
+ * Space Complexity: O(1), as we are using a constant amount of space.
+ * Given a sorted array of integers, write a function that returns true if the given integer is present in the array, and false otherwise.
+ */
 public class ArrayBinarySearch {
+    // Sorted Array Binary Search
     public static boolean binarySearch(int[] array, int value) {
         int low = 0;
         int high = array.length - 1;
@@ -10,8 +15,10 @@ public class ArrayBinarySearch {
                 return true;
             }
             if (array[mid] > value) {
+                // left half - search if value is in the left half of the array
                 high = mid - 1;
             } else {
+                // right half - search if value is in the right half of the array
                 low = mid + 1;
             }
         }

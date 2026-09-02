@@ -1,5 +1,8 @@
 package org.educative.modules.module1.big_o_notation;
-
+/*
+    * Time Complexity: O(n), where n is the length of the array.
+    * Space Complexity: O(1), as we are using a constant amount of space for the search operation.
+ */
 public class ArrayLinearSearch {
     public static boolean linearSearch(int[] array, int value) {
         for (int i = 0; i < array.length; i++) {
