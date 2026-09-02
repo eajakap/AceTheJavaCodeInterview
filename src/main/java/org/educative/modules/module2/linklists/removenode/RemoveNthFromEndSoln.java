@@ -45,6 +45,7 @@ public class RemoveNthFromEndSoln {
             dummy.next = head;
 
             ListNode fast = dummy;
+            // advance fast pointer by n + 1 steps to maintain the gap
             for (int step = 0; step <= n; step++) {
                 if (fast == null) {
                     throw new IllegalArgumentException("n cannot exceed the list length");
@@ -52,12 +53,15 @@ public class RemoveNthFromEndSoln {
                 fast = fast.next;
             }
 
+            // Move both pointers until fast reaches the end
             ListNode slow = dummy;
             while (fast != null) {
                 fast = fast.next;
                 slow = slow.next;
             }
 
+            // Remove the nth node from the end
+            // slow is now pointing to the node before the one we want to remove
             slow.next = slow.next.next;
             return dummy.next;
         }

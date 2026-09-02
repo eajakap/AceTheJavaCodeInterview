@@ -3,404 +3,405 @@ package org.educative.modules.module2.linklists.single;
 import java.util.ArrayList;
 import java.util.List;
 
-class ListNode {
-    int data;
-    ListNode next;
 
-    public ListNode(int data) {
-        this.data = data;
-        this.next = null;
-    }
-}
+public class SingleLinkedList {
+    static class ListNode {
+        int data;
+        ListNode next;
 
-class LinkedList {
-    ListNode head;
-
-    public LinkedList() {
-        this.head = null;
-    }
-
-    public LinkedList(List<Integer> list) {
-        this.head = null;
-        createLinkedList(list);
-    }
-
-    // Function to create a linked list from a list of values
-    private void createLinkedList(List<Integer> values) {
-        if (values.isEmpty()) {
-            head = null;
-            return;
-        }
-
-        head = new ListNode(values.get(0));
-        ListNode current = head;
-        for (int i = 1; i < values.size(); i++) {
-            current.next = new ListNode(values.get(i));
-            current = current.next;
+        public ListNode(int data) {
+            this.data = data;
+            this.next = null;
         }
     }
 
-    private ListNode lastNode() {
-        ListNode current = head;
-        if (current == null) {
-            throw new IllegalStateException("List is empty");
-        }
-        while (current.next != null) {
-            current = current.next;
-        }
-        return current;
-    }
+    static class LinkedList {
+        ListNode head;
 
-    private ListNode findNodeAtPosition(int position) {
-        ListNode current = head;
-        if (current == null) {
-            throw new IllegalStateException("List is empty");
+        public LinkedList() {
+            this.head = null;
         }
-        int index = 0;
-        while (current != null && index < position) {
-            current = current.next;
-            index++;
-        }
-        if (current == null) {
-            throw new IllegalArgumentException("Position out of range");
-        }
-        return current;
-    }
 
-    public void insertAtEnd(int value) {
-        ListNode newNode = new ListNode(value);
-        if (this.head == null) {
-            this.head = newNode;
-        } else  {
-            lastNode().next = newNode;
+        public LinkedList(List<Integer> list) {
+            this.head = null;
+            createLinkedList(list);
         }
-    }
 
-    public void insertAtBeginning(int value) {
-        ListNode newNode = new ListNode(value);
-        if (this.head == null) {
-            this.head = newNode;
-        } else  {
-            newNode.next = this.head;
-            this.head = newNode;
-        }
-    }
+        // Function to create a linked list from a list of values
+        private void createLinkedList(List<Integer> values) {
+            if (values.isEmpty()) {
+                head = null;
+                return;
+            }
 
-    public void insertAtPosition(int value, int position) {
-        if (position == 0) {
-            insertAtBeginning(value);
-            return;
+            head = new ListNode(values.get(0));
+            ListNode current = head;
+            for (int i = 1; i < values.size(); i++) {
+                current.next = new ListNode(values.get(i));
+                current = current.next;
+            }
         }
-        ListNode newNode = new ListNode(value);
-        ListNode  current = findNodeAtPosition(position - 1);
 
-        if (current == null) {
-            throw new IndexOutOfBoundsException("Position is out of bounds");
+        private ListNode lastNode() {
+            ListNode current = head;
+            if (current == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            while (current.next != null) {
+                current = current.next;
+            }
+            return current;
         }
-        // Update links in the correct order
-        newNode.next = current.next;
-        current.next = newNode;
-    }
 
-    public boolean deleteAtBegin() {
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
+        private ListNode findNodeAtPosition(int position) {
+            ListNode current = head;
+            if (current == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            int index = 0;
+            while (current != null && index < position) {
+                current = current.next;
+                index++;
+            }
+            if (current == null) {
+                throw new IllegalArgumentException("Position out of range");
+            }
+            return current;
         }
-        head = head.next;
-        return true;
-    }
 
-    public boolean deleteByValue(int value) {
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
+        public void insertAtEnd(int value) {
+            ListNode newNode = new ListNode(value);
+            if (this.head == null) {
+                this.head = newNode;
+            } else  {
+                lastNode().next = newNode;
+            }
         }
-        // If the head node matches, delete it by moving head forward
-        if (head.data == value) {
+
+        public void insertAtBeginning(int value) {
+            ListNode newNode = new ListNode(value);
+            if (this.head == null) {
+                this.head = newNode;
+            } else  {
+                newNode.next = this.head;
+                this.head = newNode;
+            }
+        }
+
+        public void insertAtPosition(int value, int position) {
+            if (position == 0) {
+                insertAtBeginning(value);
+                return;
+            }
+            ListNode newNode = new ListNode(value);
+            ListNode  current = findNodeAtPosition(position - 1);
+
+            if (current == null) {
+                throw new IndexOutOfBoundsException("Position is out of bounds");
+            }
+            // Update links in the correct order
+            newNode.next = current.next;
+            current.next = newNode;
+        }
+
+        public boolean deleteAtBegin() {
+            if (head == null) {
+                throw new IllegalStateException("List is empty");
+            }
             head = head.next;
             return true;
         }
-        ListNode current = head;
-        ListNode prev = null;
-        while (current != null && current.data != value) {
-            prev = current;
-            current = current.next;
-        }
-        if (current == null) {
-            return false;
-        }
-        prev.next = current.next;
-        return true;
-    }
 
-    public boolean deleteByPosition(int position) {
-        if (position < 0) {
-            throw new IllegalArgumentException("Position must be non-negative");
-        }
-
-        // If the list is empty, nothing can be deleted
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
-        }
-
-        // If the head node matches, delete it by moving head forward
-        if (position == 0) {
-            deleteAtBegin();
+        public boolean deleteByValue(int value) {
+            if (head == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            // If the head node matches, delete it by moving head forward
+            if (head.data == value) {
+                head = head.next;
+                return true;
+            }
+            ListNode current = head;
+            ListNode prev = null;
+            while (current != null && current.data != value) {
+                prev = current;
+                current = current.next;
+            }
+            if (current == null) {
+                return false;
+            }
+            prev.next = current.next;
             return true;
         }
 
+        public boolean deleteByPosition(int position) {
+            if (position < 0) {
+                throw new IllegalArgumentException("Position must be non-negative");
+            }
 
-        int index = 0;
-        ListNode current = head;
-        while (current != null && index < position - 1) {
-            current = current.next;
-            index++;
-        }
-        // If position is out of range, do nothing
-        if (current == null || current.next == null) {
-            throw new IllegalArgumentException("Position out of range");
-        }
-        // Bypass the node at 'position'
-        current.next = current.next.next;
-        return true;
-    }
+            // If the list is empty, nothing can be deleted
+            if (head == null) {
+                throw new IllegalStateException("List is empty");
+            }
 
-    public void traverse() {
-        ListNode current = head;
-        while (current != null) {
-            System.out.print(current.data + " -> ");  // Example operation: print the value
-            current = current.next;
-        }
-        System.out.println("null");  // Indicate the end of the list
-    }
-
-    public int count() {
-        ListNode current = head;
-        int count =0;
-        while (current != null) {
-            count++;
-            current = current.next;
-        }
-        return count;
-    }
-
-    public boolean exists(int value) {
-        ListNode current = head;
-        while (current != null) {
-            if (current.data == value) {
+            // If the head node matches, delete it by moving head forward
+            if (position == 0) {
+                deleteAtBegin();
                 return true;
-            };
-            current = current.next;
-        }
-        return false;
-    }
+            }
 
-    public int last() {
-        ListNode current = head;
-        if (current == null) {
-            throw new IllegalStateException("List is empty");
-        }
-        while (current.next != null) {
-            current = current.next;
-        }
-        return current.data;
-    }
 
-    public List<Integer> toList() {
-        List<Integer> list = new ArrayList<>();
-        ListNode current = head;
-        while (current != null) {
-            list.add(current.data);
-            current = current.next;
+            int index = 0;
+            ListNode current = head;
+            while (current != null && index < position - 1) {
+                current = current.next;
+                index++;
+            }
+            // If position is out of range, do nothing
+            if (current == null || current.next == null) {
+                throw new IllegalArgumentException("Position out of range");
+            }
+            // Bypass the node at 'position'
+            current.next = current.next.next;
+            return true;
         }
-        return list;
-    }
-}
 
-class LinkedListWithTail {
-    ListNode head;
-    ListNode tail;
+        public void traverse() {
+            ListNode current = head;
+            while (current != null) {
+                System.out.print(current.data + " -> ");  // Example operation: print the value
+                current = current.next;
+            }
+            System.out.println("null");  // Indicate the end of the list
+        }
 
-    public LinkedListWithTail() {
-        this.head = null;
-        this.tail = null;
-    }
+        public int count() {
+            ListNode current = head;
+            int count =0;
+            while (current != null) {
+                count++;
+                current = current.next;
+            }
+            return count;
+        }
 
-    public void insertAtBegin(int value) {
-        ListNode newNode = new ListNode(value);
-        if (this.head == null) {
-            this.head = newNode;
-            this.tail = newNode;
-        } else  {
-            newNode.next = this.head;
-            this.head = newNode;
+        public boolean exists(int value) {
+            ListNode current = head;
+            while (current != null) {
+                if (current.data == value) {
+                    return true;
+                };
+                current = current.next;
+            }
+            return false;
         }
-    }
 
-    public void insertAtEnd(int value) {
-        ListNode newNode = new ListNode(value);
-        if (this.head == null) {
-            this.head = newNode;
-            this.tail = newNode;
-        } else  {
-            this.tail.next = newNode;
-            this.tail = newNode;
+        public int last() {
+            ListNode current = head;
+            if (current == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            while (current.next != null) {
+                current = current.next;
+            }
+            return current.data;
         }
-    }
 
-    public void insertAtPosition(int value, int position) {
-        if (position == 0) {
-            insertAtBegin(value);
-            return;
-        }
-        // Traverse to the node just before the desired position
-        ListNode newNode = new ListNode(value);
-        ListNode  current = this.head;
-        int index = 0;
-        while (current != null && index < position - 1) {
-            current = current.next;
-            index++;
-        }
-        if (current == null) {
-            throw new IndexOutOfBoundsException("Position is out of bounds");
-        }
-        // Update links in the correct order
-        newNode.next = current.next;
-        current.next = newNode;
-        if (current == this.tail) {
-            tail.next = newNode;
-            tail = newNode;
+        public List<Integer> toList() {
+            List<Integer> list = new ArrayList<>();
+            ListNode current = head;
+            while (current != null) {
+                list.add(current.data);
+                current = current.next;
+            }
+            return list;
         }
     }
 
-    public void traverse() {
-        ListNode current = head;
-        while (current != null) {
-            System.out.print(current.data + " -> ");  // Example operation: print the value
-            current = current.next;
-        }
-        System.out.println("null");  // Indicate the end of the list
-    }
+    static class LinkedListWithTail {
+        ListNode head;
+        ListNode tail;
 
-    public int count() {
-        ListNode current = head;
-        int count =0;
-        while (current != null) {
-            count++;
-            current = current.next;
+        public LinkedListWithTail() {
+            this.head = null;
+            this.tail = null;
         }
-        return count;
-    }
 
-    public boolean exists(int value) {
-        ListNode current = head;
-        while (current != null) {
-            if (current.data == value) {
-                return true;
-            };
-            current = current.next;
+        public void insertAtBegin(int value) {
+            ListNode newNode = new ListNode(value);
+            if (this.head == null) {
+                this.head = newNode;
+                this.tail = newNode;
+            } else  {
+                newNode.next = this.head;
+                this.head = newNode;
+            }
         }
-        return false;
-    }
 
-    public int last() {
-        ListNode current = head;
-        if (current == null) {
-            throw new IllegalStateException("List is empty");
+        public void insertAtEnd(int value) {
+            ListNode newNode = new ListNode(value);
+            if (this.head == null) {
+                this.head = newNode;
+                this.tail = newNode;
+            } else  {
+                this.tail.next = newNode;
+                this.tail = newNode;
+            }
         }
-        while (current.next != null) {
-            current = current.next;
-        }
-        return current.data;
-    }
 
-    public List<Integer> toList() {
-        List<Integer> list = new ArrayList<>();
-        ListNode current = head;
-        while (current != null) {
-            list.add(current.data);
-            current = current.next;
+        public void insertAtPosition(int value, int position) {
+            if (position == 0) {
+                insertAtBegin(value);
+                return;
+            }
+            // Traverse to the node just before the desired position
+            ListNode newNode = new ListNode(value);
+            ListNode  current = this.head;
+            int index = 0;
+            while (current != null && index < position - 1) {
+                current = current.next;
+                index++;
+            }
+            if (current == null) {
+                throw new IndexOutOfBoundsException("Position is out of bounds");
+            }
+            // Update links in the correct order
+            newNode.next = current.next;
+            current.next = newNode;
+            if (current == this.tail) {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
-        return list;
-    }
 
-    public boolean deleteAtBegin() {
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
+        public void traverse() {
+            ListNode current = head;
+            while (current != null) {
+                System.out.print(current.data + " -> ");  // Example operation: print the value
+                current = current.next;
+            }
+            System.out.println("null");  // Indicate the end of the list
         }
-        head = head.next;
-        if (head == null) { // If the list becomes empty, update tail as well
-            tail = null;
-        }
-        return true;
-    }
 
-    public boolean deleteByValue(int value) {
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
+        public int count() {
+            ListNode current = head;
+            int count =0;
+            while (current != null) {
+                count++;
+                current = current.next;
+            }
+            return count;
         }
-        // If the head node matches, delete it by moving head forward
-        if (head.data == value) {
+
+        public boolean exists(int value) {
+            ListNode current = head;
+            while (current != null) {
+                if (current.data == value) {
+                    return true;
+                };
+                current = current.next;
+            }
+            return false;
+        }
+
+        public int last() {
+            ListNode current = head;
+            if (current == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            while (current.next != null) {
+                current = current.next;
+            }
+            return current.data;
+        }
+
+        public List<Integer> toList() {
+            List<Integer> list = new ArrayList<>();
+            ListNode current = head;
+            while (current != null) {
+                list.add(current.data);
+                current = current.next;
+            }
+            return list;
+        }
+
+        public boolean deleteAtBegin() {
+            if (head == null) {
+                throw new IllegalStateException("List is empty");
+            }
             head = head.next;
             if (head == null) { // If the list becomes empty, update tail as well
                 tail = null;
             }
             return true;
         }
-        ListNode current = head;
-        ListNode prev = null;
-        while (current != null && current.data != value) {
-            prev = current;
-            current = current.next;
-        }
-        if (current == null) {
-            return false;
-        }
-        prev.next = current.next;
-        if (current.next == null) { // If the deleted node was the tail, update tail
-            tail = prev;
-        }
-        return true;
-    }
 
-    public boolean deleteByPosition(int position) {
-        if (position < 0) {
-            throw new IllegalArgumentException("Position must be non-negative");
+        public boolean deleteByValue(int value) {
+            if (head == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            // If the head node matches, delete it by moving head forward
+            if (head.data == value) {
+                head = head.next;
+                if (head == null) { // If the list becomes empty, update tail as well
+                    tail = null;
+                }
+                return true;
+            }
+            ListNode current = head;
+            ListNode prev = null;
+            while (current != null && current.data != value) {
+                prev = current;
+                current = current.next;
+            }
+            if (current == null) {
+                return false;
+            }
+            prev.next = current.next;
+            if (current.next == null) { // If the deleted node was the tail, update tail
+                tail = prev;
+            }
+            return true;
         }
 
-        // If the list is empty, nothing can be deleted
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
-        }
+        public boolean deleteByPosition(int position) {
+            if (position < 0) {
+                throw new IllegalArgumentException("Position must be non-negative");
+            }
 
-        // If the head node matches, delete it by moving head forward
-        if (position == 0) {
-            deleteAtBegin();
+            // If the list is empty, nothing can be deleted
+            if (head == null) {
+                throw new IllegalStateException("List is empty");
+            }
+
+            // If the head node matches, delete it by moving head forward
+            if (position == 0) {
+                deleteAtBegin();
+                return true;
+            }
+
+
+            int index = 0;
+            ListNode current = head;
+            while (current != null && index < position - 1) {
+                current = current.next;
+                index++;
+            }
+            // If position is out of range, do nothing
+            if (current == null || current.next == null) {
+                throw new IllegalArgumentException("Position out of range");
+            }
+            // Bypass the node at 'position'
+            current.next = current.next.next;
+            if (current.next == null) { // If the deleted node was the tail, update tail
+                tail = current;
+            }
             return true;
         }
 
 
-        int index = 0;
-        ListNode current = head;
-        while (current != null && index < position - 1) {
-            current = current.next;
-            index++;
-        }
-        // If position is out of range, do nothing
-        if (current == null || current.next == null) {
-            throw new IllegalArgumentException("Position out of range");
-        }
-        // Bypass the node at 'position'
-        current.next = current.next.next;
-        if (current.next == null) { // If the deleted node was the tail, update tail
-            tail = current;
-        }
-        return true;
     }
 
-
-}
-
-public class SingleLinkedList {
     public static void main(String[] args) {
         // Create a linked list object
         LinkedList sampleList = new LinkedList();
