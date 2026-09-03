@@ -105,12 +105,12 @@ public class BinaryTreeMain {
                 // Print the data of the current node
                 System.out.print(current.data + " ");
 
-                // If the current node has a left child, add it to the queue
+                // If the current node has a left child, add it to back of the queue
                 if (current.left != null) {
                     queue.add(current.left);
                 }
 
-                // If the current node has a right child, add it to the queue
+                // If the current node has a right child, add it to the back of the queue
                 if (current.right != null) {
                     queue.add(current.right);
                 }

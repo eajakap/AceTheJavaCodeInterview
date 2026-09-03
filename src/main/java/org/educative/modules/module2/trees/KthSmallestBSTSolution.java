@@ -2,6 +2,14 @@ package org.educative.modules.module2.trees;
 
 import java.util.*;
 
+/**
+ * Time Complexity: O(n +e), where n is the number of nodes in the BST. and e is the number of edges in the BST.
+ * In the worst case, we may need to traverse all nodes to find the kth smallest element.
+ * Space Complexity: O(h), where h is the height of the BST (due to the stack used for in-order traversal).
+ * <p>
+ * Given a binary search tree, write a function to find the kth smallest element in it.
+ * You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+ */
 
 public class KthSmallestBSTSolution<T> {
     // Definiton of a binary tree node class
