@@ -3,7 +3,13 @@ package org.educative.modules.module2.stacks.puzzles;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
-
+/**
+ * Time Complexity: O(n), where n is the length of the array.
+ * We traverse through the array once.
+ * Space Complexity: O(n), as we are using a stack to keep track of indices.
+ * Given an integer array heights representing the histogram's bar height where the width of each bar is 1,
+ * return the area of the largest rectangle in the histogram.
+ */
 public class LargestRectangeAreaHistogram {
     private static class Solution {
         public int largestRectangleArea(int[] heights) {
@@ -33,11 +39,11 @@ public class LargestRectangeAreaHistogram {
             Solution sol = new Solution();
 
             int[][] testCases = {
-                    {1, 1, 1, 1, 1},
-                    {5, 4, 3, 2, 1},
-                    {1, 2, 3, 4, 5},
+//                    {1, 1, 1, 1, 1},
+//                    {5, 4, 3, 2, 1},
+//                    {1, 2, 3, 4, 5},
                     {3, 6, 5, 7, 4, 8, 1, 0},
-                    {0, 9, 0, 9, 0}
+//                    {0, 9, 0, 9, 0}
             };
 
             int y = 1;
