@@ -15,7 +15,7 @@ public class KthLargestElementMain {
     public KthLargestElementMain(int k, int[] nums) {
         if (nums == null || nums.length == 0) return;
         // min heap of size k to store the top k largest elements
-        this.topKHeap = new PriorityQueue<>();
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
         this.k = k;
 
         for (int element : nums) {
@@ -51,44 +51,44 @@ public class KthLargestElementMain {
     }
 
     public static void main(String[] args) {
-//        KthLargestElementMain sol = new KthLargestElementMain();
-//
-//        int[][][] testCases = {
-//                {{3, 7, 2}, {3}},
-//                {{10, 4, 2, 10}, {2}},
-//                {{5, 5, 5, 5}, {1}},
-//                {{1, 2, 3, 4, 5, 6}, {3}},
-//                {{3, 6, 9, 10, 4}, {3}},
-//                {{1000, 999, 1, 1, 1}, {2}}
-//        };
-//
-//        int y = 1;
-//        for (int[][] testCase : testCases) {
-//            int[] nums = testCase[0];
-//            int k = testCase[1][0];
-//            int result = sol.kthLargestElement2(k, nums);
-//            System.out.println(y++ + ".\tInput array: " + Arrays.toString(nums) + ", k = " + k);
-//            System.out.println("\tResult: " + result);
-//            System.out.println("-".repeat(100));
-//        }
+        KthLargestElementMain sol = new KthLargestElementMain();
 
-        int[] nums = {3, 6, 9, 10};
-        int[] temp = {3, 6, 9, 10};
-        System.out.println("Initial stream: " + Arrays.toString(nums));
-        System.out.println("k: " + 3);
+        int[][][] testCases = {
+                {{3, 7, 2}, {3}},
+                {{10, 4, 2, 10}, {2}},
+                {{5, 5, 5, 5}, {1}},
+                {{1, 2, 3, 4, 5, 6}, {3}},
+                {{3, 6, 9, 10, 4}, {3}},
+                {{1000, 999, 1, 1, 1}, {2}}
+        };
 
-        KthLargestElementMain kLargest = new KthLargestElementMain(3, nums);
-        int[] val = {4, 7, 10, 8, 15};
-        List<Integer> tempList = new ArrayList<>();
-        for (int v : temp) tempList.add(v);
-
-        for (int i = 0; i < val.length; i++) {
-            System.out.println("\tAdding a new number " + val[i] + " to the stream");
-            tempList.add(val[i]);
-            System.out.println("\tNumber stream: " + tempList);
-            System.out.println("\tKth largest element in the stream: " + kLargest.add(val[i]));
+        int y = 1;
+        for (int[][] testCase : testCases) {
+            int[] nums = testCase[0];
+            int k = testCase[1][0];
+            int result = sol.kthLargestElement2(k, nums);
+            System.out.println(y++ + ".\tInput array: " + Arrays.toString(nums) + ", k = " + k);
+            System.out.println("\tResult: " + result);
             System.out.println("-".repeat(100));
         }
+
+//        int[] nums = {3, 6, 9, 10};
+//        int[] temp = {3, 6, 9, 10};
+//        System.out.println("Initial stream: " + Arrays.toString(nums));
+//        System.out.println("k: " + 3);
+//
+//        KthLargestElementMain kLargest = new KthLargestElementMain(3, nums);
+//        int[] val = {4, 7, 10, 8, 15};
+//        List<Integer> tempList = new ArrayList<>();
+//        for (int v : temp) tempList.add(v);
+//
+//        for (int i = 0; i < val.length; i++) {
+//            System.out.println("\tAdding a new number " + val[i] + " to the stream");
+//            tempList.add(val[i]);
+//            System.out.println("\tNumber stream: " + tempList);
+//            System.out.println("\tKth largest element in the stream: " + kLargest.add(val[i]));
+//            System.out.println("-".repeat(100));
+//        }
     }
 }
 
