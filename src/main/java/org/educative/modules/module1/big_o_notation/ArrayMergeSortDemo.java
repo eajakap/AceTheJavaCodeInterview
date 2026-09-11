@@ -42,11 +42,12 @@ public class ArrayMergeSortDemo {
 
             // merge the three sorted arrays using a priority queue
             int k;
-
+            // add the first part to the priority queue
             for (k = start; k <= end; k++) {
                 q.add(input[k]);
             }
 
+            // poll the elements from the priority queue and put them back into the input array
             k = start;
             while (!q.isEmpty()) {
                 input[k] = q.poll();
@@ -69,11 +70,14 @@ public class ArrayMergeSortDemo {
 
         public static void main( String args[] ) {
             createTestData();
+            System.out.print("Input Test Data: ");
+            printArray(input);
             long start = System.currentTimeMillis();
             mergeSort(0, input.length - 1, input);
+            System.out.print("Output Test Data: ");
+            printArray(input);
             long end = System.currentTimeMillis();
             System.out.println("Time taken = " + (end - start));
-            printArray(input);
         }
 
 }
