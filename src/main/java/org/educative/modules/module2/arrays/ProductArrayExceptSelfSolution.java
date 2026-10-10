@@ -3,8 +3,13 @@ package org.educative.modules.module2.arrays;
 public class ProductArrayExceptSelfSolution {
     public static void main(String[] args) {
         int[] nums = {1, 2, 3, 4};
+        System.out.print("Input: ");
+        for (int num : nums) {
+            System.out.print(num + " ");
+        }
         int[] result = productExceptSelf(nums);
 
+        System.out.print("Output: ");
         for (int num : result) {
             System.out.print(num + " ");
         }
@@ -17,6 +22,8 @@ public class ProductArrayExceptSelfSolution {
         int n = nums.length;
         int[] result = new int[n];
 
+        System.out.println();
+
         // Calculate the prefix products -
         // start with 1 since there are no elements to the left of the first element
         int prefixProduct = 1;
@@ -25,6 +32,12 @@ public class ProductArrayExceptSelfSolution {
             prefixProduct *= nums[i];
         }
 
+        System.out.print("Prefix Product: ");
+        for (int num : result) {
+            System.out.print(+ num + " ");
+        }
+        System.out.println();
+
         // Calculate the suffix products and multiply with the prefix products -
         // start with 1 since there are no elements to the right of the last element
         int suffixProduct = 1;
@@ -32,6 +45,12 @@ public class ProductArrayExceptSelfSolution {
             result[i] *= suffixProduct; // multiply with suffix product till index i+1
             suffixProduct *= nums[i];
         }
+
+        System.out.print("Suffix Product: ");
+        for (int num : result) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
 
         return result;
     }
