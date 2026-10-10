@@ -3,7 +3,7 @@ package org.educative.modules.module2.graphs;
 import java.util.Arrays;
 import java.util.*;
 
-public class PathExistsinUNidirectedGraph {
+public class PathExistsinUnidirectedGraph {
     public static void main(String[] args) {
         Solution.main(args);
     }

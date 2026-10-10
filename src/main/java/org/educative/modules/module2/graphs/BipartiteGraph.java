@@ -63,9 +63,9 @@ public class BipartiteGraph {
 
             int y = 1;
             for (int t = 0; t < testCases.length; t++) {
-                boolean result = sol.isBipartite(testCases[t]);
                 System.out.println(y++ + ".\tInput array: " + Arrays.deepToString(testCases[t]));
                 System.out.println("\tDescription: " + descriptions[t]);
+                boolean result = sol.isBipartite(testCases[t]);
                 System.out.println("\tResult: " + result);
                 System.out.println("-".repeat(100));
             }
