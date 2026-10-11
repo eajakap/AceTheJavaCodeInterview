@@ -173,6 +173,7 @@ public class LRUCacheMain {
         // Each row of arguments supplies the constructor or method arguments
         // for the operation at the same index.
         int[][][] testCases = {
+                //{{LRUCacheCapacity}, {putKey, putValue}, {putKey, putValue}, {getKey}, {getKey}, {clear}},
                 {{1}, {5, 100}, {6, 200}, {5}, {6}, {}},
                 {{3}, {10, 10}, {20, 20}, {30, 30}, {10}, {40, 40}, {20}, {30}, {40}, {}},
                 {{2}, {7, 70}, {7, 77}, {7}, {8, 80}, {7}, {8}, {}},
