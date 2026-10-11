@@ -2,21 +2,22 @@ package org.educative.modules.module2.linklists.allone;
 
 import java.util.*;
 
-class Node {
-    int count;
-    Set<String> keys;
-    Node prev;
-    Node next;
 
-    public Node(int count) {
-        this.count = count;
-        this.keys = new HashSet<>();
-        this.prev = null;
-        this.next = null;
+public class AllOne {
+    static class Node {
+        int count;
+        Set<String> keys;
+        Node prev;
+        Node next;
+
+        public Node(int count) {
+            this.count = count;
+            this.keys = new HashSet<>();
+            this.prev = null;
+            this.next = null;
+        }
     }
-}
 
-class AllOne {
     private Map<String, Integer> keyCount;
     private Map<Integer, Node> countNode;
     private Node head;
