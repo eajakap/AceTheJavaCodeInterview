@@ -5,31 +5,31 @@ import java.util.List;
 
 
 public class DoubleLinkedList {
-    static class List2Node {
+    private static class ListNode {
         int data;
-        List2Node prev;
-        List2Node next;
+        ListNode prev;
+        ListNode next;
 
-        public List2Node(int data) {
+        public ListNode(int data) {
             this.data = data;
             this.prev = null;
             this.next = null;
         }
     }
 
-    static class DoublyLinkedList {
-        List2Node head;
+    private static class DoublyLinkedList {
+        ListNode head;
 
         public DoublyLinkedList() {
             this.head = null;
         }
 
         public void insertAtEnd(int value) {
-            List2Node newNode = new List2Node(value);
+            ListNode newNode = new ListNode(value);
             if (this.head == null) {
                 this.head = newNode;
             } else  {
-                List2Node current = this.head;
+                ListNode current = this.head;
                 while (current.next != null) {
                     current = current.next;
                 }
@@ -39,7 +39,7 @@ public class DoubleLinkedList {
         }
 
         public void insertAtBeginning(int value) {
-            List2Node newNode = new List2Node(value);
+            ListNode newNode = new ListNode(value);
             if (this.head == null) {
                 this.head = newNode;
             } else  {
@@ -50,7 +50,7 @@ public class DoubleLinkedList {
         }
 
         public void insertAfterValue(int target, int data) {
-            List2Node current = head;
+            ListNode current = head;
 
             while (current != null && current.data != target) {
                 current = current.next;       // Search for the target node
@@ -60,7 +60,7 @@ public class DoubleLinkedList {
                 return;                       // Target not found
             }
 
-            List2Node newNode = new List2Node(data);
+            ListNode newNode = new ListNode(data);
 
             newNode.next = current.next;      // Connect new node forward
             newNode.prev = current;           // Connect new node backward
@@ -77,8 +77,8 @@ public class DoubleLinkedList {
                 insertAtBeginning(value);
                 return;
             }
-            List2Node newNode = new List2Node(value);
-            List2Node  current = this.head;
+            ListNode newNode = new ListNode(value);
+            ListNode  current = this.head;
             int index = 0;
             while (current != null && index < position - 1) {
                 current = current.next;
@@ -108,7 +108,7 @@ public class DoubleLinkedList {
         }
 
         public void deleteByValue(int target) {
-            List2Node current = head;
+            ListNode current = head;
 
             // Traverse the list to find the target node
             while (current != null) {
@@ -152,7 +152,7 @@ public class DoubleLinkedList {
 
 
             int index = 0;
-            List2Node current = head;
+            ListNode current = head;
             while (current != null && index < position - 1) {
                 current = current.next;
                 index++;
@@ -178,7 +178,7 @@ public class DoubleLinkedList {
         }
 
         public void traverseForward() {
-            List2Node current = head;
+            ListNode current = head;
             while (current != null) {
                 System.out.print(current.data + " -> ");  // Example operation: print the value
                 current = current.next;
@@ -191,7 +191,7 @@ public class DoubleLinkedList {
                 throw new IllegalStateException("List is empty");
             }
             // go the the end of the list
-            List2Node current = head;
+            ListNode current = head;
             while (current.next != null) {
                 System.out.print(current.data + " -> ");
                 current = current.next;
@@ -207,7 +207,7 @@ public class DoubleLinkedList {
         }
 
         public int count() {
-            List2Node current = head;
+            ListNode current = head;
             int count =0;
             while (current != null) {
                 count++;
@@ -217,7 +217,7 @@ public class DoubleLinkedList {
         }
 
         public boolean exists(int value) {
-            List2Node current = head;
+            ListNode current = head;
             while (current != null) {
                 if (current.data == value) {
                     return true;
@@ -228,7 +228,7 @@ public class DoubleLinkedList {
         }
 
         public int last() {
-            List2Node current = head;
+            ListNode current = head;
             if (current == null) {
                 throw new IllegalStateException("List is empty");
             }
@@ -240,7 +240,7 @@ public class DoubleLinkedList {
 
         public List<Integer> toList() {
             List<Integer> list = new ArrayList<>();
-            List2Node current = head;
+            ListNode current = head;
             while (current != null) {
                 list.add(current.data);
                 current = current.next;
@@ -254,9 +254,9 @@ public class DoubleLinkedList {
         DoublyLinkedList sampleList = new DoublyLinkedList();
 
         // Create nodes
-        List2Node first = new List2Node(10);
-        List2Node second = new List2Node(20);
-        List2Node third = new List2Node(30);
+        ListNode first = new ListNode(10);
+        ListNode second = new ListNode(20);
+        ListNode third = new ListNode(30);
 
         // Connect nodes (forward and backward links)
         sampleList.head = first;
