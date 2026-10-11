@@ -3,33 +3,30 @@ package org.educative.modules.module2.queues;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class DoubleEndedQueue {
-    public static void main(String[] args) {
-        Main.main(args);
-        // Create a deque
-        Deque<String> d = new ArrayDeque<>();
-        d.addLast("Apple");
-        d.addLast("Banana");
-        d.addLast("Cherry");
+import static org.educative.modules.module2.queues.DoubleEndedQueue.createDeque;
 
-        // Rotate the deque to the right by 1 place
-        for (int i = 0; i < 1; i++) {
-            d.addFirst(d.removeLast());
+public class DoubleEndedQueue {
+    public static Deque<String> createDeque(String[] elements) {
+        Deque<String> d = new ArrayDeque<>();
+        for (String element : elements) {
+            d.addLast(element);
         }
         System.out.println(d);  // Expects [Cherry, Apple, Banana]
-
+        return d;
     }
-}
 
-class Main {
+    public static Deque<Integer> createDeque(int[] elements) {
+        Deque<Integer> d = new ArrayDeque<>();
+        for (int element : elements) {
+            d.addLast(element);
+        }
+        System.out.println(d);  // Expects [10, 20, 30]
+        return d;
+    }
+
     public static void main(String[] args) {
         // Create an empty deque
-        Deque<Integer> dq = new ArrayDeque<>();
-
-        // Insert at rear
-        dq.addLast(10);
-        dq.addLast(20);
-        dq.addLast(30);
+        Deque<Integer> dq = createDeque(new int[]{10,20,30});
 
         // Insert at front
         dq.addFirst(5);
@@ -55,5 +52,15 @@ class Main {
         // Get size
         int size = dq.size();
         System.out.println("Size: " + size);
+
+        // Create a deque
+        Deque<String> d = createDeque(new String[]{"Apple", "Banana", "Cherry"});
+
+        // Rotate the deque to the right by 1 place
+        for (int i = 0; i < 1; i++) {
+            d.addFirst(d.removeLast());
+        }
+        System.out.println(d);  // Expects [Cherry, Apple, Banana]
+
     }
 }

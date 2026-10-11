@@ -17,7 +17,7 @@ public class BrowserHistorySolution {
         // TODO: Add the visited URL to the history and clear the future
         history.addLast(url);
         future.clear();
-        }
+    }
 
     public String back(int steps) {
         // TODO: Move the specified number of steps back in the history, if possible, and update the future accordingly

@@ -2,12 +2,6 @@ package org.educative.modules.module2.queues.puzzles;
 import java.util.*;
 
 public class CircularGameWinner {
-    public static void main(String [] args) throws Exception {
-        Solution.main(args);
-    }
-}
-
-class Solution {
     public int findTheWinner(int n, int k) {
         // Initialize a queue with friends numbered 1 to n
         Queue<Integer> queue = new LinkedList<>();
@@ -30,7 +24,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        Solution sol = new Solution();
+        CircularGameWinner sol = new CircularGameWinner();
 
         int[][] testCases = {
                 {4, 2},    // 4 friends, count by 2
