@@ -4,53 +4,54 @@ import java.util.TreeMap;
 import java.util.Objects;
 import java.util.Map;
 
-class Book implements Comparable<Book> {
-    private String title;
-    private int publicationYear;
-
-    public Book(String title, int publicationYear) {
-        this.title = title;
-        this.publicationYear = publicationYear;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getPublicationYear() {
-        return publicationYear;
-    }
-
-    @Override
-    public int compareTo(Book other) {
-        int publicationYear = Integer.compare(this.publicationYear, other.publicationYear);
-        if (publicationYear != 0) {
-            return publicationYear;
-        }
-        return this.title.compareTo(other.title);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return publicationYear == book.publicationYear && title.equals(book.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(publicationYear, title );
-    }
-
-    @Override
-    public String toString() {
-        return "Book{title='" + title + "', publicationYear=" + publicationYear + "}";
-    }
-
-}
 
 public class BookSolution {
+    static class Book implements Comparable<Book> {
+        private String title;
+        private int publicationYear;
+
+        public Book(String title, int publicationYear) {
+            this.title = title;
+            this.publicationYear = publicationYear;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public int getPublicationYear() {
+            return publicationYear;
+        }
+
+        @Override
+        public int compareTo(Book other) {
+            int publicationYear = Integer.compare(this.publicationYear, other.publicationYear);
+            if (publicationYear != 0) {
+                return publicationYear;
+            }
+            return this.title.compareTo(other.title);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Book book = (Book) o;
+            return publicationYear == book.publicationYear && title.equals(book.title);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(publicationYear, title );
+        }
+
+        @Override
+        public String toString() {
+            return "Book{title='" + title + "', publicationYear=" + publicationYear + "}";
+        }
+
+    }
+
     public static void main(String[] args) {
         TreeMap<Integer, Book> library = new TreeMap<>();
         library.put(2021, new Book("Java 101", 2021));
