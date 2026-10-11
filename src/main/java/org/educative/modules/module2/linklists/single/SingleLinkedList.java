@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class SingleLinkedList {
-    static class ListNode {
+    private static class ListNode {
         int data;
         ListNode next;
 
@@ -15,8 +15,8 @@ public class SingleLinkedList {
         }
     }
 
-    static class LinkedList {
-        ListNode head;
+    private static class LinkedList {
+        private ListNode head;
 
         public LinkedList() {
             this.head = null;
@@ -218,9 +218,9 @@ public class SingleLinkedList {
         }
     }
 
-    static class LinkedListWithTail {
-        ListNode head;
-        ListNode tail;
+    private static class LinkedListWithTail {
+        private ListNode head;
+        private ListNode tail;
 
         public LinkedListWithTail() {
             this.head = null;
