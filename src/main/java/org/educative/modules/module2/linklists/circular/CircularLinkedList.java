@@ -3,30 +3,30 @@ package org.educative.modules.module2.linklists.circular;
 import java.util.ArrayList;
 import java.util.List;
 
-class List3Node {
-    int data;
-    List3Node next;
+public class CircularLinkedList {
+    private static class ListNode {
+        int data;
+        ListNode next;
 
-    public List3Node(int data) {
-        this.data = data;
-        this.next = null;
+        public ListNode(int data) {
+            this.data = data;
+            this.next = null;
+        }
     }
-}
+    
+    private ListNode head;
 
-class CircleLinkedList {
-    List3Node head;
-
-    public CircleLinkedList() {
+    public CircularLinkedList() {
         this.head = null;
     }
 
     public void insertAtEnd(int value) {
-        List3Node newNode = new List3Node(value);
+        ListNode newNode = new ListNode(value);
         if (this.head == null) {
             newNode.next = newNode; // Point to itself to form a circular link
             this.head = newNode;
         } else  {
-            List3Node current = this.head;
+            ListNode current = this.head;
             while (current.next != this.head) {
                 current = current.next;
             }
@@ -36,13 +36,13 @@ class CircleLinkedList {
     }
 
     public void insertAtBeginning(int value) {
-        List3Node newNode = new List3Node(value);
+        ListNode newNode = new ListNode(value);
         if (this.head == null) {
             newNode.next = this.head; // Point to itself to form a circular link
             this.head = newNode;
         } else  {
             // go through to the end node
-            List3Node current = this.head;
+            ListNode current = this.head;
             while (current.next != this.head) {
                 current = current.next;
             }
@@ -65,8 +65,8 @@ class CircleLinkedList {
         }
 
         // Case 2: insert somewhere after head
-        List3Node newNode = new List3Node(value);
-        List3Node current = head;
+        ListNode newNode = new ListNode(value);
+        ListNode current = head;
 
         int index = 0;
         // Traverse to position - 1
@@ -89,11 +89,11 @@ class CircleLinkedList {
             return;
         }
 
-        List3Node current = head;
+        ListNode current = head;
 
         while (true) {
             if (current.data == target) {
-                List3Node newNode = new List3Node(data);   // Create the new node
+                ListNode newNode = new ListNode(data);   // Create the new node
                 newNode.next = current.next;             // New node points to the next node
                 current.next = newNode;                  // Target node points to the new node
                 return;
@@ -115,7 +115,7 @@ class CircleLinkedList {
             return true;
         }
         // traverse through such that you cycle back to start
-        List3Node current = head;
+        ListNode current = head;
         while (current.next != head) {
             current = current.next;
         }
@@ -134,13 +134,14 @@ class CircleLinkedList {
             return true;
         }
         // traverse through such that you reach the 2nd last node
-        List3Node current = head;
+        ListNode current = head;
         while (current.next.next != head) {
             current = current.next;
         }
         //at 2nd last node
+        ListNode deleteNode = current.next; // This is the last node
         current.next = head;
-        current.next.next = null;
+        deleteNode.next = null;
         return true;
     }
 
@@ -153,8 +154,8 @@ class CircleLinkedList {
             head = head.next;
             return true;
         }
-        List3Node current = head;
-        List3Node prev = null;
+        ListNode current = head;
+        ListNode prev = null;
         while (current != null && current.data != value) {
             prev = current;
             current = current.next;
@@ -184,7 +185,7 @@ class CircleLinkedList {
 
 
         int index = 0;
-        List3Node current = head;
+        ListNode current = head;
         while (current != null && index < position - 1) {
             current = current.next;
             index++;
@@ -203,7 +204,7 @@ class CircleLinkedList {
             System.out.println("List is empty");
             return;
         }
-        List3Node current = head;
+        ListNode current = head;
         while (true) {
             System.out.print(current.data + " -> ");   // Process current node
             current = current.next;                    // Move to the next node
@@ -222,7 +223,7 @@ class CircleLinkedList {
         if (head == null) {
             return 0;
         }
-        List3Node current = head;
+        ListNode current = head;
         int count =0;
         while (current != null) {
             count++;
@@ -232,7 +233,7 @@ class CircleLinkedList {
     }
 
     public boolean exists(int value) {
-        List3Node current = head;
+        ListNode current = head;
         while (current != null) {
             if (current.data == value) {
                 return true;
@@ -243,7 +244,7 @@ class CircleLinkedList {
     }
 
     public int last() {
-        List3Node current = head;
+        ListNode current = head;
         if (current == null) {
             throw new IllegalStateException("List is empty");
         }
@@ -255,25 +256,22 @@ class CircleLinkedList {
 
     public List<Integer> toList() {
         List<Integer> list = new ArrayList<>();
-        List3Node current = head;
+        ListNode current = head;
         while (current != null) {
             list.add(current.data);
             current = current.next;
         }
         return list;
     }
-}
 
-public class CircularLinkedList {
     public static void main(String[] args) {
         // Create a linked list object
-        CircleLinkedList sampleList = new CircleLinkedList();
+        CircularLinkedList sampleList = new CircularLinkedList();
 
         // Create nodes
-        List3Node first = new List3Node(10);
-        List3Node second = new List3Node(20);
-        List3Node third = new List3Node(30);
-
+        ListNode first = new ListNode(10);
+        ListNode second = new ListNode(20);
+        ListNode third = new ListNode(30);
 
         // Connect nodes
         sampleList.head = first;
@@ -290,18 +288,20 @@ public class CircularLinkedList {
         System.out.println("-".repeat(100));
 
         // Show the circular connection
-        System.out.println("\nNode after third: " + sampleList.head.next.next.next.data);
+        System.out.println("Node after third: " + sampleList.head.next.next.next.data);
         System.out.println("-".repeat(100));
 
         // Verify the loop more clearly
-        System.out.println("\nDoes third.next point back to first? " + (third.next == sampleList.head));
+        System.out.println("Does third.next point back to first? " + (third.next == sampleList.head));
+        System.out.println("-".repeat(100));
 
         // traversal
         System.out.print("Traversal of circular linked list: ");
         sampleList.traverse();
-        CircleLinkedList sampleList2 = new CircleLinkedList();
+        System.out.println("-".repeat(100));
 
         System.out.println("Creating a circular linked list by inserting 10, 20, 30, and 40 at the end:");
+        CircularLinkedList sampleList2 = new CircularLinkedList();
         sampleList2.insertAtEnd(10);
         sampleList2.insertAtEnd(20);
         sampleList2.insertAtEnd(30);
@@ -330,4 +330,3 @@ public class CircularLinkedList {
         sampleList2.traverse();
     }
 }
-
