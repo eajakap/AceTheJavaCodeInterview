@@ -161,19 +161,12 @@ public class DoubleLinkedList {
             if (current == null || current.next == null) {
                 throw new IllegalArgumentException("Position out of range");
             }
-            if (current.prev == null) {      // Deleting the head node
-                head = current.next;
-                if (head != null) {
-                    head.prev = null;
-                }
-                return true;
+            // Bypass the node at 'position', which follows 'current'
+            ListNode target = current.next;
+            current.next = target.next;
+            if (target.next != null) {
+                target.next.prev = current;
             }
-
-            // Bypass the node at 'position'
-            if (current.next != null) {
-                current.next.prev = current.prev;
-            }
-            current.prev.next = current.next;
             return true;
         }
 

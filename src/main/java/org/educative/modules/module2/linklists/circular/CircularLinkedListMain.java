@@ -62,7 +62,7 @@ public class CircularLinkedListMain {
         public void insertAtBeginning(int value) {
             ListNode newNode = new ListNode(value);
             if (this.head == null) {
-                newNode.next = this.head;
+                newNode.next = newNode;
                 this.head = newNode;
             } else {
                 ListNode current = this.head;
@@ -195,7 +195,7 @@ public class CircularLinkedListMain {
                 throw new IllegalStateException("List is empty");
             }
             if (head.data == value) {
-                head = head.next;
+                deleteFromBeginning();
                 return true;
             }
             ListNode current = head;
@@ -236,11 +236,11 @@ public class CircularLinkedListMain {
 
             int index = 0;
             ListNode current = head;
-            while (current != null && index < position - 1) {
+            while (current.next != head && index < position - 1) {
                 current = current.next;
                 index++;
             }
-            if (current == null || current.next == null) {
+            if (current.next == head) {
                 throw new IllegalArgumentException("Position out of range");
             }
             current.next = current.next.next;
@@ -291,14 +291,16 @@ public class CircularLinkedListMain {
          * @return {@code true} if the value is present; otherwise {@code false}
          */
         public boolean exists(int value) {
+            if (head == null) {
+                return false;
+            }
             ListNode current = head;
-            while (current.next != head) {
+            do {
                 if (current.data == value) {
                     return true;
                 }
-                ;
                 current = current.next;
-            }
+            } while (current != head);
             return false;
         }
 
@@ -327,10 +329,13 @@ public class CircularLinkedListMain {
         public List<Integer> toList() {
             List<Integer> list = new ArrayList<>();
             ListNode current = head;
-            while (current != null) {
+            if (current == null) {
+                return list;
+            }
+            do {
                 list.add(current.data);
                 current = current.next;
-            }
+            } while (current != head);
             return list;
         }
     }

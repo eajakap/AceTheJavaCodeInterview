@@ -13,10 +13,10 @@ public class KthLargestElementMain {
     }
 
     public KthLargestElementMain(int k, int[] nums) {
-        if (nums == null || nums.length == 0) return;
         // min heap of size k to store the top k largest elements
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        this.topKHeap = new PriorityQueue<>();
         this.k = k;
+        if (nums == null) return;
 
         for (int element : nums) {
             add(element);

@@ -268,12 +268,16 @@ public class ReverseLinkedList {
         }
 
         public void reverse() {
+            ListNode previous = null;
             ListNode current = head;
+            tail = head;
             while (current != null) {
-                System.out.print(current.data + " -> ");  // Example operation: print the value
-                current = current.next;
+                ListNode next = current.next;
+                current.next = previous;
+                previous = current;
+                current = next;
             }
-            System.out.println("null");  // Indicate the end of the list
+            head = previous;
         }
 
         public void traverse() {
