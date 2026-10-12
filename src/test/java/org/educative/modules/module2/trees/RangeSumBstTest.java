@@ -38,7 +38,7 @@ class RangeSumBstTest {
         Object root = getRoot(tree);
 
         assertEquals(-8, invokeRecursive(tree, root, -10, 5));
-        assertEquals(14, invokeIterative(tree, root, -3, 9));
+        assertEquals(11, invokeIterative(tree, root, -3, 9));
     }
 
     @Test
@@ -58,9 +58,12 @@ class RangeSumBstTest {
 
         assertTrue(printed.contains("1.\tInput tree:"));
         assertTrue(printed.contains("Low: 12, High: 28"));
-        assertTrue(printed.contains("Result: 70"));
+        assertTrue(printed.contains("Result: 60"));
+        assertTrue(printed.contains("Result: 28"));
+        assertTrue(printed.contains("Result: 50"));
+        assertTrue(printed.contains("Result: 0"));
         assertTrue(printed.contains("5.\tInput tree:"));
-        assertTrue(printed.contains("Result: 240"));
+        assertTrue(printed.contains("Result: 280"));
     }
 
     private static RangeSumBst<Integer> newTree(Integer... values) throws Exception {

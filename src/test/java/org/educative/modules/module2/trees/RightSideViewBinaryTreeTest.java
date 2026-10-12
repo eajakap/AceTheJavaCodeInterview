@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ class RightSideViewBinaryTreeTest {
         Constructor<?> rootConstructor = binaryTreeClass().getDeclaredConstructor(nodeClass());
         Object providedRootTree = rootConstructor.newInstance(root);
         Constructor<?> listConstructor = binaryTreeClass().getDeclaredConstructor(List.class);
-        Object nullRootTree = listConstructor.newInstance(List.of(null, newNode(1)));
+        Object nullRootTree = listConstructor.newInstance(Arrays.asList(null, newNode(1)));
 
         assertNull(rootField().get(defaultTree));
         assertSame(root, rootField().get(providedRootTree));

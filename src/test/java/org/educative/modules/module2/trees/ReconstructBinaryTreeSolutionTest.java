@@ -28,7 +28,7 @@ class ReconstructBinaryTreeSolutionTest {
 
         assertArrayEquals(preorder, preorderTraversal(root).stream().mapToInt(Integer::intValue).toArray());
         assertArrayEquals(inorder, inorderTraversal(root).stream().mapToInt(Integer::intValue).toArray());
-        assertEquals(List.of(3, 9, 20, null, null, 15, 7), toLevelOrder(root));
+        assertEquals(Arrays.asList(3, 9, 20, null, null, 15, 7), toLevelOrder(root));
     }
 
     @Test
@@ -49,7 +49,7 @@ class ReconstructBinaryTreeSolutionTest {
 
         Object root = buildTree(solution, preorder, inorder);
 
-        assertEquals(List.of(-10, null, -3, null, 0, null, 5), toLevelOrder(root));
+        assertEquals(Arrays.asList(-10, null, -3, null, 0, null, 5), toLevelOrder(root));
     }
 
     @Test

@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -24,7 +25,7 @@ class RecoverBSTSolutionTest {
 
         assertSame(root, recovered);
         assertEquals(List.of(1, 2, 3, 4), inorderTraversal(root));
-        assertEquals(List.of(2, 1, 4, null, null, 3), toLevelOrder(root));
+        assertEquals(Arrays.asList(2, 1, 4, null, null, 3), toLevelOrder(root));
     }
 
     @Test
