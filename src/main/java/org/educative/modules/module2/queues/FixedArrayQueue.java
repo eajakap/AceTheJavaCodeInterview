@@ -33,7 +33,7 @@ public class FixedArrayQueue {
             System.out.println("Queue is full. Cannot enqueue " + value);
             return false;
         }
-        this.rear++;
+        this.rear = (this.rear + 1) % this.capacity;
         this.data[this.rear] = value;
         this.size++;
         return true;
@@ -45,7 +45,7 @@ public class FixedArrayQueue {
             return -1;
         }
         int value = data[front];
-        front++;
+        front = (front + 1) % capacity;
         size--;
         if (this.size == 0) {
             this.front = 0;

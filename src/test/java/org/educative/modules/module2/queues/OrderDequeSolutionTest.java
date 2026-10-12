@@ -19,6 +19,28 @@ class OrderDequeSolutionTest {
     }
 
     @Test
+    void servingAfterQueueIsDrainedThrowsAndQueueIsReusable() {
+        OrderDequeSolution queue = new OrderDequeSolution();
+        queue.addOrder(1);
+        queue.serveOrder();
+
+        assertThrows(IllegalStateException.class, queue::serveOrder);
+        queue.addOrder(2);
+        assertEquals(2, queue.serveOrder());
+    }
+
+    @Test
+    void duplicateOrderIdsAreServedSeparately() {
+        OrderDequeSolution queue = new OrderDequeSolution();
+        queue.addOrder(7);
+        queue.addOrder(7);
+
+        assertEquals(7, queue.serveOrder());
+        assertEquals(7, queue.serveOrder());
+        assertThrows(IllegalStateException.class, queue::serveOrder);
+    }
+
+    @Test
     void servingFromEmptyQueueThrows() {
         OrderDequeSolution queue = new OrderDequeSolution();
 

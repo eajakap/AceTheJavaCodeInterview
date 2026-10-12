@@ -50,6 +50,37 @@ class FiFoQueueSolutionTest {
     }
 
     @Test
+    void enqueueNullThrows() {
+        FiFoQueueSolution<String> queue = new FiFoQueueSolution<>();
+
+        assertThrows(NullPointerException.class, () -> queue.enqueue(null));
+    }
+
+    @Test
+    void queueCanBeReusedAfterBeingDrained() {
+        FiFoQueueSolution<Integer> queue = new FiFoQueueSolution<>();
+        queue.enqueue(1);
+        queue.dequeue();
+        queue.enqueue(2);
+
+        assertEquals(1, queue.size());
+        assertEquals(2, queue.dequeue());
+        assertThrows(IllegalStateException.class, queue::dequeue);
+    }
+
+    @Test
+    void playerEqualityAndToString() {
+        FiFoQueueSolution.Player player = new FiFoQueueSolution.Player("Avery", 900);
+
+        assertEquals(player, player);
+        assertFalse(player.equals(null));
+        assertFalse(player.equals("Avery"));
+        assertFalse(player.equals(new FiFoQueueSolution.Player("Avery", 901)));
+        assertFalse(player.equals(new FiFoQueueSolution.Player("Blake", 900)));
+        assertEquals("(Avery, 900)", player.toString());
+    }
+
+    @Test
     void playerOrderingUsesScoreThenName() {
         FiFoQueueSolution.Player lowerScore = new FiFoQueueSolution.Player("Zoe", 900);
         FiFoQueueSolution.Player higherScore = new FiFoQueueSolution.Player("Avery", 1000);

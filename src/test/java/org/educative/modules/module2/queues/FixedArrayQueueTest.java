@@ -52,6 +52,53 @@ class FixedArrayQueueTest {
     }
 
     @Test
+    void dequeueReturnsAllElementsInFifoOrder() {
+        FixedArrayQueue queue = new FixedArrayQueue(5);
+        for (int value = 1; value <= 5; value++) {
+            queue.enqueue(value);
+        }
+
+        for (int value = 1; value <= 5; value++) {
+            assertEquals(value, queue.dequeue());
+        }
+        assertTrue(queue.isEmpty());
+    }
+
+    @Test
+    void peekDoesNotRemoveElement() {
+        FixedArrayQueue queue = new FixedArrayQueue(2);
+        queue.enqueue(5);
+
+        assertEquals(5, queue.peek());
+        assertEquals(5, queue.peek());
+        assertEquals(1, queue.size());
+    }
+
+    @Test
+    void queueIsFullOnlyAtCapacity() {
+        FixedArrayQueue queue = new FixedArrayQueue(2);
+
+        assertFalse(queue.isFull());
+        queue.enqueue(1);
+        assertFalse(queue.isFull());
+        queue.enqueue(2);
+        assertTrue(queue.isFull());
+    }
+
+    @Test
+    void enqueueAfterDequeueOnFullQueueReusesFreedSlot() {
+        FixedArrayQueue queue = new FixedArrayQueue(2);
+        queue.enqueue(1);
+        queue.enqueue(2);
+        assertEquals(1, queue.dequeue());
+
+        assertTrue(queue.enqueue(3));
+        assertEquals(2, queue.dequeue());
+        assertEquals(3, queue.dequeue());
+        assertTrue(queue.isEmpty());
+    }
+
+    @Test
     void defaultConstructorCreatesCapacityOfTen() {
         FixedArrayQueue queue = new FixedArrayQueue();
 

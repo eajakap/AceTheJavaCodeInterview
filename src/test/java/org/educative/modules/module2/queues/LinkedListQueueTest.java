@@ -31,6 +31,42 @@ class LinkedListQueueTest {
     }
 
     @Test
+    void largeQueueKeepsFifoOrder() {
+        LinkedListQueue queue = new LinkedListQueue();
+        for (int value = 0; value < 1000; value++) {
+            queue.enqueue(value);
+        }
+
+        for (int value = 0; value < 1000; value++) {
+            assertEquals(value, queue.dequeue());
+        }
+        assertTrue(queue.isEmpty());
+    }
+
+    @Test
+    void interleavedEnqueueAndDequeue() {
+        LinkedListQueue queue = new LinkedListQueue();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        assertEquals(1, queue.dequeue());
+        queue.enqueue(3);
+
+        assertEquals(2, queue.peek());
+        assertEquals(2, queue.dequeue());
+        assertEquals(3, queue.dequeue());
+        assertEquals(-1, queue.dequeue());
+    }
+
+    @Test
+    void negativeValuesAreStoredNormally() {
+        LinkedListQueue queue = new LinkedListQueue();
+        queue.enqueue(-5);
+
+        assertEquals(-5, queue.peek());
+        assertEquals(1, queue.size());
+    }
+
+    @Test
     void linkedQueueIsNotCapacityBounded() {
         LinkedListQueue queue = new LinkedListQueue();
 
