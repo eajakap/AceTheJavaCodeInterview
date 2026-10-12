@@ -9,30 +9,33 @@ public class BaseballGameStack {
 
         for (String op : operations) {
             if (op.equals("C")) {
-                // Invalidate and remove the most recent score
                 stack.pop();
             } else if (op.equals("D")) {
-                // Double the most recent score and push it
-                stack.push(stack.peek() * 2);
+                stack.push(requireRecentScore(stack) * 2);
             } else if (op.equals("+")) {
-                // Sum of the two most recent scores
                 int top = stack.pop();
-                int newScore = top + stack.peek();
+                int newScore = top + requireRecentScore(stack);
                 stack.push(top);
                 stack.push(newScore);
             } else {
-                // It's an integer score, push onto the stack
                 stack.push(Integer.parseInt(op));
             }
         }
 
-        // Return the sum of all remaining scores
         int sum = 0;
         for (int score : stack) {
             sum += score;
         }
         return sum;
     }
+
+        private int requireRecentScore(Deque<Integer> stack) {
+            Integer score = stack.peek();
+            if (score == null) {
+                throw new NoSuchElementException("Not enough scores to apply the operation");
+            }
+            return score;
+        }
 
     public static void main(String[] args) {
         Solution sol = new Solution();

@@ -23,7 +23,7 @@ public class DecodeStringStack {
             String currentStr = "";
             for (char c : s.toCharArray()) {
                 if (isDigit(c)) {
-                    currentNum = Character.digit(c, 10);
+                    currentNum = currentNum * 10 + Character.digit(c, 10);
                 } else if (c == '[') {
                     stack.push(new Pair(currentStr, currentNum));
                     currentStr = "";

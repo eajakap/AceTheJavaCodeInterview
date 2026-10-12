@@ -22,10 +22,19 @@ public class ReconstructBinaryTreeSolution {
         private int[] preorderIdx = {0};
 
         public TreeNode<Integer> buildTree(int[] preorder, int[] inorder) {
+            if (preorder == null || inorder == null || preorder.length != inorder.length) {
+                throw new IllegalArgumentException("Preorder and inorder traversals must be non-null and of equal length.");
+            }
+            if (preorder.length == 0) {
+                return null;
+            }
+
             // Build a hashmap for O(1) lookup of root index in inorder array
             Map<Integer, Integer> inorderIndexMap = new HashMap<>();
             for (int i = 0; i < inorder.length; i++) {
-                inorderIndexMap.put(inorder[i], i);
+                if (inorderIndexMap.put(inorder[i], i) != null) {
+                    throw new IllegalArgumentException("Duplicate values are not supported.");
+                }
             }
 
             preorderIdx[0] = 0;
@@ -38,6 +47,9 @@ public class ReconstructBinaryTreeSolution {
             if (inLeft > inRight) {
                 return null;
             }
+            if (preorderIdx[0] >= preorder.length) {
+                throw new IllegalArgumentException("Traversals do not describe the same tree.");
+            }
 
             // Pick the current root from preorder traversal
             int rootVal = preorder[preorderIdx[0]];
@@ -47,7 +59,10 @@ public class ReconstructBinaryTreeSolution {
             preorderIdx[0] += 1;
 
             // Find the index of root in inorder to split left and right subtrees
-            int inorderRootIdx = inorderIndexMap.get(rootVal);
+            Integer inorderRootIdx = inorderIndexMap.get(rootVal);
+            if (inorderRootIdx == null || inorderRootIdx < inLeft || inorderRootIdx > inRight) {
+                throw new IllegalArgumentException("Traversals do not describe the same tree.");
+            }
 
             // Recursively build left subtree (elements left of root in inorder)
             root.left = helper(preorder, inorderIndexMap, inLeft, inorderRootIdx - 1);

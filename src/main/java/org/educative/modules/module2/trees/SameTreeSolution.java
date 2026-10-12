@@ -38,7 +38,7 @@ public class SameTreeSolution {
         }
 
         public TreeNode<Integer> buildTree(Integer[] values) {
-            if (values == null || values.length == 0) return null;
+            if (values == null || values.length == 0 || values[0] == null) return null;
 
             TreeNode<Integer> root = new TreeNode<>(values[0]);
             Queue<TreeNode<Integer>> queue = new LinkedList<>();

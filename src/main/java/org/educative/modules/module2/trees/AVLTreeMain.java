@@ -101,10 +101,18 @@ public class AVLTreeMain {
                 return leftRotate(node);
             }
 
+            // Right Right case with duplicates routed to the right
+            if (balance < -1 && data >= node.right.data) {
+                return leftRotate(node);
+            }
+
             return node;
         }
 
         public TreeNode getMinValueNode(TreeNode node) {
+            if (node == null) {
+                return null;
+            }
             TreeNode current = node;
             while (current.left != null) {
                 current = current.left;

@@ -378,6 +378,9 @@ public class BinarySearchTreeMain {
         }
 
         public TreeNode minValueNode(TreeNode node) {
+            if (node == null) {
+                return null;
+            }
             TreeNode current = node;
             while (current.left != null) {
                 current = current.left;

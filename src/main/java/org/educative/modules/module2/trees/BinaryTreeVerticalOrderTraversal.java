@@ -154,6 +154,10 @@ public class BinaryTreeVerticalOrderTraversal {
         }
 
         public static List<List<Integer>> verticalTraversal(TreeNode<Integer> root) {
+            if (root == null) {
+                return new ArrayList<>();
+            }
+
             // HashMap to store nodes grouped by column: col -> list of {row, val}
             Map<Integer, List<int[]>> colMap = new HashMap<>();
 

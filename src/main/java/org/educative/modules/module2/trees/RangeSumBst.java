@@ -23,7 +23,7 @@ public class RangeSumBst<T> {
     }
 
     private TreeNode<T> createBinaryTree(List<TreeNode<T>> ListOfNodes) {
-        if (ListOfNodes.isEmpty()) {
+        if (ListOfNodes == null || ListOfNodes.isEmpty() || ListOfNodes.get(0) == null) {
             return null;
         }
 
