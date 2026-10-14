@@ -3,7 +3,7 @@ package org.codesignal.debugging.problems;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class FitnessActivity {
+public class FitnessTracker {
     public record Event (String activityType, int distance, long eventTime) {
     }
 
@@ -100,7 +100,7 @@ public class FitnessActivity {
 
     public static void main(String[] args) {
 
-        FitnessActivity solution = new FitnessActivity();
+        FitnessTracker solution = new FitnessTracker();
         solution.addActivity("user1", "running", 5);
         solution.addActivity("user1", "cycling", 10);
         solution.updateActivity("user1", "running", 3);
