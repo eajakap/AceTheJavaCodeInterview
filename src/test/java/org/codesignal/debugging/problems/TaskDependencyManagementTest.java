@@ -181,7 +181,7 @@ class TaskDependencyManagementTest {
     }
 
     @Test
-    void getDependentTasksReturnsAnIndependentList() {
+    void testDependentTasksReturnsAnIndependentList() {
         TaskDependencyManagement solution = new TaskDependencyManagement();
         addTasks(solution, "A", "B");
         solution.addDependency("A", "B");
