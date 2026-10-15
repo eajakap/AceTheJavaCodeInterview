@@ -146,21 +146,27 @@ public class TaskDependencyManagement {
     }
 
     public boolean removeDependency(String taskId, String dependencyTaskId) {
-        List<String> dependencyTasks = dependencyTasksMap.get(taskId);
-        if (dependencyTasks == null || !dependencyTasks.remove(dependencyTaskId)) {
-            return false;
+
+        // 1. Remove forward dependency
+        List<String> dependencies = dependencyTasksMap.get(taskId);
+        if (dependencies == null || !dependencies.remove(dependencyTaskId)) {
+            return false; // Nothing to remove
         }
 
-        List<String> dependentTasks = dependentTasksMap.get(dependencyTaskId);
-        if (dependentTasks != null) {
-            dependentTasks.remove(taskId);
-            if (dependentTasks.isEmpty()) {
+        // 2. Remove reverse dependency
+        List<String> dependents = dependentTasksMap.get(dependencyTaskId);
+        if (dependents != null) {
+            dependents.remove(taskId);
+            if (dependents.isEmpty()) {
                 dependentTasksMap.remove(dependencyTaskId);
             }
         }
-        if (dependencyTasks.isEmpty()) {
+
+        // 3. Clean up empty forward list
+        if (dependencies.isEmpty()) {
             dependencyTasksMap.remove(taskId);
         }
+
         return true;
     }
 
