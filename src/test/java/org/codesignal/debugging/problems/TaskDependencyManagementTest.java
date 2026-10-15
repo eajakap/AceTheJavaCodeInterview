@@ -164,7 +164,7 @@ class TaskDependencyManagementTest {
         assertEquals(List.of(), solution.getTasksByStatus("Open"));
 
         assertTrue(solution.updateTask("C", null, null, "closed", null));
-        assertEquals(List.of("B"), solution.getTasksByStatus("Open"));
+        assertEquals(List.of("B"), solution.getTasksByStatus("open"));
     }
 
     @Test

@@ -43,20 +43,20 @@ public class TaskDependencyManagement {
         }
         if (status != null) {
             attributes.put("status", status);
-            List<String> dependencies = dependencyTasksMap.getOrDefault(
-                    taskId, Collections.emptyList());
-            if ("closed".equalsIgnoreCase(status)
-                    && !dependencies.isEmpty()
-                    && dependencies.stream().anyMatch(dependencyTaskId -> !isTaskClosed(dependencyTaskId))) {
-                attributes.put("status", "open");
+            // mark all the open dependencies associated with this task as open if the task is closed
+            List<String> dependencies = dependencyTasksMap.getOrDefault(taskId, Collections.emptyList());
+            if ("closed".equalsIgnoreCase(status) && !dependencies.isEmpty()) {
+                List<String> notClosed = dependencies.stream().filter(dependencyTaskId -> !isTaskClosed(dependencyTaskId)).toList();
+                if (!notClosed.isEmpty()) {
+                    attributes.put("status", "open");
+                }
             }
             if (isTaskClosed(taskId)) {
-                for (String dependentTaskId : dependentTasksMap.getOrDefault(
-                        taskId, Collections.emptyList())) {
-                    List<String> dependentDependencies = dependencyTasksMap.getOrDefault(
-                            dependentTaskId, Collections.emptyList());
+                List<String> dependentTasks = dependentTasksMap.getOrDefault(taskId, Collections.emptyList());
+                for (String dependentTaskId : dependentTasks) {
+                    List<String> dependentDependencies = dependencyTasksMap.getOrDefault(dependentTaskId, Collections.emptyList());
                     if (dependentDependencies.stream().allMatch(this::isTaskClosed)) {
-                        taskAttributes.get(dependentTaskId).put("status", "Open");
+                        taskAttributes.get(dependentTaskId).put("status", "open");
                     }
                 }
             }
@@ -175,6 +175,7 @@ public class TaskDependencyManagement {
         taskManager.addTask("task3", "Title 3", "Description 3", "open", 3);
         System.out.println("tasks:" + taskManager.getTasksByStatus("open"));
 
+        // establishing a dependency chain: task1 -> task2 -> task3
         taskManager.addDependency("task2", "task1");
         taskManager.addDependency("task3", "task2");
 
@@ -183,7 +184,7 @@ public class TaskDependencyManagement {
         System.out.println("task3->" + taskManager.getDependentTasks("task3")); // Should print []
 
         taskManager.updateTask("task1", null, null, "closed", null);
-        System.out.println("tasks:" + taskManager.getTasksByStatus("open")); // Should print [task1, task2, task3]
+        System.out.println("tasks:" + taskManager.getTasksByStatus("open")); // Should print [task2, task3]
 
         // remove a dependency and check the dependent tasks again
         taskManager.removeDependency("task2", "task1");
