@@ -168,4 +168,25 @@ public class TaskDependencyManagement {
         return new ArrayList<>(dependentTasksMap.getOrDefault(taskId, Collections.emptyList()));
     }
 
+    public static void main(String[] args) {
+        TaskDependencyManagement taskManager = new TaskDependencyManagement();
+        taskManager.addTask("task1", "Title 1", "Description 1", "open", 1);
+        taskManager.addTask("task2", "Title 2", "Description 2", "open", 2);
+        taskManager.addTask("task3", "Title 3", "Description 3", "open", 3);
+        System.out.println("tasks:" + taskManager.getTasksByStatus("open"));
+
+        taskManager.addDependency("task2", "task1");
+        taskManager.addDependency("task3", "task2");
+
+        System.out.println("task1->" + taskManager.getDependentTasks("task1")); // Should print [task2]
+        System.out.println("task2->" + taskManager.getDependentTasks("task2")); // Should print [task3]
+        System.out.println("task3->" + taskManager.getDependentTasks("task3")); // Should print []
+
+        taskManager.updateTask("task1", null, null, "closed", null);
+        System.out.println("tasks:" + taskManager.getTasksByStatus("open")); // Should print [task1, task2, task3]
+
+        // remove a dependency and check the dependent tasks again
+        taskManager.removeDependency("task2", "task1");
+        System.out.println("task1->" + taskManager.getDependentTasks("task1")); // Should print []
+    }
 }

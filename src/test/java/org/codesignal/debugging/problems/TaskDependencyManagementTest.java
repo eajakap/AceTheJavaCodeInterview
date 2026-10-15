@@ -40,12 +40,53 @@ class TaskDependencyManagementTest {
     @Test
     void testCircularDependencyFailure() {
         TaskDependencyManagement solution = new TaskDependencyManagement();
-        addTasks(solution, "A", "B", "C");
+        addTasks(solution, "task1", "task2", "task3");
+
+        assertTrue(solution.addDependency("task1", "task2"));
+        assertTrue(solution.addDependency("task2", "task3"));
+        assertFalse(solution.addDependency("task3", "task1"));
+    }
+
+    @Test
+    void testLongCycleFailure() {
+        TaskDependencyManagement solution = new TaskDependencyManagement();
+        addTasks(solution, "t1", "t2", "t3", "t4", "t5");
+        assertTrue(solution.addDependency("t1", "t2"));
+        assertTrue(solution.addDependency("t2", "t3"));
+        assertTrue(solution.addDependency("t3", "t4"));
+        assertTrue(solution.addDependency("t4", "t5"));
+
+        // closing the whole chain, and closing it part-way along
+        assertFalse(solution.addDependency("t5", "t1"));
+        assertFalse(solution.addDependency("t5", "t3"));
+
+        // a rejected add must not leave a half-written edge behind
+        assertEquals(List.of(), solution.getDependentTasks("t1"));
+        assertEquals(List.of("t2"), solution.getDependentTasks("t3"));
+
+        // a shortcut across an existing path is still acyclic, so it is allowed
+        assertTrue(solution.addDependency("t1", "t4"));
+        assertEquals(List.of("t3", "t1"), solution.getDependentTasks("t4"));
+    }
+
+    @Test
+    void testDiamondDependencyIsAllowed() {
+        TaskDependencyManagement solution = new TaskDependencyManagement();
+        addTasks(solution, "A", "B", "C", "D");
 
         assertTrue(solution.addDependency("A", "B"));
-        assertTrue(solution.addDependency("C", "A"));
-        assertFalse(solution.addDependency("B", "C"));
-        assertFalse(solution.addDependency("A", "B"));
+        assertTrue(solution.addDependency("A", "C"));
+        assertTrue(solution.addDependency("B", "D"));
+        assertTrue(solution.addDependency("C", "D"));
+
+        assertEquals(List.of(), solution.getDependentTasks("A"));
+        assertEquals(List.of("A"), solution.getDependentTasks("B"));
+        assertEquals(List.of("A"), solution.getDependentTasks("C"));
+        assertEquals(List.of("B", "C"), solution.getDependentTasks("D"));
+
+        // reaching the shared tail by two paths must not mask a real cycle
+        assertFalse(solution.addDependency("D", "A"));
+        assertEquals(List.of(), solution.getDependentTasks("A"));
     }
 
     @Test
