@@ -78,26 +78,21 @@ public class TicketManagementSystem {
 
         double totalPrice = 0;
         List<String> matchedTransIds = new ArrayList<>();
-        String firstjourneyId = (String)tickets.get(firstTransId).get("journeyId");
-        for (String transId: transIds){
-            if (tickets.containsKey(transId)) {
-                String journeyId = (String) tickets.get(transId).get("journeyId");
-                if (journeyId.equals(firstjourneyId)) {
-                    double price = (double) tickets.get(transId).get("price");
-                    totalPrice += price;
-                    matchedTransIds.add(transId);
-                } else {
-                    return null;
-                }
-            } else {
+        String firstJourneyId = (String) tickets.get(firstTransId).get("journeyId");
+        for (String transId : transIds) {
+            Map<String, Object> ticket = tickets.get(transId);
+            if (ticket == null || !Objects.equals(ticket.get("journeyId"), firstJourneyId)) {
                 return null;
             }
+
+            totalPrice += (double) ticket.get("price");
+            matchedTransIds.add(transId);
         }
 
         if (matchedTransIds.size() < 2) {
             return null;
         }
-        String mergedTransId = sellTicket(firstjourneyId, totalPrice);
+        String mergedTransId = sellTicket(firstJourneyId, totalPrice);
         Map<String,Object> mergedTicket = tickets.get(mergedTransId);
         mergedTicket.put("isMerged", true);
         mergedTicket.put("originalTransIds", matchedTransIds);
