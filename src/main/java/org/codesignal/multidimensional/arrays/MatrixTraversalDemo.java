@@ -5,7 +5,7 @@ package org.codesignal.multidimensional.arrays;
  * Traversal methods return the visited values in a one-dimensional array and
  * print that array as a demonstration.
  */
-public class ZigZagReverseTraverseArray {
+public class MatrixTraversalDemo {
 
     /**
      * Traverses rows from top to bottom, alternating the horizontal direction.
