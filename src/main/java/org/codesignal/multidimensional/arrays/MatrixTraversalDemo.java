@@ -104,7 +104,7 @@ public class MatrixTraversalDemo {
      * @param matrix rectangular, non-empty matrix to traverse
      * @return values in reverse row-major order
      */
-    public static int[] rowTraverseLastRowToFirstRow(int[][] matrix) {
+    public static int[] reverseRowTraverse(int[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
         int[] result = new int[rows * cols];
@@ -148,7 +148,7 @@ public class MatrixTraversalDemo {
      * @param matrix rectangular, non-empty matrix to traverse
      * @return values in reverse column-major order
      */
-    public static int[] columnTraverseLastColumnToFirstColumn(int[][] matrix) {
+    public static int[] reverseColumnTraverse(int[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
         int[] result = new int[rows * cols];
@@ -293,11 +293,11 @@ public class MatrixTraversalDemo {
 
         rowTraverseFirstRowToLastRow(matrix);
 
-        rowTraverseLastRowToFirstRow(matrix);
+        reverseRowTraverse(matrix);
 
         columnTraverseFirstColumnToLastColumn(matrix);
 
-        columnTraverseLastColumnToFirstColumn(matrix);
+        reverseColumnTraverse(matrix);
 
         zigZagRowTraverse(matrix);
 
@@ -324,11 +324,11 @@ public class MatrixTraversalDemo {
 
         rowTraverseFirstRowToLastRow(matrix);
 
-        rowTraverseLastRowToFirstRow(matrix);
+        reverseRowTraverse(matrix);
 
         columnTraverseFirstColumnToLastColumn(matrix);
 
-        columnTraverseLastColumnToFirstColumn(matrix);
+        reverseColumnTraverse(matrix);
 
         zigZagRowTraverse(matrix);
 
