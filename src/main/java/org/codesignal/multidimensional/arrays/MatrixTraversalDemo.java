@@ -184,17 +184,19 @@ public class MatrixTraversalDemo {
 
             // Reverse direction at the current column's edge, then move to the next column.
             if (direction.equals("down")) {
+                // check if we are at the bottom of the column, if so, change direction and move to the next column
                 if (row + 1 == rows) {
                     direction = "up";
                     col += 1;
-                } else {
+                } else { //
                     row += 1;
                 }
             } else {
+                // check if we are at the top of the column, if so, change direction and move to the next column
                 if (row - 1 < 0) {
                     direction = "down";
                     col += 1;
-                } else {
+                } else { // if we are not at the top of the column, move up
                     row -= 1;
                 }
             }
@@ -226,17 +228,19 @@ public class MatrixTraversalDemo {
 
             // Reverse direction at the current column's edge, then move left.
             if (direction.equals("up")) {
+                // check if we are at the top of the column, if so, change direction and move to the next column
                 if (row - 1 < 0) {
                     direction = "down";
                     col -= 1;
-                } else {
+                } else { // if we are not at the top of the column, move up
                     row -= 1;
                 }
             } else {
+                // check if we are at the bottom of the column, if so, change direction and move to the next column
                 if (row + 1 == rows) {
                     direction = "up";
                     col -= 1;
-                } else {
+                } else { // if we are not at the bottom of the column, move down
                     row += 1;
                 }
             }
