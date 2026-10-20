@@ -57,17 +57,17 @@ public class SpiralMatrixTraversel {
             if (nextRow < top || nextRow > bottom || nextColumn < left || nextColumn > right) {
                 // Finished a side: shrink that boundary, then turn
                 switch (dir) {
-                    case RIGHT: top++;    break;
-                    case DOWN:  right--;  break;
-                    case LEFT:  bottom--; break;
-                    case UP:    left++;   break;
+                    case RIGHT: top++;    break; // all cells in the top row have been visited, so move the top boundary down
+                    case DOWN:  right--;  break; // all cells in the right column have been visited, so move the right boundary left
+                    case LEFT:  bottom--; break; // all cells in the bottom row have been visited, so move the bottom boundary up
+                    case UP:    left++;   break; // all cells in the left column have been visited, so move the left boundary right
                 }
-                dir = dir.turnClockwise();
-                nextRow = row + dir.dRow;
-                nextColumn = col + dir.dCol;
+                dir = dir.turnClockwise(); // change direction clockwise
+                nextRow = row + dir.dRow; // recalculate next position after turning clockwise
+                nextColumn = col + dir.dCol; // recalculate next position after turning clockwise
             }
-            row = nextRow;
-            col = nextColumn;
+            row = nextRow; // move to the next row in the current direction
+            col = nextColumn; // move to the next column in the current direction
         }
         printArray(spiralGrid);
         return vowels.stream().mapToInt(Integer::intValue).toArray();
