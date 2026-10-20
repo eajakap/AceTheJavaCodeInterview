@@ -1,5 +1,6 @@
 package org.codesignal.multidimensional.arrays;
 
+import org.codesignal.tutorials.arrays.multidimensional.MatrixBoundaryConcatenation;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

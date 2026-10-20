@@ -1,5 +1,6 @@
 package org.codesignal.multidimensional.arrays;
 
+import org.codesignal.tutorials.arrays.multidimensional.SpiralMatrixTraversel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;

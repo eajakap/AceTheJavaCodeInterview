@@ -1,7 +1,6 @@
-package org.codesignal.multidimensional.arrays;
+package org.codesignal.tutorials.arrays.multidimensional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

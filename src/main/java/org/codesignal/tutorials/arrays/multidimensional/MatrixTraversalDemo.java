@@ -1,4 +1,4 @@
-package org.codesignal.multidimensional.arrays;
+package org.codesignal.tutorials.arrays.multidimensional;
 
 /**
  * Provides row-wise and column-wise traversal orders for rectangular matrices.

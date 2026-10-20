@@ -1,4 +1,4 @@
-package org.codesignal.multidimensional.arrays;
+package org.codesignal.tutorials.arrays.multidimensional;
 
 public class MatrixTransposeDemo {
 

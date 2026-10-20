@@ -1,6 +1,6 @@
-package org.codesignal.multidimensional.arrays;
+package org.codesignal.tutorials.arrays.multidimensional;
 
-public class SubMatrixConcatenation {
+public class SubMatrixInterleaving {
 
         public static int[][] submatrixConcatenation(
                 int[][] matrixA,
@@ -23,25 +23,29 @@ public class SubMatrixConcatenation {
             int[][] submatrixA = new int[numRows][numColsA];
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numColsA; j++) {
-                    submatrixA[i][j] = matrixA[startRowA + i - 1][startColA + j - 1];
+                    submatrixA[i][j] = matrixA[startRowA + i][startColA + j];
                 }
             }
 
             int[][] submatrixB = new int[numRows][numColsB];
             for (int i = 0; i < numRows; i++) {
                 for (int j = 0; j < numColsB; j++) {
-                    submatrixB[i][j] = matrixB[startRowB + i - 1][startColB + j - 1];
+                    submatrixB[i][j] = matrixB[startRowB + i][startColB + j];
                 }
             }
 
             // The part for the concatenation process
             int[][] resultMatrix = new int[numRows][numColsA + numColsB];
             for (int i = 0; i < numRows; i++) {
+                int m = 0;
                 for (int j = 0; j < numColsA; j++) {
-                    resultMatrix[i][j] = submatrixA[i][j];
+                    resultMatrix[i][m] = submatrixA[i][j];
+                    m += 2;
                 }
+                int n=1;
                 for (int j = 0; j < numColsB; j++) {
-                    resultMatrix[i][j + numColsA] = submatrixB[i][j];
+                    resultMatrix[i][n] = submatrixB[i][j];
+                    n += 2;
                 }
             }
 
