@@ -15,30 +15,30 @@ class TwoSumTest {
 
     @Test
     void bruteForceReturnsFirstPairInIndexOrder() {
-        assertArrayEquals(new int[]{1, 4}, TwoSum.twosum(new int[]{3, 2, 5, 7, 9, 11}, 11));
+        assertArrayEquals(new int[]{1, 4}, TwoSum.twosumUsingBruteForce(new int[]{3, 2, 5, 7, 9, 11}, 11));
     }
 
     @Test
     void bruteForceReturnsEmptyWhenNoPairExists() {
-        assertArrayEquals(new int[]{}, TwoSum.twosum(new int[]{1, 2, 3}, 100));
-        assertArrayEquals(new int[]{}, TwoSum.twosum(new int[]{}, 0));
+        assertArrayEquals(new int[]{}, TwoSum.twosumUsingBruteForce(new int[]{1, 2, 3}, 100));
+        assertArrayEquals(new int[]{}, TwoSum.twosumUsingBruteForce(new int[]{}, 0));
     }
 
     @Test
     void sortingApproachReturnsOriginalIndices() {
         int[] nums = {10, -2, 3, 4, 5};
-        assertIndicesSumTo(nums, TwoSum.twosumV2(nums, 8), 8);
+        assertIndicesSumTo(nums, TwoSum.twosumUsingTwoPointers(nums, 8), 8);
 
         int[] negatives = {-4, -8, 0, -7, -3, -10};
-        assertIndicesSumTo(negatives, TwoSum.twosumV2(negatives, -15), -15);
+        assertIndicesSumTo(negatives, TwoSum.twosumUsingTwoPointers(negatives, -15), -15);
     }
 
     @Test
     void sortingApproachHandlesDuplicatesAndMissingPairs() {
         int[] nums = {0, 4, 3, 0};
-        assertIndicesSumTo(nums, TwoSum.twosumV2(nums, 0), 0);
-        assertArrayEquals(new int[]{}, TwoSum.twosumV2(new int[]{1, 2, 3}, 100));
-        assertArrayEquals(new int[]{}, TwoSum.twosumV2(new int[]{}, 0));
+        assertIndicesSumTo(nums, TwoSum.twosumUsingTwoPointers(nums, 0), 0);
+        assertArrayEquals(new int[]{}, TwoSum.twosumUsingTwoPointers(new int[]{1, 2, 3}, 100));
+        assertArrayEquals(new int[]{}, TwoSum.twosumUsingTwoPointers(new int[]{}, 0));
     }
 
     @Test

@@ -6,9 +6,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TwoSum {
+    public static enum SolutionApproach {
+        TWO_POINTERS, SORTED_PAIRS, HASH_MAP, BRUTE_FORCE
+    }
+
+    public static int[] twosum(int[]nums, int target, SolutionApproach approach) {
+        switch (approach) {
+            case TWO_POINTERS:
+                return twosumUsingTwoPointers(nums, target);
+            case SORTED_PAIRS:
+                return twoSumUnsortedSortPairsTwoPointers(nums, target);
+            case HASH_MAP:
+                return twoSumUnsortedHashMap(nums, target);
+            case BRUTE_FORCE:
+            default:
+                return twosumUsingBruteForce(nums, target);
+        }
+    }
+
     // Time complexity - O(n^2)
     // Space Complexity - O(1)
-    public static int[] twosum(int[]nums, int target) {
+    public static int[] twosumUsingBruteForce(int[]nums, int target) {
         for (int i = 0; i < nums.length; i++) {
             // linear search for the complement of nums[i] in the rest of the array
             for (int j = i + 1; j < nums.length; j++) {
@@ -22,7 +40,7 @@ public class TwoSum {
 
     // Time complexity - O(n log n)
     // Space Complexity - O(1)
-    public static int[] twosumV2(int[]nums, int target) {
+    public static int[] twosumUsingTwoPointers(int[]nums, int target) {
 
         // Pair each number with its original index
         int n = nums.length;
@@ -145,7 +163,7 @@ public class TwoSum {
     public static void main(String[] args) {
         int[] nums = {3, 2, 5, 7, 9, 11};
         int target = 11;
-        int[] result = twosum(nums, target);
+        int[] result = twosumUsingBruteForce(nums, target);
         if (result.length > 0) {
             System.out.println("Indices: " + result[0] + ", " + result[1]);
         } else {
@@ -154,7 +172,7 @@ public class TwoSum {
 
         int[] nums2 = {1, 2, 3, 4, 5, 7, 9, 11};
         int target2 = 11;
-        int[] result2 = twosum(nums2, target2);
+        int[] result2 = twosumUsingBruteForce(nums2, target2);
         if (result2.length > 0) {
             System.out.println("Indices: " + result2[0] + ", " + result2[1]);
         } else {
@@ -179,12 +197,12 @@ public class TwoSum {
             System.out.println("-".repeat(100));
             int ctr = y++;
             System.out.println(ctr + ".\tLinear Approach: Input array: " + Arrays.toString(nums4));
-            int[] result4 = twosum(nums4, target4);
+            int[] result4 = twosumUsingBruteForce(nums4, target4);
             System.out.println("\tTarget: " + target4);
             System.out.println("\n \tResult: " + Arrays.toString(result4));
             System.out.println("-".repeat(100));
             System.out.println(ctr + ".\tTwo Pointer Approach: Input array: " + Arrays.toString(nums4));
-            int[] result5 = twosumV2(nums4, target4);
+            int[] result5 = twosumUsingTwoPointers(nums4, target4);
             System.out.println("\tTarget: " + target4);
             System.out.println("\n \tResult: " + Arrays.toString(result5));
         }
