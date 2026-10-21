@@ -13,7 +13,7 @@ public class TwoSum {
     public static int[] twosum(int[]nums, int target, SolutionApproach approach) {
         switch (approach) {
             case TWO_POINTERS:
-                return twosumUsingTwoPointers(nums, target);
+                return twosumV2(nums, target);
             case SORTED_PAIRS:
                 return twoSumUnsortedSortPairsTwoPointers(nums, target);
             case HASH_MAP:
@@ -40,7 +40,7 @@ public class TwoSum {
 
     // Time complexity - O(n log n)
     // Space Complexity - O(1)
-    public static int[] twosumUsingTwoPointers(int[]nums, int target) {
+    public static int[] twosumV2(int[]nums, int target) {
 
         // Pair each number with its original index
         int n = nums.length;
@@ -202,7 +202,7 @@ public class TwoSum {
             System.out.println("\n \tResult: " + Arrays.toString(result4));
             System.out.println("-".repeat(100));
             System.out.println(ctr + ".\tTwo Pointer Approach: Input array: " + Arrays.toString(nums4));
-            int[] result5 = twosumUsingTwoPointers(nums4, target4);
+            int[] result5 = twosumV2(nums4, target4);
             System.out.println("\tTarget: " + target4);
             System.out.println("\n \tResult: " + Arrays.toString(result5));
         }
