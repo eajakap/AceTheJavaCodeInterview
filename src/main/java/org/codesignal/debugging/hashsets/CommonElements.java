@@ -39,6 +39,22 @@ public class CommonElements {
         return result;
     }
 
+    public static Boolean[] commonElements(String[] A, String[] B) {
+        Set<String> setB = new HashSet<>();
+        for (String str : B) {
+            setB.add(str);
+        }
+        List<Boolean> common = new ArrayList<>();
+        for (String str : A) {
+            if (setB.contains(str)) {
+                common.add(true);
+            } else {
+                common.add(false);
+            }
+        }
+        return common.toArray(new Boolean[0]);
+    }
+
     public static void testIntArray() {
         List<Integer> list1 = Arrays.asList(1, 2, 3, 5, 8, 13, 21, 34);
         List<Integer> list2 = Arrays.asList(2, 3, 5, 7, 13, 21, 31);
@@ -69,7 +85,13 @@ public class CommonElements {
         char[] letters = {'h', 'e', 'l', 'o', 'w', 'r', 'd', 'x'};
         char[] result = commonElements(s, letters);
         System.out.println(Arrays.toString(result));  // Prints: [d, e, h, l, o, r, w]
+
+        String[] Array1 = {"mars", "jupiter", "venus", "earth"};
+        String[] Array2 = {"earth", "mars", "neptune"};
+        Boolean[] result2 = commonElements(Array1, Array2);
+        System.out.println(Arrays.toString(result2));
     }
+
     public static void main(String[] args) {
         testIntArray();
         testString();
