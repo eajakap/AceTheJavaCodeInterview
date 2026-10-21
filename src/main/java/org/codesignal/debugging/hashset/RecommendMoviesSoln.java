@@ -1,4 +1,4 @@
-package org.codesignal.debugging.hashsets;
+package org.codesignal.debugging.hashset;
 
 import java.util.*;
 
