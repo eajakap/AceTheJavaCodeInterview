@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.allone;
 
+import org.educative.modules.module2.linklists.AllOne;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;

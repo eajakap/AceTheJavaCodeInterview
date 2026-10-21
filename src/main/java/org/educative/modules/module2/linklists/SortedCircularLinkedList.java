@@ -1,4 +1,4 @@
-package org.educative.modules.module2.linklists.circular;
+package org.educative.modules.module2.linklists;
 
 import java.util.ArrayList;
 import java.util.Arrays;

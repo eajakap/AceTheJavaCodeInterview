@@ -1,4 +1,4 @@
-package org.educative.modules.module2.linklists.doubly;
+package org.educative.modules.module2.linklists;
 
 import java.util.ArrayList;
 import java.util.List;

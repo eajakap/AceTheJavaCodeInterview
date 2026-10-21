@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.circular;
 
+import org.educative.modules.module2.linklists.CircularLinkedListMain;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -24,9 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CircularLinkedListMainTest {
     private static final String LIST_CLASS_NAME =
-            "org.educative.modules.module2.linklists.circular.CircularLinkedListMain$CircularLinkedList";
+            "org.educative.modules.module2.linklists.CircularLinkedListMain$CircularLinkedList";
     private static final String NODE_CLASS_NAME =
-            "org.educative.modules.module2.linklists.circular.CircularLinkedListMain$ListNode";
+            "org.educative.modules.module2.linklists.CircularLinkedListMain$ListNode";
 
     @Test
     void insertAndDeleteOperationsWorkForTypicalPositions() throws Exception {

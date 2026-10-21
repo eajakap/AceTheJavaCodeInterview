@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.single;
 
+import org.educative.modules.module2.linklists.ReverseLinkedListKGroup;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReverseLinkedListKGroupTest {
     private static final String LIST_NODE_CLASS_NAME =
-            "org.educative.modules.module2.linklists.single.ReverseLinkedListKGroup$ListNode";
+            "org.educative.modules.module2.linklists.ReverseLinkedListKGroup$ListNode";
 
     @Test
     void buildListAndToListRoundTripValues() throws Throwable {

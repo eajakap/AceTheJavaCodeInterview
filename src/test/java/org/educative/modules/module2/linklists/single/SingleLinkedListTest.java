@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.single;
 
+import org.educative.modules.module2.linklists.SingleLinkedList;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -17,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SingleLinkedListTest {
     private static final String LINKED_LIST_CLASS_NAME =
-            "org.educative.modules.module2.linklists.single.SingleLinkedList$LinkedList";
+            "org.educative.modules.module2.linklists.SingleLinkedList$LinkedList";
     private static final String LINKED_LIST_WITH_TAIL_CLASS_NAME =
-            "org.educative.modules.module2.linklists.single.SingleLinkedList$LinkedListWithTail";
+            "org.educative.modules.module2.linklists.SingleLinkedList$LinkedListWithTail";
 
     @Test
     void linkedListConstructorWithValuesBuildsExpectedList() throws Throwable {

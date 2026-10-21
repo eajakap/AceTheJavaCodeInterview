@@ -1,4 +1,4 @@
-package org.educative.modules.module2.linklists.allone;
+package org.educative.modules.module2.linklists;
 
 import java.util.*;
 

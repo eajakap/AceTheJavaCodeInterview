@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.circular;
 
+import org.educative.modules.module2.linklists.SortedCircularLinkedList;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -14,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SortedCircularLinkedListTest {
     private static final String NODE_CLASS_NAME =
-            "org.educative.modules.module2.linklists.circular.SortedCircularLinkedList$ListNode";
+            "org.educative.modules.module2.linklists.SortedCircularLinkedList$ListNode";
     private static final String HELPER_CLASS_NAME =
-            "org.educative.modules.module2.linklists.circular.SortedCircularLinkedList$CircularLinkedList";
+            "org.educative.modules.module2.linklists.SortedCircularLinkedList$CircularLinkedList";
 
     @Test
     void insertHandlesEmptyAndSingleNodeLists() throws Exception {

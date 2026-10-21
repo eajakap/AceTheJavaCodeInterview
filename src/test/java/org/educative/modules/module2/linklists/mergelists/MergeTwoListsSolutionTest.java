@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.mergelists;
 
+import org.educative.modules.module2.linklists.MergeTwoListsSolution;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -55,7 +56,7 @@ class MergeTwoListsSolutionTest {
 
     private static Object merge(MergeTwoListsSolution solution, Object list1, Object list2) throws Exception {
         Class<?> nodeClass = Class.forName(
-                "org.educative.modules.module2.linklists.mergelists.MergeTwoListsSolution$ListNode"
+                "org.educative.modules.module2.linklists.MergeTwoListsSolution$ListNode"
         );
         Method method = MergeTwoListsSolution.class.getDeclaredMethod("mergeTwoLists", nodeClass, nodeClass);
         method.setAccessible(true);
@@ -75,7 +76,7 @@ class MergeTwoListsSolutionTest {
     @SuppressWarnings("unchecked")
     private static List<Integer> toList(Object head) throws Exception {
         Class<?> nodeClass = Class.forName(
-                "org.educative.modules.module2.linklists.mergelists.MergeTwoListsSolution$ListNode"
+                "org.educative.modules.module2.linklists.MergeTwoListsSolution$ListNode"
         );
         Method method = MergeTwoListsSolution.class.getDeclaredMethod("toList", nodeClass);
         method.setAccessible(true);

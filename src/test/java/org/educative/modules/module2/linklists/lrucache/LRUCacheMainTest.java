@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.lrucache;
 
+import org.educative.modules.module2.linklists.LRUCacheMain;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;

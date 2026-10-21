@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.doubly;
 
+import org.educative.modules.module2.linklists.DoubleLinkedList;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DoubleLinkedListTest {
     private static final String DOUBLY_LINKED_LIST_CLASS_NAME =
-            "org.educative.modules.module2.linklists.doubly.DoubleLinkedList$DoublyLinkedList";
+            "org.educative.modules.module2.linklists.DoubleLinkedList$DoublyLinkedList";
 
     @Test
     void insertionsBuildExpectedOrderAndBidirectionalLinks() throws Throwable {

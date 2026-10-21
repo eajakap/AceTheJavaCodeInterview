@@ -1,11 +1,10 @@
-package org.educative.modules.module2.linklists.reverse;
+package org.educative.modules.module2.linklists;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReverseLinkedList {
-
+public class SingleLinkedList {
     private static class ListNode {
         int data;
         ListNode next;
@@ -17,10 +16,57 @@ public class ReverseLinkedList {
     }
 
     private static class LinkedList {
-        ListNode head;
+        private ListNode head;
 
         public LinkedList() {
             this.head = null;
+        }
+
+        public LinkedList(List<Integer> list) {
+            this.head = null;
+            createLinkedList(list);
+        }
+
+        // Function to create a linked list from a list of values
+        private void createLinkedList(List<Integer> values) {
+            if (values.isEmpty()) {
+                head = null;
+                return;
+            }
+
+            head = new ListNode(values.get(0));
+            ListNode current = head;
+            for (int i = 1; i < values.size(); i++) {
+                current.next = new ListNode(values.get(i));
+                current = current.next;
+            }
+        }
+
+        private ListNode lastNode() {
+            ListNode current = head;
+            if (current == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            while (current.next != null) {
+                current = current.next;
+            }
+            return current;
+        }
+
+        private ListNode findNodeAtPosition(int position) {
+            ListNode current = head;
+            if (current == null) {
+                throw new IllegalStateException("List is empty");
+            }
+            int index = 0;
+            while (current != null && index < position) {
+                current = current.next;
+                index++;
+            }
+            if (current == null) {
+                throw new IllegalArgumentException("Position out of range");
+            }
+            return current;
         }
 
         public void insertAtEnd(int value) {
@@ -28,11 +74,7 @@ public class ReverseLinkedList {
             if (this.head == null) {
                 this.head = newNode;
             } else  {
-                ListNode current = this.head;
-                while (current.next != null) {
-                    current = current.next;
-                }
-                current.next = newNode;
+                lastNode().next = newNode;
             }
         }
 
@@ -52,12 +94,8 @@ public class ReverseLinkedList {
                 return;
             }
             ListNode newNode = new ListNode(value);
-            ListNode  current = this.head;
-            int index = 0;
-            while (current != null && index < position - 1) {
-                current = current.next;
-                index++;
-            }
+            ListNode  current = findNodeAtPosition(position - 1);
+
             if (current == null) {
                 throw new IndexOutOfBoundsException("Position is out of bounds");
             }
@@ -128,27 +166,9 @@ public class ReverseLinkedList {
             return true;
         }
 
-        public LinkedList reverse() {
-            ListNode prev = null;
-            ListNode current = head;
-            while (current != null) {
-                ListNode nextNode = current.next;
-                current.next = prev;
-                prev = current;
-                System.out.print(current.data + " -> ");  // Example operation: print the value
-                current = nextNode;
-            }
-            System.out.println("null");  // Indicate the end of the list
-            // prev now points to the new head (last node of original list)
-            LinkedList reversedList = new LinkedList();
-            reversedList.head = prev;
-            return reversedList;
-        }
-
         public void traverse() {
             ListNode current = head;
             while (current != null) {
-                ListNode nextNode = current.next;
                 System.out.print(current.data + " -> ");  // Example operation: print the value
                 current = current.next;
             }
@@ -196,25 +216,11 @@ public class ReverseLinkedList {
             }
             return list;
         }
-
-        public static ListNode middleNode(ListNode head) {
-
-            ListNode slow = head;
-            ListNode fast = head;
-
-            while (fast != null && fast.next != null) {
-                slow = slow.next;
-                fast = fast.next.next;
-            }
-
-            return slow;
-        }
-
     }
 
     private static class LinkedListWithTail {
-        ListNode head;
-        ListNode tail;
+        private ListNode head;
+        private ListNode tail;
 
         public LinkedListWithTail() {
             this.head = null;
@@ -248,6 +254,7 @@ public class ReverseLinkedList {
                 insertAtBegin(value);
                 return;
             }
+            // Traverse to the node just before the desired position
             ListNode newNode = new ListNode(value);
             ListNode  current = this.head;
             int index = 0;
@@ -265,19 +272,6 @@ public class ReverseLinkedList {
                 tail.next = newNode;
                 tail = newNode;
             }
-        }
-
-        public void reverse() {
-            ListNode previous = null;
-            ListNode current = head;
-            tail = head;
-            while (current != null) {
-                ListNode next = current.next;
-                current.next = previous;
-                previous = current;
-                current = next;
-            }
-            head = previous;
         }
 
         public void traverse() {
@@ -409,7 +403,6 @@ public class ReverseLinkedList {
     }
 
     public static void main(String[] args) {
-        System.out.println("<<<<<<<<<<<<<<<< LinkedList operations >>>>>>>>>>>>>>>>");
         // Create a linked list object
         LinkedList sampleList = new LinkedList();
 
@@ -430,7 +423,6 @@ public class ReverseLinkedList {
         System.out.println("Next of second node: " + sampleList.head.next.next);
 
         // traversal
-        System.out.print("Traversing the linked list: ");
         sampleList.traverse();
         System.out.println("Number of nodes: " + sampleList.count());
         System.out.println("Does node with value 10 exist? " + sampleList.exists(10));
@@ -438,15 +430,7 @@ public class ReverseLinkedList {
         System.out.println("Does node with value 30 exist? " + sampleList.exists(30));
         System.out.println("Linked list as a list: " + sampleList.toList());
         System.out.println("Last node value: " + sampleList.last());
-        LinkedList reversedHead = sampleList.reverse();
-        System.out.print("Traversing the Reversed linked list: ");
-        reversedHead.traverse();
-        System.out.println("Linked list as a list: " + reversedHead.toList());
-        System.out.println("Last node value: " + reversedHead.last());
-        // Print formatted output
-        System.out.println("-".repeat(100));
 
-        System.out.println("<<<<<<<<<<<<<<<< LinkedListWithTail operations >>>>>>>>>>>>>>>>");
         LinkedListWithTail sampleListWithTail = new LinkedListWithTail();
         sampleListWithTail.insertAtEnd(10);
         sampleListWithTail.insertAtBegin(20);

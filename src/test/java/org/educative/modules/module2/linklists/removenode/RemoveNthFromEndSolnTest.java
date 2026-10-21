@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.removenode;
 
+import org.educative.modules.module2.linklists.RemoveNthFromEndSoln;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -58,7 +59,7 @@ class RemoveNthFromEndSolnTest {
 
     private static Object buildHead(int... values) throws Exception {
         Class<?> linkedListClass = Class.forName(
-                "org.educative.modules.module2.linklists.removenode.RemoveNthFromEndSoln$LinkedList"
+                "org.educative.modules.module2.linklists.RemoveNthFromEndSoln$LinkedList"
         );
         Method fromArray = linkedListClass.getDeclaredMethod("fromArray", int[].class);
         fromArray.setAccessible(true);
@@ -70,10 +71,10 @@ class RemoveNthFromEndSolnTest {
 
     private static Object removeNthFromEnd(Object head, int n) throws Exception {
         Class<?> nodeClass = Class.forName(
-                "org.educative.modules.module2.linklists.removenode.RemoveNthFromEndSoln$ListNode"
+                "org.educative.modules.module2.linklists.RemoveNthFromEndSoln$ListNode"
         );
         Class<?> solutionClass = Class.forName(
-                "org.educative.modules.module2.linklists.removenode.RemoveNthFromEndSoln$Solution"
+                "org.educative.modules.module2.linklists.RemoveNthFromEndSoln$Solution"
         );
         Constructor<?> constructor = solutionClass.getDeclaredConstructor();
         constructor.setAccessible(true);
@@ -93,7 +94,7 @@ class RemoveNthFromEndSolnTest {
 
     private static String display(Object head) throws Exception {
         Class<?> nodeClass = Class.forName(
-                "org.educative.modules.module2.linklists.removenode.RemoveNthFromEndSoln$ListNode"
+                "org.educative.modules.module2.linklists.RemoveNthFromEndSoln$ListNode"
         );
         Method method = RemoveNthFromEndSoln.class.getDeclaredMethod("toDisplayString", nodeClass);
         method.setAccessible(true);

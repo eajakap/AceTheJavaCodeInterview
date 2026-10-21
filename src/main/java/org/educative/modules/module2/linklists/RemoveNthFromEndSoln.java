@@ -1,4 +1,4 @@
-package org.educative.modules.module2.linklists.removenode;
+package org.educative.modules.module2.linklists;
 
 import java.util.Arrays;
 

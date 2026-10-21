@@ -1,5 +1,6 @@
 package org.educative.modules.module2.linklists.reverse;
 
+import org.educative.modules.module2.linklists.ReverseLinkedList;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -18,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReverseLinkedListTest {
     private static final String LINKED_LIST_CLASS_NAME =
-            "org.educative.modules.module2.linklists.reverse.ReverseLinkedList$LinkedList";
+            "org.educative.modules.module2.linklists.ReverseLinkedList$LinkedList";
     private static final String LINKED_LIST_WITH_TAIL_CLASS_NAME =
-            "org.educative.modules.module2.linklists.reverse.ReverseLinkedList$LinkedListWithTail";
+            "org.educative.modules.module2.linklists.ReverseLinkedList$LinkedListWithTail";
     private static final String LIST_NODE_CLASS_NAME =
-            "org.educative.modules.module2.linklists.reverse.ReverseLinkedList$ListNode";
+            "org.educative.modules.module2.linklists.ReverseLinkedList$ListNode";
 
     @Test
     void linkedListInsertionsAndQueriesWork() throws Throwable {
