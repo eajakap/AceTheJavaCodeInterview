@@ -4,43 +4,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * You are tasked with an intriguing string manipulation problem. You are provided with a string s and an integer K.
- * The string s contains at most $100000$ alphanumeric (A-Za-z0-9) characters and has at least one character.
- * The integer K ranges from $1$ to $100000$, inclusive.
- * You need to write a Java function that identifies the length of the longest possible substring within s
- * that contains at most K distinct characters.
- * If multiple substrings share the longest length, you should select the substring that appears first.
- * Your solution should have a time complexity of $O(n)$, where n is the length of the string s,
- * to ensure efficiency given the constraints.
- * To offer more clarity, let's consider an example. Suppose s is "acaabcc" and K is 2.
- * The longest possible substring with at most 2 distinct characters is "acaa",
- * so your function should return 4, which is the length of "acaa".
- * Remember, the function should not return the actual substring but the length of the longest possible
- * substring that meets the specified criteria.
- * Note: Alphanumeric characters are case-sensitive, i.e., 'A' and 'a' are treated as different characters.
+ * Finds the length of the longest substring that contains at most K distinct characters.
+ *
+ * Given a string s of 1 to 100000 alphanumeric characters (A-Za-z0-9) and an integer K between 1 and 100000,
+ * inclusive, return the length of the longest substring of s with at most K distinct characters.
+ * Only the length is returned, not the substring itself.
+ * Characters are case-sensitive, so 'A' and 'a' are different characters.
+ * The solution runs in {@code O(n)} time, where n is the length of s.
+ *
+ * Example: for s = "acaabcc" and K = 2, the longest substring with at most 2 distinct characters is "acaa",
+ * so the result is 4.
  */
 public class LongestNonRepeatWithDistinctChars {
 
     /**
+     * Returns the length of the longest substring of {@code s} with at most {@code k} distinct characters.
+     *
      * Steps:
-     * 1. Use a hash map to count the number of occurrences of each character in the string.
-     * 2. Maintain a sliding window of size k.
-     * 3. As we add more characters to the window, shrink the window by removing the leftmost character
-     * if its count exceeds k.
-     * 4. Keep track of the maximum length of the window.
-     * 5. Return the maximum length of the window.
+     * 1. Use a hash map to count the occurrences of each character inside the current window.
+     * 2. Expand the window by moving the right pointer one character at a time.
+     * 3. While the window holds more than k distinct characters, shrink it from the left,
+     *    removing a character from the map when its count reaches zero.
+     * 4. After each step, update the maximum window length.
+     * 5. Return the maximum length.
      * 6. Time Complexity: O(n)
      * 7. Space Complexity: O(k)
      *
-     * @param s
-     * @param k
-     * @return
+     * @param s the input string
+     * @param k the maximum number of distinct characters allowed
+     * @return the length of the longest valid substring, or 0 if {@code s} is null or empty or {@code k} is 0
      */
     public int longestSubstringWithKDistinctChars(String s, int k) {
         if (s == null || s.length() == 0 || k == 0) {
             return 0;
         }
-
+        System.out.println("s= " + s + " length= " + s.length());
         Map<Character, Integer> charCountMap = new HashMap<>();
         int left = 0, maxLength = 0;
 
