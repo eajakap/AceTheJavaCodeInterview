@@ -67,6 +67,11 @@ public class MaximumSum {
         return new int[]{(int) maximum_sum, left};
     }
 
+    /**
+     * Runs the maximum-sum example and prints its result.
+     *
+     * @param args command-line arguments, which are not used
+     */
     public static void main(String[] args) {
         MaximumSum app = new MaximumSum();
         int[] numbers = {2, 1, 5, 1, 3, 2};
