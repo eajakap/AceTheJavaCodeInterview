@@ -19,8 +19,9 @@ public class FlapDetector {
 
         // Step 1: collect transition timestamps (alarm differs from previous event)
         List<Long> transitions = new ArrayList<>();
-        for (int i = 1; i < events.size(); i++) {
-            if (!events.get(i).first.equals(events.get(i - 1).first)) {
+        for (int i = 0; i < events.size(); i++) {
+            // the first event is the baseline state, so it's not a flap itself; windows count changes after it
+            if (i == 0 || !events.get(i).first.equals(events.get(i - 1).first)) {
                 transitions.add(events.get(i).second);
             }
         }
@@ -29,12 +30,18 @@ public class FlapDetector {
         Long lastFlap = null;
         int left = 0;
         for (int right = 0; right < transitions.size(); right++) {
-            while (transitions.get(right) - transitions.get(left) >= window) {
-                left++;  // shrink
+            while (left < right && transitions.get(right) - transitions.get(left) >= window) {
+                left++;  // shrink from the left side
             }
-            if (right - left + 1 >= k) {
-                lastFlap = transitions.get(right);   // k+ transitions inside window; keep latest
+            int flapCounter = right - left;  // transitions between events in the window; 0 when left == right
+            if (flapCounter >= k) {
+                lastFlap = transitions.get(right);   // keep latest
             }
+            Long lastFlapInWindow = flapCounter > 0 ? transitions.get(right) : null;  // latest change in this window, regardless of k
+            System.out.printf("\t  [l=%d, r=%d] window=%s span=%d/%d flaps=%d/%d windowLastFlap=%s lastFlap=%s%n",
+                    left, right, transitions.subList(left, right + 1),
+                    transitions.get(right) - transitions.get(left), window,
+                    flapCounter, k, lastFlapInWindow, lastFlap);
         }
         return lastFlap;
     }
@@ -64,7 +71,7 @@ public class FlapDetector {
     public static void main(String[] args) {
         // let us assume that the alarm states are: CRITICAL, MAJOR, MINOR, INFO, OFF
         String[] stream = {
-                "1,100,OFF", "1,101,INFO", "1,103,INFO", "1,105,MINOR",   "1,108,MAJOR", "1,110,MAJOR",
+                "1,100,OFF", "1,101,INFO", "1,103,INFO", "1,105,MINOR", "1,108,MAJOR", "1,110,MAJOR",
                 "1,115,CRITICAL", "1,117,INFO", "1,118,INFO", "1,119,MINOR", "1,120,MAJOR", "1,130,MAJOR", // flap at 120
                 "2,100,OFF", "2,103,INFO", "2,106,MINOR", "2,109,MAJOR", "2,110,MAJOR", "2,112,MINOR", "2,115,CRITICAL" // 115
         };
