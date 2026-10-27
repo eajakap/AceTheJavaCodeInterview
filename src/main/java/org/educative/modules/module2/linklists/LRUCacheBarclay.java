@@ -127,6 +127,21 @@ public class LRUCacheBarclay {
             head.next = tail;
             tail.prev = head;
         }
+
+        public String printLRUCache() {
+            StringBuilder sb = new StringBuilder();
+            if (cache.isEmpty()) {
+                return String.format("Cache is empty");
+            }
+            int size = cache.size(), count = 0;
+            for (Node node : cache.values()) {
+                count++;
+                sb.append(node.key).append("=")
+                        .append(node.value)
+                        .append(count != size ? "," : "");
+            }
+            return sb.toString();
+        }
     }
 
     /**
@@ -160,6 +175,9 @@ public class LRUCacheBarclay {
                     cache.put(args[0], Double.parseDouble(args[1]));
                     results.add("put: {" + args[0] + ": " + args[1] + "}");
                     break;
+                case "print":
+                    results.add("print: {" + cache.printLRUCache() + "}");
+                    break;
                 case "clear":
                     cache.clear();
                     results.add("clear: {}");
@@ -178,14 +196,14 @@ public class LRUCacheBarclay {
         // for the operation at the same index.
         String[][][] testCases = {
                 //{{LRUCacheCapacity}, {putKey, putValue}, {putKey, putValue}, {getKey}, {getKey}, {clear}},
-                {{"1"}, {"AAPL", "150.25"}, {"MSFT", "420.10"}, {"AAPL"}, {"MSFT"}, {}},
+                {{"1"}, {"AAPL", "150.25"}, {"MSFT", "420.10"}, {"AAPL"}, {"MSFT"}, {}, {}},
                 {{"3"}, {"AAPL", "150.25"}, {"MSFT", "420.10"}, {"GOOGL", "175.50"}, {"AAPL"}, {"TSLA", "245.00"}, {"MSFT"},
-                        {"AAPL", "151.00"}, {"GOOGL"}, {"META", "500.00"}, {"TSLA"}, {"AAPL"}, {}},
+                        {"AAPL", "151.00"}, {"GOOGL"}, {"META", "500.00"}, {"TSLA"}, {"AAPL"}, {}, {}},
         };
 
         String[][] operations = {
-                {"LRUCache", "put", "put", "get", "get", "clear"},
-                {"LRUCache", "put", "put", "put", "get", "put", "get", "put", "get", "put", "get", "get", "clear"},
+                {"LRUCache", "put", "put", "get", "get", "print", "clear"},
+                {"LRUCache", "put", "put", "put", "get", "put", "get", "put", "get", "put", "get", "get", "print", "clear"},
         };
 
         int y = 1;
@@ -194,7 +212,7 @@ public class LRUCacheBarclay {
             System.out.println("\tInput arguments: " + Arrays.deepToString(testCases[t]));
             List<Object> results = runLRUCache(operations[t], testCases[t]);
             System.out.println("\tResult: " + results);
-            System.out.println(new String(new char[100]).replace('\0', '-'));
+            System.out.println(new String(new char[500]).replace('\0', '-'));
         }
     }
  }
