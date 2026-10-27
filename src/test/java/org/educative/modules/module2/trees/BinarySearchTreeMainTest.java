@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
+import static org.educative.modules.module2.trees.BinarySearchTreeMain.Node;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -47,11 +49,11 @@ class BinarySearchTreeMainTest {
         assertEquals("", captureOutput(empty::levelOrder));
         assertEquals("null", captureOutput(() -> empty.displayTree(null)));
 
-        BinarySearchTreeMain.TreeNode root = new BinarySearchTreeMain.TreeNode(10);
-        root.left = new BinarySearchTreeMain.TreeNode(5);
-        root.right = new BinarySearchTreeMain.TreeNode(15);
-        root.left.left = new BinarySearchTreeMain.TreeNode(3);
-        root.left.right = new BinarySearchTreeMain.TreeNode(7);
+        Node root = new BinarySearchTreeMain.Node(10);
+        root.left = new BinarySearchTreeMain.Node(5);
+        root.right = new BinarySearchTreeMain.Node(15);
+        root.left.left = new BinarySearchTreeMain.Node(3);
+        root.left.right = new BinarySearchTreeMain.Node(7);
 
         BinarySearchTreeMain.BinarySearchTree tree = new BinarySearchTreeMain.BinarySearchTree(root);
         assertEquals("10 5 3 7 15", captureOutput(() -> tree.preorder(tree.root)));

@@ -7,12 +7,12 @@ import java.util.Queue;
 
 public class BinarySearchTreeMain {
 
-    static class TreeNode {
+    static class Node {
         int data;
-        TreeNode left;
-        TreeNode right;
+        Node left;
+        Node right;
 
-        public TreeNode(int data) {
+        public Node(int data) {
             this.data = data;
             this.left = null;
             this.right = null;
@@ -20,34 +20,34 @@ public class BinarySearchTreeMain {
     }
 
     static class BinarySearchTree {
-        TreeNode root;
+        Node root;
 
         public BinarySearchTree() {
             this.root = null;
         }
 
-        public BinarySearchTree(TreeNode root) {
+        public BinarySearchTree(Node root) {
             this.root = root;
         }
 
         // Iterative way of insertion
         public void insertIterative(int value) {
             if (root == null) {
-                root = new TreeNode(value);
+                root = new Node(value);
                 return;
             }
 
-            TreeNode current = root;
+            Node current = root;
             while (true) {
                 if (value < current.data) {
                     if (current.left == null) {
-                        current.left = new TreeNode(value);
+                        current.left = new Node(value);
                         return;
                     }
                     current = current.left;
                 } else {  // duplicates go to the right
                     if (current.right == null) {
-                        current.right = new TreeNode(value);
+                        current.right = new Node(value);
                         return;
                     }
                     current = current.right;
@@ -60,12 +60,12 @@ public class BinarySearchTreeMain {
             root = insertHelper(root, value);
         }
 
-        private TreeNode insertHelper(TreeNode root, int value) {
+        private Node insertHelper(Node root, int value) {
             // Base case:
             // If the current position is empty, create a new node
             // and insert the value here
             if (root == null) {
-                return new TreeNode(value);
+                return new Node(value);
             }
 
             // If the value to insert is smaller than the current node's value,
@@ -83,7 +83,7 @@ public class BinarySearchTreeMain {
             return root;
         }
 
-        public void preorder(TreeNode root) {
+        public void preorder(Node root) {
             if (root != null) {
                 System.out.print(root.data + " ");
                 preorder(root.left);
@@ -91,7 +91,7 @@ public class BinarySearchTreeMain {
             }
         }
 
-        public void inorder(TreeNode root) {
+        public void inorder(Node root) {
             if (root != null) {
                 inorder(root.left);
                 System.out.print(root.data + " ");
@@ -99,7 +99,7 @@ public class BinarySearchTreeMain {
             }
         }
 
-        public void postorder(TreeNode root) {
+        public void postorder(Node root) {
             if (root != null) {
                 postorder(root.left);
                 postorder(root.right);
@@ -114,13 +114,13 @@ public class BinarySearchTreeMain {
             }
 
             // Initialize a queue with the root node
-            Queue<TreeNode> queue = new LinkedList<>();
+            Queue<Node> queue = new LinkedList<>();
             queue.add(root);
 
             // Continue until the queue is empty
             while (!queue.isEmpty()) {
                 // Remove the first node from the queue (FIFO)
-                TreeNode current = queue.poll();
+                Node current = queue.poll();
 
                 // Print the data of the current node
                 System.out.print(current.data + " ");
@@ -138,12 +138,12 @@ public class BinarySearchTreeMain {
         }
 
         // --- Display tree methods ---
-        private int treeHeight(TreeNode node) {
+        private int treeHeight(Node node) {
             if (node == null) return 0;
             return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
         }
 
-        public int height(TreeNode node) {
+        public int height(Node node) {
             // Base case:
             // If the node is null (empty subtree),
             // we return -1 so that leaf nodes have height 0
@@ -166,7 +166,7 @@ public class BinarySearchTreeMain {
             return heightHelper(root);
         }
 
-        private int heightHelper(TreeNode node) {
+        private int heightHelper(Node node) {
             if (node == null) {
                 return -1;
             }
@@ -175,7 +175,7 @@ public class BinarySearchTreeMain {
             return 1 + Math.max(leftHeight, rightHeight);
         }
 
-        public int size(TreeNode node) {
+        public int size(Node node) {
             // Base case:
             // If the node is null, it contributes 0 to the size
             // (i.e., no nodes in an empty subtree)
@@ -194,7 +194,7 @@ public class BinarySearchTreeMain {
             return sizeHelper(root);
         }
 
-        private int sizeHelper(TreeNode node) {
+        private int sizeHelper(Node node) {
             if (node == null) {
                 return 0;
             }
@@ -205,7 +205,7 @@ public class BinarySearchTreeMain {
             return depthHelper(root, target, 0);
         }
 
-        private int depthHelper(TreeNode node, int target, int currentDepth) {
+        private int depthHelper(Node node, int target, int currentDepth) {
             if (node == null) {
                 return -1;
             }
@@ -219,7 +219,7 @@ public class BinarySearchTreeMain {
             return depthHelper(node.right, target, currentDepth + 1);
         }
 
-        public int depth(TreeNode root, int target, int currentDepth) {
+        public int depth(Node root, int target, int currentDepth) {
             // Base case:
             // If the current node is null, the target does not exist
             // in this path, so return -1
@@ -249,7 +249,7 @@ public class BinarySearchTreeMain {
         }
 
         private void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
-                              TreeNode node, int level, int p, char linkChar) {
+                              Node node, int level, int p, char linkChar) {
             if (node == null) return;
             String SP = " ";
             int h = output.size();
@@ -285,7 +285,7 @@ public class BinarySearchTreeMain {
                 drawNode(output, linkAbove, node.right, level + 1, output.get(level).length(), 'R');
         }
 
-        public void displayTree(TreeNode root) {
+        public void displayTree(Node root) {
             if (root == null) {
                 System.out.println("\tnull");
                 return;
@@ -328,7 +328,7 @@ public class BinarySearchTreeMain {
             }
         }
 
-        public boolean searchRecursive(TreeNode node, int target) {
+        public boolean searchRecursive(Node node, int target) {
             // Base case: if the current node is null, the value is not found
             if (node == null) {
                 return false;
@@ -352,7 +352,7 @@ public class BinarySearchTreeMain {
 
         public boolean searchIterative(int target) {
             // Start from the root node
-            TreeNode current = root;
+            Node current = root;
 
             // Traverse the tree until we reach a null node
             while (current != null) {
@@ -377,11 +377,11 @@ public class BinarySearchTreeMain {
             return false;
         }
 
-        public TreeNode minValueNode(TreeNode node) {
+        public Node minValueNode(Node node) {
             if (node == null) {
                 return null;
             }
-            TreeNode current = node;
+            Node current = node;
             while (current.left != null) {
                 current = current.left;
             }
@@ -392,7 +392,7 @@ public class BinarySearchTreeMain {
             root = deleteHelper(root, value);
         }
 
-        public TreeNode deleteHelper(TreeNode root, int value) {
+        public Node deleteHelper(Node root, int value) {
             if (root == null) {
                 return null;
             }
@@ -410,7 +410,7 @@ public class BinarySearchTreeMain {
                 }
 
                 // Case 3: node has 2 children
-                TreeNode successor = minValueNode(root.right);
+                Node successor = minValueNode(root.right);
                 root.data = successor.data;
                 root.right = deleteHelper(root.right, successor.data);
             }
@@ -419,13 +419,12 @@ public class BinarySearchTreeMain {
         }
     }
 
-    static class Main {
-        public static void main(String[] args) {
-            TreeNode root = new TreeNode(10);
-            TreeNode node1 = new TreeNode(5);
-            TreeNode node2 = new TreeNode(15);
-            TreeNode node3 = new TreeNode(3);
-            TreeNode node4 = new TreeNode(7);
+    public static void main(String[] args) {
+            Node root = new Node(10);
+            Node node1 = new Node(5);
+            Node node2 = new Node(15);
+            Node node3 = new Node(3);
+            Node node4 = new Node(7);
 
             root.left = node1;
             root.right = node2;
@@ -486,12 +485,12 @@ public class BinarySearchTreeMain {
             System.out.println("After deleting 3:");
             bt.displayTree(bt.root);
 
-            TreeNode root2 = new TreeNode(11);
-            root2.left = new TreeNode(12);
-            root2.right = new TreeNode(13);
-            root2.left.left = new TreeNode(14);
-            root2.left.right = new TreeNode(15);
-            root2.right.left = new TreeNode(16);
+            Node root2 = new Node(11);
+            root2.left = new Node(12);
+            root2.right = new Node(13);
+            root2.left.left = new Node(14);
+            root2.left.right = new Node(15);
+            root2.right.left = new Node(16);
 
             BinarySearchTree tree2 = new BinarySearchTree(root2);
             tree2.displayTree(tree2.root);
@@ -533,9 +532,4 @@ public class BinarySearchTreeMain {
             bst.displayTree(bst.root);
 
         }
-    }
-
-    public static void main(String[] args) {
-        Main.main(args);
-    }
 }
