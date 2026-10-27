@@ -67,6 +67,30 @@ public class TopKFrequentMain {
         return result;
     }
 
+    public static List<Integer> topKFrequentV2(int[] arr, int k) {
+        Map<Integer, Integer> numFrequencyMap = new HashMap<>();
+        for (int n : arr)
+            numFrequencyMap.put(n, numFrequencyMap.getOrDefault(n, 0) + 1);
+
+        PriorityQueue<Map.Entry<Integer, Integer>> topKElements = new PriorityQueue<>(
+                (e1, e2) -> e1.getValue() - e2.getValue()
+        );
+
+        for (Map.Entry<Integer, Integer> entry : numFrequencyMap.entrySet()) {
+            topKElements.add(entry);
+            if (topKElements.size() > k) {
+                topKElements.poll();
+            }
+        }
+
+        List<Integer> topNumbers = new ArrayList<>(k);
+        while (!topKElements.isEmpty()) {
+            topNumbers.add(topKElements.poll().getKey());
+        }
+        Collections.sort(topNumbers);
+        return topNumbers;
+    }
+
     public static void main(String[] args) {
         TopKFrequentMain topKFrequentMain = new TopKFrequentMain();
         int[][][] testCases = {
