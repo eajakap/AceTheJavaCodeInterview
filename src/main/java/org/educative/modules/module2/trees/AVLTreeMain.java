@@ -10,37 +10,38 @@ import java.util.*;
  *   4. Right-Left Rotation (Double Rotation: RL Rotation: Right Rotation followed by Left Rotation)
  */
 public class AVLTreeMain {
-    private static class TreeNode {
+    private static class Node {
         int data;
-        TreeNode left;
-        TreeNode right;
+        Node left;
+        Node right;
         int height;
 
-        public TreeNode(int data) {
+        public Node(int data) {
             this.data = data;
             this.left = null;
             this.right = null;
             this.height = 1;
         }
     }
+
     private static class AVLTree {
-        public int getHeight(TreeNode node) {
+        public int getHeight(Node node) {
             if (node == null) {
                 return 0;
             }
             return node.height;
         }
 
-        public int getBalance(TreeNode node) {
+        public int getBalance(Node node) {
             if (node == null) {
                 return 0;
             }
             return getHeight(node.left) - getHeight(node.right);
         }
 
-        public TreeNode rightRotate(TreeNode y) {
-            TreeNode x = y.left;
-            TreeNode t2 = x.right;
+        public Node rightRotate(Node y) {
+            Node x = y.left;
+            Node t2 = x.right;
 
             x.right = y;
             y.left = t2;
@@ -51,9 +52,9 @@ public class AVLTreeMain {
             return x;
         }
 
-        public TreeNode leftRotate(TreeNode x) {
-            TreeNode y = x.right;
-            TreeNode t2 = y.left;
+        public Node leftRotate(Node x) {
+            Node y = x.right;
+            Node t2 = y.left;
 
             y.left = x;
             x.right = t2;
@@ -64,9 +65,9 @@ public class AVLTreeMain {
             return y;
         }
 
-        public TreeNode insert(TreeNode node, int data) {
+        public Node insert(Node node, int data) {
             if (node == null) {
-                return new TreeNode(data);
+                return new Node(data);
             }
 
             if (data < node.data) {
@@ -109,18 +110,18 @@ public class AVLTreeMain {
             return node;
         }
 
-        public TreeNode getMinValueNode(TreeNode node) {
+        public Node getMinValueNode(Node node) {
             if (node == null) {
                 return null;
             }
-            TreeNode current = node;
+            Node current = node;
             while (current.left != null) {
                 current = current.left;
             }
             return current;
         }
 
-        public TreeNode delete(TreeNode node, int data) {
+        public Node delete(Node node, int data) {
             if (node == null) {
                 return node;
             }
@@ -136,7 +137,7 @@ public class AVLTreeMain {
                     return node.left;
                 }
 
-                TreeNode temp = getMinValueNode(node.right);
+                Node temp = getMinValueNode(node.right);
                 node.data = temp.data;
                 node.right = delete(node.right, temp.data);
             }
@@ -174,7 +175,7 @@ public class AVLTreeMain {
             return node;
         }
 
-        public void inorder(TreeNode node) {
+        public void inorder(Node node) {
             if (node != null) {
                 inorder(node.left);
                 System.out.print(node.data + " ");
@@ -182,22 +183,24 @@ public class AVLTreeMain {
             }
         }
 
-        public void preorder(TreeNode node) {
+        public void preorder(Node node) {
             if (node != null) {
                 System.out.print(node.data + " ");
                 preorder(node.left);
                 preorder(node.right);
             }
         }
-
+    }
+    
+    static class PrintAVLTree {
         // --- Display tree methods ---
-        private int height(TreeNode node) {
+        private static int height(Node node) {
             if (node == null) return 0;
             return 1 + Math.max(height(node.left), height(node.right));
         }
 
-        private void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
-                              TreeNode node, int level, int p, char linkChar) {
+        private static void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
+                              Node node, int level, int p, char linkChar) {
             if (node == null) return;
             String SP = " ";
             int h = output.size();
@@ -233,7 +236,7 @@ public class AVLTreeMain {
                 drawNode(output, linkAbove, node.right, level + 1, output.get(level).length(), 'R');
         }
 
-        public void displayTree(TreeNode root) {
+        public static void displayTree(Node root) {
             if (root == null) {
                 System.out.println("\tnull");
                 return;
@@ -279,7 +282,7 @@ public class AVLTreeMain {
 
     public static void main(String[] args) {
         AVLTree tree = new AVLTree();
-        TreeNode root = null;
+        Node root = null;
 
         int[] values = {10, 20, 30, 40, 50, 25};
 
@@ -288,13 +291,13 @@ public class AVLTreeMain {
         }
 
         System.out.println("Tree after insertion:");
-        tree.displayTree(root);
+        PrintAVLTree.displayTree(root);
         System.out.println();
 
         root = tree.delete(root, 40);
 
         System.out.println("Tree after deleting 40:");
-        tree.displayTree(root);
+        PrintAVLTree.displayTree(root);
         System.out.println();
     }
 }
