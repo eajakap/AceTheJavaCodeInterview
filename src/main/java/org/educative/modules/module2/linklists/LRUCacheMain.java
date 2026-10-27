@@ -123,6 +123,25 @@ public class LRUCacheMain {
             head.next = tail;
             tail.prev = head;
         }
+
+        /**
+         * Prints the LRU Cache
+         * @return
+         */
+        public String printLRUCache() {
+            StringBuilder sb = new StringBuilder();
+            if (cache.isEmpty()) {
+                return String.format("Cache is empty");
+            }
+            int size = cache.size(), count = 0;
+            for (Node node : cache.values()) {
+                count++;
+                sb.append(node.key).append("=")
+                        .append(node.value)
+                        .append(count != size ? "," : "");
+            }
+            return sb.toString();
+        }
     }
 
     /**
@@ -147,14 +166,17 @@ public class LRUCacheMain {
             switch (op) {
                 case "LRUCache":
                     cache = new LRUCache(args[0]);
-                    results.add(null);
+                    results.add("capacity: {" + cache.capacity + "}");
                     break;
                 case "get":
-                    results.add(cache.get(args[0]));
+                    results.add("get: {" + args[0] + ": "+ cache.get(args[0]) + "}");
                     break;
                 case "put":
                     cache.put(args[0], args[1]);
-                    results.add(null);
+                    results.add("put: {" + args[0] + ": " + args[1] + "}");
+                    break;
+                case "print":
+                    results.add("print: {" + cache.printLRUCache() + "}");
                     break;
                 case "clear":
                     cache.clear();
@@ -174,19 +196,19 @@ public class LRUCacheMain {
         // for the operation at the same index.
         int[][][] testCases = {
                 //{{LRUCacheCapacity}, {putKey, putValue}, {putKey, putValue}, {getKey}, {getKey}, {clear}},
-                {{1}, {5, 100}, {6, 200}, {5}, {6}, {}},
-                {{3}, {10, 10}, {20, 20}, {30, 30}, {10}, {40, 40}, {20}, {30}, {40}, {}},
-                {{2}, {7, 70}, {7, 77}, {7}, {8, 80}, {7}, {8}, {}},
-                {{2}, {1, 10}, {2, 20}, {1}, {3, 30}, {1}, {2}, {}},
-                {{3}, {100, 1}, {200, 2}, {300, 3}, {200}, {400, 4}, {500, 5}, {100}, {200}, {400}, {500}, {}}
+                {{1}, {5, 100}, {6, 200}, {5}, {6}, {}, {}},
+                {{3}, {10, 10}, {20, 20}, {30, 30}, {10}, {40, 40}, {20}, {30}, {40}, {}, {}},
+                {{2}, {7, 70}, {7, 77}, {7}, {8, 80}, {7}, {8}, {}, {}},
+                {{2}, {1, 10}, {2, 20}, {1}, {3, 30}, {1}, {2}, {}, {}},
+                {{3}, {100, 1}, {200, 2}, {300, 3}, {200}, {400, 4}, {500, 5}, {100}, {200}, {400}, {500}, {}, {}}
         };
 
         String[][] operations = {
-                {"LRUCache", "put", "put", "get", "get", "clear"},
-                {"LRUCache", "put", "put", "put", "get", "put", "get", "get", "get", "clear"},
-                {"LRUCache", "put", "put", "get", "put", "get", "get", "clear"},
-                {"LRUCache", "put", "put", "get", "put", "get", "get", "clear"},
-                {"LRUCache", "put", "put", "put", "get", "put", "put", "get", "get", "get", "get", "clear"}
+                {"LRUCache", "put", "put", "get", "get", "print", "clear"},
+                {"LRUCache", "put", "put", "put", "get", "put", "get", "get", "get", "print", "clear"},
+                {"LRUCache", "put", "put", "get", "put", "get", "get", "print", "clear"},
+                {"LRUCache", "put", "put", "get", "put", "get", "get", "print", "clear"},
+                {"LRUCache", "put", "put", "put", "get", "put", "put", "get", "get", "get", "get", "print", "clear"}
         };
 
         int y = 1;
