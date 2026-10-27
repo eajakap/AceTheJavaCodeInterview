@@ -114,11 +114,11 @@ public class MaxHeapMain {
             System.out.println("Is heap full? " + heap.isFull());  // Output: false
 
             heap.size = 0;
-            heap.insert(14);
-            heap.insert(10);
-            heap.insert(8);
             heap.insert(5);
+            heap.insert(10);
             heap.insert(2);
+            heap.insert(8);
+            heap.insert(14);
 
             System.out.println("All elements have been inserted. Size of the heap: " + heap.getSize());  // Output: 5
             System.out.println("1st extraction - maximum element removed: " + heap.extractMax());  // Output: 14
