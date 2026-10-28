@@ -72,8 +72,9 @@ public class TopKFrequentMain {
 
     public static List<Integer> topKFrequentV2(int[] arr, int k) {
         Map<Integer, Integer> numFrequencyMap = new HashMap<>();
-        for (int n : arr)
+        for (int n : arr) {
             numFrequencyMap.put(n, numFrequencyMap.getOrDefault(n, 0) + 1);
+        }
 
         PriorityQueue<Map.Entry<Integer, Integer>> topKElements = new PriorityQueue<>(
                 (e1, e2) -> e1.getValue() - e2.getValue()
@@ -90,7 +91,7 @@ public class TopKFrequentMain {
         while (!topKElements.isEmpty()) {
             topNumbers.add(topKElements.poll().getKey());
         }
-        Collections.sort(topNumbers);
+        Collections.reverse(topNumbers);
         return topNumbers;
     }
 
@@ -122,7 +123,9 @@ public class TopKFrequentMain {
             System.out.println("\tResult\t: " + Arrays.toString(result));
             List<Integer> result2 = topKFrequentMain.topKFrequentV2(nums, k);
             System.out.println("\tResul2\t: " + result2);
-            List<String> result3 = topKFrequentMain.topK(List.of("IBM", "AAPL", "IBM", "MSFT", "IBM", "AAPL"), k);
+            List<String> inputTickers = List.of("IBM", "AAPL", "IBM", "MSFT", "IBM", "AAPL");
+            System.out.println(y++ + ".\tInput array: " + inputTickers);
+            List<String> result3 = topKFrequentMain.topK(inputTickers, k);
             System.out.println("\tResul2\t: " + result3);
             System.out.println("-".repeat(100));
         }
