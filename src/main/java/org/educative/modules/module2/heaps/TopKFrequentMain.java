@@ -2,6 +2,9 @@ package org.educative.modules.module2.heaps;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 public class TopKFrequentMain {
 
     private PriorityQueue<Integer> topKFrequentHeap;
@@ -91,6 +94,14 @@ public class TopKFrequentMain {
         return topNumbers;
     }
 
+    public static List<String> topK(List<String> xs, int k) {
+        Map<String, Long> c = xs.stream().collect(groupingBy(s -> s, counting()));
+        PriorityQueue<Map.Entry<String, Long>> h = new PriorityQueue<>(Map.Entry.comparingByValue());
+        for (var e : c.entrySet()) { h.offer(e); if (h.size() > k) h.poll(); }
+        List<String> out = new ArrayList<>(); while (!h.isEmpty()) out.add(h.poll().getKey());
+        Collections.reverse(out); return out;
+    }
+
     public static void main(String[] args) {
         TopKFrequentMain topKFrequentMain = new TopKFrequentMain();
         int[][][] testCases = {
@@ -105,10 +116,14 @@ public class TopKFrequentMain {
         for (int[][] tc : testCases) {
             int[] nums = tc[0];
             int k = tc[1][0];
-            int[] result = topKFrequentMain.topKFrequent(nums, k);
             System.out.println(y++ + ".\tInput array: " + Arrays.toString(nums));
             System.out.println("\tTarget: " + k);
-            System.out.println("\tResult: " + Arrays.toString(result));
+            int[] result = topKFrequentMain.topKFrequent(nums, k);
+            System.out.println("\tResult\t: " + Arrays.toString(result));
+            List<Integer> result2 = topKFrequentMain.topKFrequentV2(nums, k);
+            System.out.println("\tResul2\t: " + result2);
+            List<String> result3 = topKFrequentMain.topK(List.of("IBM", "AAPL", "IBM", "MSFT", "IBM", "AAPL"), k);
+            System.out.println("\tResul2\t: " + result3);
             System.out.println("-".repeat(100));
         }
     }
