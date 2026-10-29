@@ -1,5 +1,6 @@
 package org.educative.modules.module2.stacks.array;
 
+import org.educative.modules.module2.stacks.ArrayStack;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;

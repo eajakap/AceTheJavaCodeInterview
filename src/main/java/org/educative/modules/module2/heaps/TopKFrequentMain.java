@@ -122,11 +122,11 @@ public class TopKFrequentMain {
             int[] result = topKFrequentMain.topKFrequent(nums, k);
             System.out.println("\tResult\t: " + Arrays.toString(result));
             List<Integer> result2 = topKFrequentMain.topKFrequentV2(nums, k);
-            System.out.println("\tResul2\t: " + result2);
+            System.out.println("\tResult2\t: " + result2);
             List<String> inputTickers = List.of("IBM", "AAPL", "IBM", "MSFT", "IBM", "AAPL");
             System.out.println(y++ + ".\tInput array: " + inputTickers);
             List<String> result3 = topKFrequentMain.topK(inputTickers, k);
-            System.out.println("\tResul2\t: " + result3);
+            System.out.println("\tResult3\t: " + result3);
             System.out.println("-".repeat(100));
         }
     }

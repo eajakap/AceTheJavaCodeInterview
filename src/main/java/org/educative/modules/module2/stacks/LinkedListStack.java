@@ -1,4 +1,4 @@
-package org.educative.modules.module2.stacks.linkedlist;
+package org.educative.modules.module2.stacks;
 
 
 import java.util.ArrayList;
