@@ -1,4 +1,4 @@
-package org.educative.migration;
+package org.codility.migration;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
