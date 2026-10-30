@@ -1,6 +1,5 @@
-package org.educative.modules.module2.stacks.linkedlist;
+package org.educative.modules.module2.stacks;
 
-import org.educative.modules.module2.stacks.LinkedListStack;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
