@@ -47,7 +47,7 @@ class BinarySearchTreeMainTest {
         assertEquals(0, empty.size());
         assertEquals(-1, empty.depth(5));
         assertEquals("", captureOutput(empty::levelOrder));
-        assertEquals("null", captureOutput(() -> empty.displayTree(null)));
+        assertEquals("null", captureOutput(() -> BinarySearchTreeMain.PrintBinarySearchTree.displayTree(null)));
 
         Node root = new BinarySearchTreeMain.Node(10);
         root.left = new BinarySearchTreeMain.Node(5);

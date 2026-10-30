@@ -90,7 +90,7 @@ class AVLTreeMainTest {
         Object initialRoot = root;
         assertEquals("5 10 15 20 25 30 35", captureOutput(() -> invokeVoidNodeMethod(tree, "inorder", initialRoot)));
         assertEquals("20 10 5 15 30 25 35", captureOutput(() -> invokeVoidNodeMethod(tree, "preorder", initialRoot)));
-        assertEquals("null", captureOutput(() -> invokeVoidNodeMethod(tree, "displayTree", null)));
+        assertEquals("null", captureOutput(() -> invokeDisplayTree(null)));
 
         root = delete(tree, root, 5);
         root = delete(tree, root, 30);
@@ -115,7 +115,7 @@ class AVLTreeMainTest {
     }
 
     private static Object newNode(int value) throws Exception {
-        Constructor<?> constructor = Class.forName("org.educative.modules.module2.trees.AVLTreeMain$TreeNode")
+        Constructor<?> constructor = Class.forName("org.educative.modules.module2.trees.AVLTreeMain$Node")
                 .getDeclaredConstructor(int.class);
         constructor.setAccessible(true);
         return constructor.newInstance(value);
@@ -163,8 +163,19 @@ class AVLTreeMainTest {
         }
     }
 
+    private static void invokeDisplayTree(Object node) {
+        try {
+            Method method = Class.forName("org.educative.modules.module2.trees.AVLTreeMain$PrintAVLTree")
+                    .getDeclaredMethod("displayTree", nodeClass());
+            method.setAccessible(true);
+            method.invoke(null, node);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static Class<?> nodeClass() throws Exception {
-        return Class.forName("org.educative.modules.module2.trees.AVLTreeMain$TreeNode");
+        return Class.forName("org.educative.modules.module2.trees.AVLTreeMain$Node");
     }
 
     private static int dataOf(Object node) throws Exception {

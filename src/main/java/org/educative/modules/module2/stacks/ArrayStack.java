@@ -1,7 +1,7 @@
 package org.educative.modules.module2.stacks;
 
 public class ArrayStack {
-    static class Stack {
+    public static class Stack {
         int capacity;
         int[] data;
         int top;

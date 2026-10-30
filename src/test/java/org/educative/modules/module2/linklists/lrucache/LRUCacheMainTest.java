@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +20,8 @@ class LRUCacheMainTest {
         );
 
         assertEquals(
-                Arrays.asList(null, null, null, 10, null, -1, 30, "clear", -1, null, 40),
+                List.of("capacity: {2}", "put: {1: 10}", "put: {2: 20}", "get: {1: 10}", "put: {3: 30}",
+                        "get: {2: -1}", "get: {3: 30}", "clear", "get: {3: -1}", "put: {4: 40}", "get: {4: 40}"),
                 results
         );
     }
@@ -33,7 +33,10 @@ class LRUCacheMainTest {
                 new int[][]{{2}, {1, 10}, {2, 20}, {1, 11}, {1}, {2}}
         );
 
-        assertEquals(Arrays.asList(null, null, null, null, 11, 20), results);
+        assertEquals(
+                List.of("capacity: {2}", "put: {1: 10}", "put: {2: 20}", "put: {1: 11}", "get: {1: 11}", "get: {2: 20}"),
+                results
+        );
     }
 
     @Test
@@ -59,8 +62,11 @@ class LRUCacheMainTest {
 
         String printed = output.toString(StandardCharsets.UTF_8);
         assertTrue(printed.contains("1.\tInput operations:"));
-        assertTrue(printed.contains("\tResult: [null, null, null, -1, 200, clear]"));
+        assertTrue(printed.contains("\tResult: [capacity: {1}, put: {5: 100}, put: {6: 200}, get: {5: -1}, "
+                + "get: {6: 200}, print: {6=200}, clear]"));
         assertTrue(printed.contains("5.\tInput operations:"));
-        assertTrue(printed.contains("\tResult: [null, null, null, null, 2, null, null, -1, 2, 4, 5, clear]"));
+        assertTrue(printed.contains("\tResult: [capacity: {3}, put: {100: 1}, put: {200: 2}, put: {300: 3}, "
+                + "get: {200: 2}, put: {400: 4}, put: {500: 5}, get: {100: -1}, get: {200: 2}, get: {400: 4}, "
+                + "get: {500: 5}, print: {"));
     }
 }
