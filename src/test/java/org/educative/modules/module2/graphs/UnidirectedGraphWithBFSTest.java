@@ -48,6 +48,6 @@ class UnidirectedGraphWithBFSTest {
     @Test
     void mainRunsBfsFromA() {
         assertEquals("A B C D E F ",
-                ConsoleOutputCapture.capture(() -> UnidirectedGraphWithBFS.Main.main(new String[0])));
+                ConsoleOutputCapture.capture(() -> UnidirectedGraphWithBFS.main(new String[0])));
     }
 }

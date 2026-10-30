@@ -3,10 +3,6 @@ package org.educative.modules.module2.graphs;
 import java.util.*;
 
 public class UnidirectedGraphWithBFS {
-    public static void main(String[] args) throws Exception {
-        Main.main(args);
-    }
-
     static class Graph {
         private Map<String, List<String>> graph;   // Adjacency list
 
@@ -44,19 +40,18 @@ public class UnidirectedGraphWithBFS {
         }
     }
 
-    static class Main {
-        public static void main(String[] args) {
-            Graph g = new Graph();
+    public static void main(String[] args) {
+        Graph g = new Graph();
 
-            // Build graph
-            g.addEdge("A", "B");
-            g.addEdge("A", "C");
-            g.addEdge("B", "D");
-            g.addEdge("B", "E");
-            g.addEdge("C", "F");
+        // Build graph
+        g.addEdge("A", "B");
+        g.addEdge("A", "C");
+        g.addEdge("B", "D");
+        g.addEdge("B", "E");
+        g.addEdge("C", "F");
 
-            // Run BFS
-            g.bfs("A");
-        }
+        // Run BFS
+        g.bfs("A");
     }
+
 }

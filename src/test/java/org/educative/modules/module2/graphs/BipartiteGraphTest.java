@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BipartiteGraphTest {
-    private final BipartiteGraph.Solution solution = new BipartiteGraph.Solution();
+    private final BipartiteGraph solution = new BipartiteGraph();
 
     @Test
     void emptyAndEdgelessGraphsAreBipartite() {
