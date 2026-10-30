@@ -4,11 +4,6 @@ import java.util.Arrays;
 import java.util.*;
 
 public class PathExistsinUnidirectedGraph {
-    public static void main(String[] args) {
-        Solution.main(args);
-    }
-
-    private static class Solution {
         public boolean validPath(int n, int[][] edges, int source, int destination) {
             // Build adjacency list
             Map<Integer, List<Integer>> adjacency = new HashMap<>();
@@ -47,30 +42,29 @@ public class PathExistsinUnidirectedGraph {
             return false;
         }
 
-        public static void main(String[] args) {
-            Solution sol = new Solution();
+    public static void main(String[] args) {
+        PathExistsinUnidirectedGraph sol = new PathExistsinUnidirectedGraph();
 
-            int[][][] edgeSets = {
-                    {{0, 1}, {1, 2}, {2, 3}},
-                    {{0, 1}, {0, 2}, {3, 4}},
-                    {{0, 1}, {1, 2}, {2, 3}, {3, 4}},
-                    {},
-                    {{0, 1}, {2, 3}, {1, 3}}
-            };
+        int[][][] edgeSets = {
+                {{0, 1}, {1, 2}, {2, 3}},
+                {{0, 1}, {0, 2}, {3, 4}},
+                {{0, 1}, {1, 2}, {2, 3}, {3, 4}},
+                {},
+                {{0, 1}, {2, 3}, {1, 3}}
+        };
 
-            int[] nValues =      {4, 5, 5, 1, 4};
-            int[] sources =      {0, 0, 0, 0, 0};
-            int[] destinations = {3, 4, 4, 0, 3};
+        int[] nValues =      {4, 5, 5, 1, 4};
+        int[] sources =      {0, 0, 0, 0, 0};
+        int[] destinations = {3, 4, 4, 0, 3};
 
-            int y = 1;
-            for (int t = 0; t < edgeSets.length; t++) {
-                boolean result = sol.validPath(nValues[t], edgeSets[t], sources[t], destinations[t]);
-                System.out.println(y++ + ".\tn: " + nValues[t]);
-                System.out.println("\tEdges: " + Arrays.deepToString(edgeSets[t]));
-                System.out.println("\tSource: " + sources[t] + ", Destination: " + destinations[t]);
-                System.out.println("\tResult: " + result);
-                System.out.println("-".repeat(100));
-            }
+        int y = 1;
+        for (int t = 0; t < edgeSets.length; t++) {
+            boolean result = sol.validPath(nValues[t], edgeSets[t], sources[t], destinations[t]);
+            System.out.println(y++ + ".\tn: " + nValues[t]);
+            System.out.println("\tEdges: " + Arrays.deepToString(edgeSets[t]));
+            System.out.println("\tSource: " + sources[t] + ", Destination: " + destinations[t]);
+            System.out.println("\tResult: " + result);
+            System.out.println("-".repeat(100));
         }
     }
 }
