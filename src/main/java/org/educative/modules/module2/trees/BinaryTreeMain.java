@@ -117,12 +117,6 @@ public class BinaryTreeMain {
             }
         }
 
-        // --- Display tree methods ---
-        private int treeHeight(TreeNode node) {
-            if (node == null) return 0;
-            return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
-        }
-
         public int height(TreeNode node) {
             // Base case:
             // If the node is null (empty subtree),
@@ -228,86 +222,6 @@ public class BinaryTreeMain {
             return depth(root.right, target, currentDepth + 1);
         }
 
-        private void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
-                                     TreeNode node, int level, int p, char linkChar) {
-            if (node == null) return;
-            String SP = " ";
-            int h = output.size();
-
-            if (p < 0) {
-                for (StringBuilder s : output)
-                    if (s.length() > 0)
-                        s.insert(0, " ".repeat(-p));
-                for (StringBuilder s : linkAbove)
-                    if (s.length() > 0)
-                        s.insert(0, " ".repeat(-p));
-            }
-
-            if (level < h - 1) p = Math.max(p, output.get(level + 1).length());
-            if (level > 0) p = Math.max(p, output.get(level - 1).length());
-            p = Math.max(p, output.get(level).length());
-
-            if (node.left != null) {
-                String leftData = SP + node.left.data + SP;
-                drawNode(output, linkAbove, node.left, level + 1, p - leftData.length(), 'L');
-                p = Math.max(p, output.get(level + 1).length());
-            }
-
-            int space = p - output.get(level).length();
-            if (space > 0) output.get(level).append(" ".repeat(space));
-            output.get(level).append(SP + node.data + SP);
-
-            space = p + SP.length() - linkAbove.get(level).length();
-            if (space > 0) linkAbove.get(level).append(" ".repeat(space));
-            linkAbove.get(level).append(linkChar);
-
-            if (node.right != null)
-                drawNode(output, linkAbove, node.right, level + 1, output.get(level).length(), 'R');
-        }
-
-        public void displayTree(TreeNode root) {
-            if (root == null) {
-                System.out.println("\tnull");
-                return;
-            }
-            int h = treeHeight(root);
-            List<StringBuilder> output = new ArrayList<>();
-            List<StringBuilder> linkAbove = new ArrayList<>();
-            for (int i = 0; i < h; i++) {
-                output.add(new StringBuilder());
-                linkAbove.add(new StringBuilder());
-            }
-            drawNode(output, linkAbove, root, 0, 5, ' ');
-
-            for (int i = 1; i < h; i++) {
-                for (int j = 0; j < linkAbove.get(i).length(); j++) {
-                    if (linkAbove.get(i).charAt(j) != ' ') {
-                        int size = output.get(i - 1).length();
-                        if (size < j + 1)
-                            output.get(i - 1).append(" ".repeat(j + 1 - size));
-                        int jj = j;
-                        if (linkAbove.get(i).charAt(j) == 'L') {
-                            while (jj < output.get(i - 1).length() && output.get(i - 1).charAt(jj) == ' ')
-                                jj++;
-                            for (int k = j + 1; k < jj - 1 && k < output.get(i - 1).length(); k++)
-                                output.get(i - 1).setCharAt(k, '_');
-                        } else if (linkAbove.get(i).charAt(j) == 'R') {
-                            while (jj >= 0 && output.get(i - 1).charAt(jj) == ' ')
-                                jj--;
-                            for (int k = j - 1; k > jj && k >= 0; k--)
-                                output.get(i - 1).setCharAt(k, '_');
-                        }
-                        linkAbove.get(i).setCharAt(j, '|');
-                    }
-                }
-            }
-
-            for (int i = 0; i < h; i++) {
-                if (i > 0) System.out.println("\t" + linkAbove.get(i));
-                System.out.println("\t" + output.get(i));
-            }
-        }
-
         public boolean search(TreeNode root, int target) {
             // Base case: if the current node is null, the value is not found
             if (root == null) {
@@ -388,96 +302,179 @@ public class BinaryTreeMain {
 
     }
 
-    static class Main {
-        public static void main(String[] args) {
-            TreeNode root = new TreeNode(10);
-            TreeNode node1 = new TreeNode(5);
-            TreeNode node2 = new TreeNode(15);
-            TreeNode node3 = new TreeNode(3);
-            TreeNode node4 = new TreeNode(7);
-
-            root.left = node1;
-            root.right = node2;
-            node1.left = node3;
-            node1.right = node4;
-
-            BinaryTree tree = new BinaryTree();
-            tree.root = root;
-
-            System.out.println("Root: " + tree.root.data);
-            System.out.println("Left child of root: " + tree.root.left.data);
-            System.out.println("Right child of root: " + tree.root.right.data);
-
-            tree.displayTree(tree.root);
-
-            System.out.println("_".repeat(100));
-
-            BinaryTree bt = new BinaryTree();
-            bt.insert(5);
-            bt.insert(15);
-            bt.insert(3);
-            bt.insert(7);
-            bt.insert(12);
-            bt.insert(18);
-
-            bt.displayTree(bt.root);
-
-            System.out.println("_".repeat(100));
-
-            System.out.println("Inorder Traversal:");
-            bt.inorder(bt.root);
-            System.out.println();
-
-            System.out.println("Preorder Traversal:");
-            bt.preorder(bt.root);
-            System.out.println();
-
-            System.out.println("Postorder Traversal:");
-            bt.postorder(bt.root);
-            System.out.println();
-
-            System.out.println("Level Order Traversal:");
-            bt.levelOrder();
-            System.out.println();
-
-            System.out.println("_".repeat(100));
-            System.out.println("Initial tree");
-            bt.displayTree(bt.root);
-
-            System.out.println("Search for 3: " + bt.search(bt.root, 3));
-            System.out.println("Search for 7: " + bt.search(bt.root, 7));
-            System.out.println("Search for 99: " + bt.search(bt.root, 99));
-            bt.delete(7);
-            System.out.println("After deleting 7:");
-            bt.displayTree(bt.root);
-
-            bt.delete(3);
-            System.out.println("After deleting 3:");
-            bt.displayTree(bt.root);
-
-            TreeNode root2 = new TreeNode(11);
-            root2.left = new TreeNode(12);
-            root2.right = new TreeNode(13);
-            root2.left.left = new TreeNode(14);
-            root2.left.right = new TreeNode(15);
-            root2.right.left = new TreeNode(16);
-
-            BinaryTree tree2 = new BinaryTree(root2);
-            tree2.displayTree(tree2.root);
-
-            System.out.println("Height of tree: " + tree2.height());
-            System.out.println("Size of tree: " + tree2.size());
-
-            System.out.println("Depth of A: " + tree2.depth(11));
-            System.out.println("Depth of B: " + tree2.depth(12));
-            System.out.println("Depth of E: " + tree2.depth(13));
-            System.out.println("Depth of F: " + tree2.depth(14));
-            System.out.println("Depth of X: " + tree2.depth(15));
-
+    static class PrintBinaryTree {
+        // --- Display tree methods ---
+        private static int treeHeight(TreeNode node) {
+            if (node == null) return 0;
+            return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
         }
+
+        private static void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
+                                     TreeNode node, int level, int p, char linkChar) {
+            if (node == null) return;
+            String SP = " ";
+            int h = output.size();
+
+            if (p < 0) {
+                for (StringBuilder s : output)
+                    if (s.length() > 0)
+                        s.insert(0, " ".repeat(-p));
+                for (StringBuilder s : linkAbove)
+                    if (s.length() > 0)
+                        s.insert(0, " ".repeat(-p));
+            }
+
+            if (level < h - 1) p = Math.max(p, output.get(level + 1).length());
+            if (level > 0) p = Math.max(p, output.get(level - 1).length());
+            p = Math.max(p, output.get(level).length());
+
+            if (node.left != null) {
+                String leftData = SP + node.left.data + SP;
+                drawNode(output, linkAbove, node.left, level + 1, p - leftData.length(), 'L');
+                p = Math.max(p, output.get(level + 1).length());
+            }
+
+            int space = p - output.get(level).length();
+            if (space > 0) output.get(level).append(" ".repeat(space));
+            output.get(level).append(SP + node.data + SP);
+
+            space = p + SP.length() - linkAbove.get(level).length();
+            if (space > 0) linkAbove.get(level).append(" ".repeat(space));
+            linkAbove.get(level).append(linkChar);
+
+            if (node.right != null)
+                drawNode(output, linkAbove, node.right, level + 1, output.get(level).length(), 'R');
+        }
+
+        public static void displayTree(TreeNode root) {
+            if (root == null) {
+                System.out.println("\tnull");
+                return;
+            }
+            int h = treeHeight(root);
+            List<StringBuilder> output = new ArrayList<>();
+            List<StringBuilder> linkAbove = new ArrayList<>();
+            for (int i = 0; i < h; i++) {
+                output.add(new StringBuilder());
+                linkAbove.add(new StringBuilder());
+            }
+            drawNode(output, linkAbove, root, 0, 5, ' ');
+
+            for (int i = 1; i < h; i++) {
+                for (int j = 0; j < linkAbove.get(i).length(); j++) {
+                    if (linkAbove.get(i).charAt(j) != ' ') {
+                        int size = output.get(i - 1).length();
+                        if (size < j + 1)
+                            output.get(i - 1).append(" ".repeat(j + 1 - size));
+                        int jj = j;
+                        if (linkAbove.get(i).charAt(j) == 'L') {
+                            while (jj < output.get(i - 1).length() && output.get(i - 1).charAt(jj) == ' ')
+                                jj++;
+                            for (int k = j + 1; k < jj - 1 && k < output.get(i - 1).length(); k++)
+                                output.get(i - 1).setCharAt(k, '_');
+                        } else if (linkAbove.get(i).charAt(j) == 'R') {
+                            while (jj >= 0 && output.get(i - 1).charAt(jj) == ' ')
+                                jj--;
+                            for (int k = j - 1; k > jj && k >= 0; k--)
+                                output.get(i - 1).setCharAt(k, '_');
+                        }
+                        linkAbove.get(i).setCharAt(j, '|');
+                    }
+                }
+            }
+
+            for (int i = 0; i < h; i++) {
+                if (i > 0) System.out.println("\t" + linkAbove.get(i));
+                System.out.println("\t" + output.get(i));
+            }
+        }
+
     }
 
     public static void main(String[] args) {
-        Main.main(args);
+        TreeNode root = new TreeNode(10);
+        TreeNode node1 = new TreeNode(5);
+        TreeNode node2 = new TreeNode(15);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node4 = new TreeNode(7);
+
+        root.left = node1;
+        root.right = node2;
+        node1.left = node3;
+        node1.right = node4;
+
+        BinaryTree tree = new BinaryTree();
+        tree.root = root;
+
+        System.out.println("Root: " + tree.root.data);
+        System.out.println("Left child of root: " + tree.root.left.data);
+        System.out.println("Right child of root: " + tree.root.right.data);
+
+        PrintBinaryTree.displayTree(tree.root);
+
+        System.out.println("_".repeat(100));
+
+        BinaryTree bt = new BinaryTree();
+        bt.insert(5);
+        bt.insert(15);
+        bt.insert(3);
+        bt.insert(7);
+        bt.insert(12);
+        bt.insert(18);
+
+        PrintBinaryTree.displayTree(bt.root);
+
+        System.out.println("_".repeat(100));
+
+        System.out.println("Inorder Traversal:");
+        bt.inorder(bt.root);
+        System.out.println();
+
+        System.out.println("Preorder Traversal:");
+        bt.preorder(bt.root);
+        System.out.println();
+
+        System.out.println("Postorder Traversal:");
+        bt.postorder(bt.root);
+        System.out.println();
+
+        System.out.println("Level Order Traversal:");
+        bt.levelOrder();
+        System.out.println();
+
+        System.out.println("_".repeat(100));
+        System.out.println("Initial tree");
+        PrintBinaryTree.displayTree(bt.root);
+
+        System.out.println("Search for 3: " + bt.search(bt.root, 3));
+        System.out.println("Search for 7: " + bt.search(bt.root, 7));
+        System.out.println("Search for 99: " + bt.search(bt.root, 99));
+        bt.delete(7);
+        System.out.println("After deleting 7:");
+        PrintBinaryTree.displayTree(bt.root);
+
+        bt.delete(3);
+        System.out.println("After deleting 3:");
+        PrintBinaryTree.displayTree(bt.root);
+
+        TreeNode root2 = new TreeNode(11);
+        root2.left = new TreeNode(12);
+        root2.right = new TreeNode(13);
+        root2.left.left = new TreeNode(14);
+        root2.left.right = new TreeNode(15);
+        root2.right.left = new TreeNode(16);
+
+        BinaryTree tree2 = new BinaryTree(root2);
+        PrintBinaryTree.displayTree(tree2.root);
+
+        System.out.println("Height of tree: " + tree2.height());
+        System.out.println("Size of tree: " + tree2.size());
+
+        System.out.println("Depth of A: " + tree2.depth(11));
+        System.out.println("Depth of B: " + tree2.depth(12));
+        System.out.println("Depth of E: " + tree2.depth(13));
+        System.out.println("Depth of F: " + tree2.depth(14));
+        System.out.println("Depth of X: " + tree2.depth(15));
+
     }
 }

@@ -20,7 +20,7 @@ class BinaryTreeMainTest {
         assertEquals(0, empty.size());
         assertEquals(-1, empty.depth(1));
         assertEquals("", captureOutput(empty::levelOrder));
-        assertEquals("null", captureOutput(() -> empty.displayTree(null)));
+        assertEquals("null", captureOutput(() -> BinaryTreeMain.PrintBinaryTree.displayTree(null)));
 
         BinaryTreeMain.BinaryTree tree = new BinaryTreeMain.BinaryTree();
         for (int value : new int[]{1, 2, 3, 4, 5}) {

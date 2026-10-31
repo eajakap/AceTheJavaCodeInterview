@@ -5,36 +5,40 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class BinaryTreeMain2 {
+public class BinaryTreeGeneric {
 
-    static class TreeNode {
-        String data;
-        TreeNode left;
-        TreeNode right;
+    static class TreeNode<T> {
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
 
-        public TreeNode(String data) {
+        public TreeNode(T data) {
             this.data = data;
             this.left = null;
             this.right = null;
         }
     }
 
-    static class BinaryTree {
-        TreeNode root;
+    static class BinaryTree<T> {
+        TreeNode<T> root;
 
-        public BinaryTree(String rootValue) {
-            this.root = rootValue != null ? new TreeNode(rootValue) : null;
+        // Pairs a node with its parent during level-order traversal in delete()
+        private record NodeWithParent<T>(TreeNode<T> node, TreeNode<T> parent) {
+        }
+
+        public BinaryTree(T rootValue) {
+            this.root = rootValue != null ? new TreeNode<>(rootValue) : null;
         }
 
         public BinaryTree() {
             this.root = null;
         }
 
-        public BinaryTree(TreeNode root) {
+        public BinaryTree(TreeNode<T> root) {
             this.root = root;
         }
 
-        public boolean search(TreeNode root, String target) {
+        public boolean search(TreeNode<T> root, T target) {
             if (root == null) {
                 return false;
             }
@@ -46,19 +50,19 @@ public class BinaryTreeMain2 {
             return search(root.left, target) || search(root.right, target);
         }
 
-        public void insert(String value) {
-            TreeNode newNode = new TreeNode(value);
+        public void insert(T value) {
+            TreeNode<T> newNode = new TreeNode<>(value);
 
             if (root == null) {
                 root = newNode;
                 return;
             }
 
-            Queue<TreeNode> queue = new LinkedList<>();
+            Queue<TreeNode<T>> queue = new LinkedList<>();
             queue.add(root);
 
             while (!queue.isEmpty()) {
-                TreeNode current = queue.poll();
+                TreeNode<T> current = queue.poll();
 
                 if (current.left == null) {
                     current.left = newNode;
@@ -74,7 +78,61 @@ public class BinaryTreeMain2 {
             }
         }
 
-        public void delete(String target) {
+        public void preorder(TreeNode<T> root) {
+            if (root != null) {
+                System.out.print(root.data + " ");
+                preorder(root.left);
+                preorder(root.right);
+            }
+        }
+
+        public void inorder(TreeNode<T> root) {
+            if (root != null) {
+                inorder(root.left);
+                System.out.print(root.data + " ");
+                inorder(root.right);
+            }
+        }
+
+        public void postorder(TreeNode<T> root) {
+            if (root != null) {
+                postorder(root.left);
+                postorder(root.right);
+                System.out.print(root.data + " ");
+            }
+        }
+
+        public void levelOrder() {
+            // If the tree is empty, there is nothing to traverse
+            if (root == null) {
+                return;
+            }
+
+            // Initialize a queue with the root node
+            Queue<TreeNode<T>> queue = new LinkedList<>();
+            queue.add(root);
+
+            // Continue until the queue is empty
+            while (!queue.isEmpty()) {
+                // Remove the first node from the queue (FIFO)
+                TreeNode<T> current = queue.poll();
+
+                // Print the data of the current node
+                System.out.print(current.data + " ");
+
+                // If the current node has a left child, add it to back of the queue
+                if (current.left != null) {
+                    queue.add(current.left);
+                }
+
+                // If the current node has a right child, add it to the back of the queue
+                if (current.right != null) {
+                    queue.add(current.right);
+                }
+            }
+        }
+
+        public void delete(T target) {
             if (root == null) {
                 return;
             }
@@ -86,17 +144,17 @@ public class BinaryTreeMain2 {
                 return;
             }
 
-            Queue<TreeNode[]> queue = new LinkedList<>();
-            queue.add(new TreeNode[]{root, null});
+            Queue<NodeWithParent<T>> queue = new LinkedList<>();
+            queue.add(new NodeWithParent<>(root, null));
 
-            TreeNode targetNode = null;
-            TreeNode lastNode = null;
-            TreeNode lastParent = null;
+            TreeNode<T> targetNode = null;
+            TreeNode<T> lastNode = null;
+            TreeNode<T> lastParent = null;
 
             while (!queue.isEmpty()) {
-                TreeNode[] pair = queue.poll();
-                TreeNode current = pair[0];
-                TreeNode parent = pair[1];
+                NodeWithParent<T> pair = queue.poll();
+                TreeNode<T> current = pair.node();
+                TreeNode<T> parent = pair.parent();
 
                 if (current.data.equals(target)) {
                     targetNode = current;
@@ -106,10 +164,10 @@ public class BinaryTreeMain2 {
                 lastParent = parent;
 
                 if (current.left != null) {
-                    queue.add(new TreeNode[]{current.left, current});
+                    queue.add(new NodeWithParent<>(current.left, current));
                 }
                 if (current.right != null) {
-                    queue.add(new TreeNode[]{current.right, current});
+                    queue.add(new NodeWithParent<>(current.right, current));
                 }
             }
 
@@ -126,13 +184,7 @@ public class BinaryTreeMain2 {
             }
         }
 
-        // --- Display tree methods ---
-        private int treeHeight(TreeNode node) {
-            if (node == null) return 0;
-            return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
-        }
-
-        public int height(TreeNode node) {
+        public int height(TreeNode<T> node) {
             // Base case:
             // If the node is null (empty subtree),
             // we return -1 so that leaf nodes have height 0
@@ -155,7 +207,7 @@ public class BinaryTreeMain2 {
             return heightHelper(root);
         }
 
-        private int heightHelper(TreeNode node) {
+        private int heightHelper(TreeNode<T> node) {
             if (node == null) {
                 return -1;
             }
@@ -164,7 +216,7 @@ public class BinaryTreeMain2 {
             return 1 + Math.max(leftHeight, rightHeight);
         }
 
-        public int size(TreeNode node) {
+        public int size(TreeNode<T> node) {
             // Base case:
             // If the node is null, it contributes 0 to the size
             // (i.e., no nodes in an empty subtree)
@@ -183,14 +235,14 @@ public class BinaryTreeMain2 {
             return sizeHelper(root);
         }
 
-        private int sizeHelper(TreeNode node) {
+        private int sizeHelper(TreeNode<T> node) {
             if (node == null) {
                 return 0;
             }
             return 1 + sizeHelper(node.left) + sizeHelper(node.right);
         }
 
-        public int depth(TreeNode root, String target, int currentDepth) {
+        public int depth(TreeNode<T> root, T target, int currentDepth) {
             // Base case:
             // If the current node is null, the target does not exist
             // in this path, so return -1
@@ -219,11 +271,11 @@ public class BinaryTreeMain2 {
             return depth(root.right, target, currentDepth + 1);
         }
 
-        public int depth(String target) {
+        public int depth(T target) {
             return depthHelper(root, target, 0);
         }
 
-        private int depthHelper(TreeNode node, String target, int currentDepth) {
+        private int depthHelper(TreeNode<T> node, T target, int currentDepth) {
             if (node == null) {
                 return -1;
             }
@@ -237,8 +289,19 @@ public class BinaryTreeMain2 {
             return depthHelper(node.right, target, currentDepth + 1);
         }
 
-        private void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
-                              TreeNode node, int level, int p, char linkChar) {
+    }
+
+    static class PrintBinaryTree {
+        // --- Display tree methods ---
+        // Display only reads node.data via toString(), so any element type works: TreeNode<?>
+        private static int treeHeight(TreeNode<?> node) {
+            if (node == null) return 0;
+            return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
+        }
+
+
+        private static void drawNode(List<StringBuilder> output, List<StringBuilder> linkAbove,
+                              TreeNode<?> node, int level, int p, char linkChar) {
             if (node == null) return;
             String SP = " ";
             int h = output.size();
@@ -274,7 +337,7 @@ public class BinaryTreeMain2 {
                 drawNode(output, linkAbove, node.right, level + 1, output.get(level).length(), 'R');
         }
 
-        public void displayTree(TreeNode root) {
+        public static void displayTree(TreeNode<?> root) {
             if (root == null) {
                 System.out.println("\tnull");
                 return;
@@ -318,50 +381,122 @@ public class BinaryTreeMain2 {
         }
     }
 
-    public static class Main {
-        public static void main(String[] args) {
-            BinaryTree bt = new BinaryTree("A");
-            bt.insert("B");
-            bt.insert("C");
-            bt.insert("D");
-            bt.insert("E");
+    public static void testBinaryTreeWithStrings() {
+        BinaryTree<String> bt = new BinaryTree<>("A");
+        bt.insert("B");
+        bt.insert("C");
+        bt.insert("D");
+        bt.insert("E");
+        bt.insert("F");
 
-            System.out.println("Initial tree");
-            bt.displayTree(bt.root);
+        System.out.println("Initial tree");
+        PrintBinaryTree.displayTree(bt.root);
 
-            System.out.println("Search for C: " + bt.search(bt.root, "C"));
-            System.out.println("Search for X: " + bt.search(bt.root, "X"));
+        System.out.println("Height of tree: " + bt.height());
+        System.out.println("Size of tree: " + bt.size());
 
-            bt.delete("B");
-            System.out.println("After deleting B:");
-            bt.displayTree(bt.root);
+        System.out.println("Depth of A: " + bt.depth("A"));
+        System.out.println("Depth of B: " + bt.depth("B"));
+        System.out.println("Depth of E: " + bt.depth("E"));
+        System.out.println("Depth of F: " + bt.depth("F"));
+        System.out.println("Depth of X: " + bt.depth("X"));
 
-            bt.delete("A");
-            System.out.println("After deleting A:");
-            bt.displayTree(bt.root);
+        System.out.println("Search for C: " + bt.search(bt.root, "C"));
+        System.out.println("Search for X: " + bt.search(bt.root, "X"));
 
-            TreeNode root = new TreeNode("A");
-            root.left = new TreeNode("B");
-            root.right = new TreeNode("C");
-            root.left.left = new TreeNode("D");
-            root.left.right = new TreeNode("E");
-            root.right.left = new TreeNode("F");
+        bt.delete("B");
+        System.out.println("After deleting B:");
+        PrintBinaryTree.displayTree(bt.root);
 
-            BinaryTree tree = new BinaryTree(root);
-            tree.displayTree(tree.root);
-
-            System.out.println("Height of tree: " + tree.height());
-            System.out.println("Size of tree: " + tree.size());
-
-            System.out.println("Depth of A: " + tree.depth("A"));
-            System.out.println("Depth of B: " + tree.depth("B"));
-            System.out.println("Depth of E: " + tree.depth("E"));
-            System.out.println("Depth of F: " + tree.depth("F"));
-            System.out.println("Depth of X: " + tree.depth("X"));
-
-        }
+        bt.delete("A");
+        System.out.println("After deleting A:");
+        PrintBinaryTree.displayTree(bt.root);
     }
+
+    public static void testBinaryTreeCreatedWithStringNodes() {
+        TreeNode<String> root = new TreeNode<>("A");
+        root.left = new TreeNode<>("B");
+        root.right = new TreeNode<>("C");
+        root.left.left = new TreeNode<>("D");
+        root.left.right = new TreeNode<>("E");
+        root.right.left = new TreeNode<>("F");
+
+        BinaryTree<String> tree = new BinaryTree<>(root);
+        PrintBinaryTree.displayTree(tree.root);
+
+        System.out.println("Height of tree: " + tree.height());
+        System.out.println("Size of tree: " + tree.size());
+
+        System.out.println("Depth of A: " + tree.depth("A"));
+        System.out.println("Depth of B: " + tree.depth("B"));
+        System.out.println("Depth of E: " + tree.depth("E"));
+        System.out.println("Depth of F: " + tree.depth("F"));
+        System.out.println("Depth of X: " + tree.depth("X"));
+
+    }
+
+    public static void testBinaryTreeWithIntegers() {
+        BinaryTree<Integer> bt = new BinaryTree<>(10);
+        bt.insert(20);
+        bt.insert(30);
+        bt.insert(40);
+        bt.insert(50);
+
+        System.out.println("Initial tree");
+        PrintBinaryTree.displayTree(bt.root);
+
+        System.out.println("Search for 20: " + bt.search(bt.root, 20));
+        System.out.println("Search for 60: " + bt.search(bt.root, 60));
+
+        bt.delete(20);
+        System.out.println("After deleting 20:");
+        PrintBinaryTree.displayTree(bt.root);
+
+        bt.delete(10);
+        System.out.println("After deleting 10:");
+        PrintBinaryTree.displayTree(bt.root);
+    }
+
+    public static void testBinaryTreeDFSTraversals() {
+        BinaryTree<String> bt = new BinaryTree<>("A");
+        bt.insert("B");
+        bt.insert("C");
+        bt.insert("D");
+        bt.insert("E");
+        bt.insert("F");
+
+        System.out.println("Preorder traversal:");
+        bt.preorder(bt.root);
+        System.out.println();
+
+        System.out.println("Inorder traversal:");
+        bt.inorder(bt.root);
+        System.out.println();
+
+        System.out.println("Postorder traversal:");
+        bt.postorder(bt.root);
+        System.out.println();
+    }
+
+    public static void testBinaryTreeBFSTraversals() {
+        BinaryTree<String> bt = new BinaryTree<>("A");
+        bt.insert("B");
+        bt.insert("C");
+        bt.insert("D");
+        bt.insert("E");
+        bt.insert("F");
+
+        System.out.println("Level-order traversal:");
+        bt.levelOrder();
+        System.out.println();
+    }
+
     public static void main(String[] args) {
-        Main.main(args);
+        testBinaryTreeWithStrings();
+        testBinaryTreeCreatedWithStringNodes();
+        testBinaryTreeWithIntegers();
+        testBinaryTreeDFSTraversals();
+        testBinaryTreeBFSTraversals();
     }
+
 }
