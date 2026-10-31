@@ -4,7 +4,7 @@ import java.util.*;
 
 public class BinaryTreeVerticalOrderTraversal {
     // Definition of a binary tree node class
-    private static class TreeNode<T> {
+    static class TreeNode<T> {
         T data;
         TreeNode<T> left;
         TreeNode<T> right;
@@ -54,8 +54,7 @@ public class BinaryTreeVerticalOrderTraversal {
         }
     }
 
-    private static class Solution {
-
+    static class PrintBinaryTree {
         // --- Display tree methods ---
         private int treeHeight(TreeNode node) {
             if (node == null) return 0;
@@ -142,110 +141,108 @@ public class BinaryTreeVerticalOrderTraversal {
             }
         }
 
-        static class NodeInfo {
-            TreeNode<Integer> node;
-            int row, col;
+    }
 
-            NodeInfo(TreeNode<Integer> node, int row, int col) {
-                this.node = node;
-                this.row = row;
-                this.col = col;
-            }
-        }
+    static class NodeInfo {
+        TreeNode<Integer> node;
+        int row, col;
 
-        public static List<List<Integer>> verticalTraversal(TreeNode<Integer> root) {
-            if (root == null) {
-                return new ArrayList<>();
-            }
-
-            // HashMap to store nodes grouped by column: col -> list of {row, val}
-            Map<Integer, List<int[]>> colMap = new HashMap<>();
-
-            // BFS queue storing NodeInfo(node, row, col)
-            Queue<NodeInfo> queue = new LinkedList<>();
-            queue.add(new NodeInfo(root, 0, 0));
-
-            while (!queue.isEmpty()) {
-                NodeInfo curr = queue.poll();
-                TreeNode<Integer> node = curr.node;
-                int row = curr.row;
-                int col = curr.col;
-
-                // Append {row, val} array to the column's list
-                colMap.computeIfAbsent(col, k -> new ArrayList<>()).add(new int[]{row, node.data});
-
-                // Enqueue left child at (row+1, col-1)
-                if (node.left != null) {
-                    queue.add(new NodeInfo(node.left, row + 1, col - 1));
-                }
-                // Enqueue right child at (row+1, col+1)
-                if (node.right != null) {
-                    queue.add(new NodeInfo(node.right, row + 1, col + 1));
-                }
-            }
-
-            List<List<Integer>> result = new ArrayList<>();
-            // Iterate columns from leftmost to rightmost
-            List<Integer> cols = new ArrayList<>(colMap.keySet());
-            Collections.sort(cols);
-
-            for (int col : cols) {
-                List<int[]> colList = colMap.get(col);
-                // Sort by row first, then by value for tie-breaking
-                colList.sort(Comparator.comparingInt((int[] a) -> a[0])
-                        .thenComparingInt(a -> a[1]));
-                // Extract only the values
-                List<Integer> colValues = new ArrayList<>();
-                for (int[] entry : colList) {
-                    colValues.add(entry[1]);
-                }
-                result.add(colValues);
-            }
-
-            return result;
-        }
-
-        // Driver code
-        public static void main(String[] args) {
-            Solution sol = new Solution();
-
-            int[][] testCases = {
-                    {1},
-                    {0, 1, 2, 3, -1, -1, 4},
-                    {5, 3, 8, 1, 4, 7, 10},
-                    {10, 5, 15, -1, 8, 12, -1},
-                    {2, 1, 3, -1, -1, -1, 4, -1, 5}
-            };
-
-            String[] descriptions = {
-                    "Single node tree",
-                    "Skewed tree with some nulls",
-                    "Complete binary tree with 7 nodes",
-                    "Tree with some missing children",
-                    "Right-leaning tree"
-            };
-
-            int y = 1;
-            for (int t = 0; t < testCases.length; t++) {
-                // Convert int[] to List<TreeNode<Integer>>, using null for -1
-                List<TreeNode<Integer>> nodeList = new ArrayList<>();
-                for (int val : testCases[t]) {
-                    nodeList.add(val == -1 ? null : new TreeNode<>(val));
-                }
-
-                BinaryTree<Integer> tree = new BinaryTree<>(nodeList);
-                System.out.println(y++ + ".\tInput tree:");
-                sol.displayTree(tree.root);
-                System.out.println("\tDescription: " + descriptions[t]);
-                List<List<Integer>> result = sol.verticalTraversal(tree.root);
-                System.out.println("\tResult: " + result);
-                System.out.println("-".repeat(100));
-            }
+        NodeInfo(TreeNode<Integer> node, int row, int col) {
+            this.node = node;
+            this.row = row;
+            this.col = col;
         }
     }
 
+    public static List<List<Integer>> verticalTraversal(TreeNode<Integer> root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+
+        // HashMap to store nodes grouped by column: col -> list of {row, val}
+        Map<Integer, List<int[]>> colMap = new HashMap<>();
+
+        // BFS queue storing NodeInfo(node, row, col)
+        Queue<NodeInfo> queue = new LinkedList<>();
+        queue.add(new NodeInfo(root, 0, 0));
+
+        while (!queue.isEmpty()) {
+            NodeInfo curr = queue.poll();
+            TreeNode<Integer> node = curr.node;
+            int row = curr.row;
+            int col = curr.col;
+
+            // Append {row, val} array to the column's list
+            colMap.computeIfAbsent(col, k -> new ArrayList<>()).add(new int[]{row, node.data});
+
+            // Enqueue left child at (row+1, col-1)
+            if (node.left != null) {
+                queue.add(new NodeInfo(node.left, row + 1, col - 1));
+            }
+            // Enqueue right child at (row+1, col+1)
+            if (node.right != null) {
+                queue.add(new NodeInfo(node.right, row + 1, col + 1));
+            }
+        }
+
+        List<List<Integer>> result = new ArrayList<>();
+        // Iterate columns from leftmost to rightmost
+        List<Integer> cols = new ArrayList<>(colMap.keySet());
+        Collections.sort(cols);
+
+        for (int col : cols) {
+            List<int[]> colList = colMap.get(col);
+            // Sort by row first, then by value for tie-breaking
+            colList.sort(Comparator.comparingInt((int[] a) -> a[0])
+                    .thenComparingInt(a -> a[1]));
+            // Extract only the values
+            List<Integer> colValues = new ArrayList<>();
+            for (int[] entry : colList) {
+                colValues.add(entry[1]);
+            }
+            result.add(colValues);
+        }
+
+        return result;
+    }
+
+    // Driver code
     public static void main(String[] args) {
-        Solution.main(args);
+        BinaryTreeVerticalOrderTraversal sol = new BinaryTreeVerticalOrderTraversal();
+
+        int[][] testCases = {
+                {1},
+                {0, 1, 2, 3, -1, -1, 4},
+                {5, 3, 8, 1, 4, 7, 10},
+                {10, 5, 15, -1, 8, 12, -1},
+                {2, 1, 3, -1, -1, -1, 4, -1, 5}
+        };
+
+        String[] descriptions = {
+                "Single node tree",
+                "Skewed tree with some nulls",
+                "Complete binary tree with 7 nodes",
+                "Tree with some missing children",
+                "Right-leaning tree"
+        };
+
+        int y = 1;
+        for (int t = 0; t < testCases.length; t++) {
+            // Convert int[] to List<TreeNode<Integer>>, using null for -1
+            List<TreeNode<Integer>> nodeList = new ArrayList<>();
+            for (int val : testCases[t]) {
+                nodeList.add(val == -1 ? null : new TreeNode<>(val));
+            }
+
+            BinaryTree<Integer> tree = new BinaryTree<>(nodeList);
+            System.out.println(y++ + ".\tInput tree:");
+            PrintBinaryTree display = new PrintBinaryTree();
+            display.displayTree(tree.root);
+            System.out.println("\tDescription: " + descriptions[t]);
+            List<List<Integer>> result = sol.verticalTraversal(tree.root);
+            System.out.println("\tResult: " + result);
+            System.out.println("-".repeat(100));
+        }
     }
 
 }
