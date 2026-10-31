@@ -89,8 +89,10 @@ public class HourGlassMax {
                 All anchors visited -> return maxSum
          */
         int maxSum = Integer.MIN_VALUE;
+        int visitedGlasses = 0;
         for (int row = 0; row <= arr.size() - 3; row++) {
             for (int col = 0; col <= arr.get(row).size() - 3; col++) {
+                visitedGlasses++;
                 int sum = arr.get(row).get(col)
                                 + arr.get(row).get(col + 1)
                                 + arr.get(row).get(col + 2)
@@ -101,6 +103,7 @@ public class HourGlassMax {
                 maxSum = Math.max(maxSum, sum);
             }
         }
+        System.out.println("Visited hourglasses: " + visitedGlasses);
         return maxSum;
     }
 
