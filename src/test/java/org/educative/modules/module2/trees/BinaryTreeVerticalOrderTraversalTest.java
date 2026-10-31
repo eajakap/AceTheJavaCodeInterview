@@ -1,12 +1,12 @@
 package org.educative.modules.module2.trees;
 
+import org.educative.modules.module2.trees.BinaryTreeVerticalOrderTraversal.BinaryTree;
+import org.educative.modules.module2.trees.BinaryTreeVerticalOrderTraversal.PrintBinaryTree;
+import org.educative.modules.module2.trees.BinaryTreeVerticalOrderTraversal.TreeNode;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,31 +17,30 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BinaryTreeVerticalOrderTraversalTest {
     @Test
-    void binaryTreeConstructorBuildsExpectedShapeAndTraversal() throws Exception {
-        Object root = rootFromValues(3, 9, 20, null, null, 15, 7);
+    void binaryTreeConstructorBuildsExpectedShapeAndTraversal() {
+        TreeNode<Integer> root = rootFromValues(3, 9, 20, null, null, 15, 7);
 
-        assertEquals(List.of(List.of(9), List.of(3, 15), List.of(20), List.of(7)), verticalTraversal(root));
+        assertEquals(List.of(List.of(9), List.of(3, 15), List.of(20), List.of(7)),
+                BinaryTreeVerticalOrderTraversal.verticalTraversal(root));
     }
 
     @Test
-    void verticalTraversalBreaksTiesByRowThenValueAndHandlesNullRoot() throws Exception {
-        Object root = rootFromValues(1, 2, 3, null, 5, 4, null);
+    void verticalTraversalBreaksTiesByRowThenValueAndHandlesNullRoot() {
+        TreeNode<Integer> root = rootFromValues(1, 2, 3, null, 5, 4, null);
 
-        assertEquals(List.of(List.of(2), List.of(1, 4, 5), List.of(3)), verticalTraversal(root));
-        assertEquals(List.of(), verticalTraversal(null));
+        assertEquals(List.of(List.of(2), List.of(1, 4, 5), List.of(3)),
+                BinaryTreeVerticalOrderTraversal.verticalTraversal(root));
+        assertEquals(List.of(), BinaryTreeVerticalOrderTraversal.verticalTraversal(null));
     }
 
     @Test
-    void constructorDisplayAndMainHandleEmptyCasesAndPrintExamples() throws Exception {
-        assertNull(rootFromList(new ArrayList<>()));
-        List<Object> firstNull = new ArrayList<>();
+    void constructorDisplayAndMainHandleEmptyCasesAndPrintExamples() {
+        assertNull(new BinaryTree<Integer>(new ArrayList<>()).root);
+        List<TreeNode<Integer>> firstNull = new ArrayList<>();
         firstNull.add(null);
-        assertNull(rootFromList(firstNull));
+        assertNull(new BinaryTree<>(firstNull).root);
 
-        Constructor<?> constructor = solutionClass().getDeclaredConstructor();
-        constructor.setAccessible(true);
-        Object solution = constructor.newInstance();
-        String display = captureOutput(() -> invokeDisplayTree(solution, null));
+        String display = captureOutput(() -> new PrintBinaryTree().displayTree(null));
         assertEquals("null", display);
 
         String output = captureOutput(() -> BinaryTreeVerticalOrderTraversal.main(new String[0]));
@@ -49,56 +48,12 @@ class BinaryTreeVerticalOrderTraversalTest {
         assertTrue(output.contains("Result: [[1]]"));
     }
 
-    private static Object rootFromValues(Integer... values) throws Exception {
-        List<Object> nodes = new ArrayList<>();
+    private static TreeNode<Integer> rootFromValues(Integer... values) {
+        List<TreeNode<Integer>> nodes = new ArrayList<>();
         for (Integer value : values) {
-            nodes.add(value == null ? null : newNode(value));
+            nodes.add(value == null ? null : new TreeNode<>(value));
         }
-        return rootFromList(nodes);
-    }
-
-    private static Object rootFromList(List<Object> nodes) throws Exception {
-        Constructor<?> constructor = binaryTreeClass().getDeclaredConstructor(List.class);
-        constructor.setAccessible(true);
-        Object tree = constructor.newInstance(nodes);
-        Field rootField = binaryTreeClass().getDeclaredField("root");
-        rootField.setAccessible(true);
-        return rootField.get(tree);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static List<List<Integer>> verticalTraversal(Object root) throws Exception {
-        Method method = solutionClass().getDeclaredMethod("verticalTraversal", treeNodeClass());
-        method.setAccessible(true);
-        return (List<List<Integer>>) method.invoke(null, root);
-    }
-
-    private static void invokeDisplayTree(Object solution, Object root) {
-        try {
-            Method method = solutionClass().getDeclaredMethod("displayTree", treeNodeClass());
-            method.setAccessible(true);
-            method.invoke(solution, root);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static Object newNode(Integer value) throws Exception {
-        Constructor<?> constructor = treeNodeClass().getDeclaredConstructor(Object.class);
-        constructor.setAccessible(true);
-        return constructor.newInstance(value);
-    }
-
-    private static Class<?> treeNodeClass() throws Exception {
-        return Class.forName("org.educative.modules.module2.trees.BinaryTreeVerticalOrderTraversal$TreeNode");
-    }
-
-    private static Class<?> binaryTreeClass() throws Exception {
-        return Class.forName("org.educative.modules.module2.trees.BinaryTreeVerticalOrderTraversal$BinaryTree");
-    }
-
-    private static Class<?> solutionClass() throws Exception {
-        return Class.forName("org.educative.modules.module2.trees.BinaryTreeVerticalOrderTraversal$Solution");
+        return new BinaryTree<>(nodes).root;
     }
 
     private static String captureOutput(Runnable action) {
