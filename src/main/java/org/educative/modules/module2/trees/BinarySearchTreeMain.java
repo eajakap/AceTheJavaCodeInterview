@@ -167,6 +167,27 @@ public class BinarySearchTreeMain {
             }
         }
 
+        public Node invertTree() {
+            return invertTree(root);
+        }
+
+        public Node invertTree(Node node) {
+            if (node == null) {
+                return null;
+            }
+
+            // Swap the left and right children
+            Node temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+
+            // Recursively invert the left and right subtrees
+            invertTree(node.left);
+            invertTree(node.right);
+
+            return node;
+        }
+
         public int height(Node node) {
             // Base case:
             // If the node is null (empty subtree),
@@ -548,6 +569,7 @@ public class BinarySearchTreeMain {
             System.out.println("Max value node: " + bst.maxValueNode(bst.root).data);
             bst.minValueNode(bst.root);
             System.out.println("Min value node: " + bst.minValueNode(bst.root).data);
-
-        }
+            Node invertedRoot = bst.invertTree();
+            PrintBinarySearchTree.displayTree(invertedRoot);
+    }
 }
