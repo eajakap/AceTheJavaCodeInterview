@@ -53,11 +53,45 @@ public class LargestNumberAfterDigitSwapByParity {
         return Integer.parseInt(result.toString());
     }
 
+    public static int largestInteger2 (int num) {
+
+        // Replace this placeholder return statement with your code
+        List<Integer> digits = new ArrayList<>();
+        PriorityQueue<Integer> oddPQ = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> evenPQ = new PriorityQueue<>(Collections.reverseOrder());
+
+        // num % 10 extracts digits right-to-left, so digits is stored in REVERSE order
+        while ( num > 0) {
+            int digit = num % 10;
+            digits.add(digit);
+            boolean isEven = (digit % 2 == 0);
+            if (isEven) {
+                evenPQ.add(digit);
+            } else {
+                oddPQ.add(digit);
+            }
+            num /= 10;
+        }
+
+        // Rebuild from the most significant digit (end of list) so the largest
+        // digits of each parity are placed in the highest positions
+        int result = 0;
+        for (int i = digits.size() - 1; i >= 0; i--) {
+            int d = digits.get(i);
+            int next = (d % 2 == 0) ? evenPQ.poll() : oddPQ.poll();
+            result = result * 10 + next;
+        }
+
+        return result;
+
+    }
+
     public static void main(String[] args) {
         int[] testCases = {1234, 65875, 4321, 2468, 98123};
         for (int num : testCases) {
             System.out.println("\tInput number: " + num);
             System.out.println("\tOutput number: " + largestInteger(num));
+            System.out.println("\tOutput number 2: " + largestInteger2(num));
             System.out.println(new String(new char[100]).replace('\0', '-'));
         }
     }
