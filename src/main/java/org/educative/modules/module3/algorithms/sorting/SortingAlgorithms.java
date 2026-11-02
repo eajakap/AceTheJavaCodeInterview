@@ -1,9 +1,45 @@
 package org.educative.modules.module3.algorithms.sorting;
 
 /**
- * This class contains implementations of various sorting algorithms, including Selection Sort, Insertion Sort, and Bubble Sort.
- * Each sorting algorithm is implemented as a static inner class with its own methods for sorting an array of integers.
- * The main method demonstrates the usage of these sorting algorithms by testing them on a sample array.
+ * The SortingAlgorithms class provides implementations of various sorting algorithms, including Selection Sort,
+ * Insertion Sort, Bubble Sort, Merge Sort, and Quick Sort. Each sorting algorithm is implemented as a static inner
+ * class with its own methods for sorting an array of integers. The main method demonstrates the usage of these
+ * sorting algorithms by testing them on a sample array.
+ * <p>
+ * Complexity Analysis:
+ * 1. Selection Sort:
+ *    - Time Complexity: O(n^2) in all cases (best, average, and worst) due to two nested loops.
+ *    - Space Complexity: O(1) as it only requires a constant amount of additional space for variables.
+ * 2. Insertion Sort:
+ *    - Time Complexity: O(n^2) in the worst case, O(n) in the best case (already sorted), and O(n^2) on average.
+ *    - Space Complexity: O(1) as it only requires a constant amount of additional space for variables.
+ * 3. Bubble Sort:
+ *    - Time Complexity: O(n^2) in the worst and average cases, O(n) in the best case (already sorted).
+ *    - Space Complexity: O(1) as it only requires a constant amount of additional space for variables.
+ * 4. Merge Sort:
+ *    - Time Complexity: O(n log n) in all cases (best, average, and worst) due to the divide and conquer approach.
+ *    - Space Complexity: O(n) as it requires additional space for temporary arrays used during merging.
+ * 5. Quick Sort:
+ *    - Time Complexity: O(n log n) on average, O(n^2) in the worst case (when the smallest or largest element is always chosen as the pivot).
+ *    - Space Complexity: O(log n) due to the recursive stack space used during the sorting.
+ * <p>
+ * Time Complexities of Sorting Algorithms (Overview)
+ * Explore the time complexities of major sorting algorithms including Insertion, Selection, Merge, Quick, and Bubble Sort.
+ * Understand best, average, and worst case scenarios to improve your problem-solving skills for coding interviews.
+ * <p>
+ * Now that we’ve gone over how most famous and important sorting algorithms work, here’s a quick table that you can
+ * refer to when you are solving coding problems!
+ *
+ * <pre>
+ * |              | Insertion | Selection | Merge      | Quick      | Bubble |
+ * |--------------|-----------|-----------|------------|------------|--------|
+ * | Best case    | O(n)      | O(n^2)    | O(n log n) | O(n log n) | O(n)   |
+ * | Average case | O(n^2)    | O(n^2)    | O(n log n) | O(n log n) | O(n^2) |
+ * | Worst case   | O(n^2)    | O(n^2)    | O(n log n) | O(n^2)     | O(n^2) |
+ * </pre>
+ *
+ * Usage:
+ *   - To use the SortingAlgorithms class, simply call the main method, which will execute the test methods for each sorting algorithm.
  */
 class SortingAlgorithms {
     /**
@@ -131,7 +167,15 @@ class SortingAlgorithms {
      * Space Complexity: O(1)
      */
     static class SelectionSort {
+        /** Shared helper used for printing arrays. */
         static Helper obj = new Helper();
+
+        /**
+         * Sorts the first {@code arrSize} elements of the array in ascending order using selection sort.
+         * The array is sorted in place.
+         * @param arr the array to sort
+         * @param arrSize the number of elements to sort
+         */
         static void selectionSort(int[] arr, int arrSize) {
             int minIndex, temp;
             //Traverse through 0 to size of the array
@@ -149,6 +193,9 @@ class SortingAlgorithms {
                 arr[i] = temp;
             }
         }
+        /**
+         * Runs selection sort on a sample array and prints the array before and after sorting.
+         */
         public static void testSelectionSort() {
             int arr[] = {5,4,1,0,5,95,4,-100,200,0};
             int arrSize = 10;
@@ -184,7 +231,15 @@ class SortingAlgorithms {
      * Space Complexity: O(1)
      */
     static class InsertionSort {
+        /** Shared helper used for printing arrays. */
         static Helper obj = new Helper();
+
+        /**
+         * Sorts the first {@code arrSize} elements of the array in ascending order using insertion sort.
+         * The array is sorted in place.
+         * @param arr the array to sort
+         * @param arrSize the number of elements to sort
+         */
         static void insertionSort(int[] arr, int arrSize) {
             int ele, j;
             //Traverse through 1 to size of the array
@@ -197,9 +252,14 @@ class SortingAlgorithms {
                     arr[j + 1] = arr[j];
                     j = j - 1;
                 }
+                // Place the element in the gap left by the shifted elements
                 arr[j + 1] = ele;
             }
         }
+
+        /**
+         * Runs insertion sort on a sample array and prints the array before and after sorting.
+         */
         public static void testInsertionSort() {
             int arr[] = {5,4,1,0,5,95,4,-100,200,0};
             int arrSize = 10;
@@ -233,7 +293,16 @@ class SortingAlgorithms {
      * Space Complexity: O(1)
      */
     static class BubbleSort {
+        /** Shared helper used for swapping elements and printing arrays. */
         static Helper obj = new Helper();
+
+        /**
+         * Sorts the first {@code arrSize} elements of the array in ascending order using bubble sort.
+         * Stops early if a full pass makes no swaps, which gives O(n) on an already sorted array.
+         * The array is sorted in place.
+         * @param arr the array to sort
+         * @param arrSize the number of elements to sort
+         */
         static void bubbleSort(int[] arr, int arrSize) {
             boolean swapped;
             // Traverse through all array elements
@@ -253,6 +322,9 @@ class SortingAlgorithms {
                 }
             }
         }
+        /**
+         * Runs bubble sort on a sample array and prints the array before and after sorting.
+         */
         public static void testBubbleSort() {
             int arr[] = {5,4,1,0,5,95,4,-100,200,0};
             int arrSize = 10;
@@ -291,7 +363,18 @@ class SortingAlgorithms {
      * Space Complexity: O(n)
      */
     static class MergeSort {
+        /** Shared helper used for printing arrays. */
         static Helper obj = new Helper();
+
+        /**
+         * Merges two adjacent sorted subarrays, {@code arr[leftHalf..middle]} and {@code arr[middle+1..rightHalf]},
+         * into a single sorted subarray {@code arr[leftHalf..rightHalf]}.
+         * Equal elements are taken from the left half first, which keeps the sort stable.
+         * @param arr the array containing both subarrays
+         * @param leftHalf the starting index of the left subarray
+         * @param middle the ending index of the left subarray
+         * @param rightHalf the ending index of the right subarray
+         */
         static void merge(int arr[], int leftHalf, int middle, int rightHalf) {
             // Find sizes of two subarrays to be merged
             int leftHalfSize = middle - leftHalf + 1;
@@ -314,6 +397,7 @@ class SortingAlgorithms {
 
             // Initial index of merged subarray array
             int k = leftHalf;
+            // Repeatedly copy the smaller front element of L[] or R[] back into arr[]
             while (i < leftHalfSize && j < rightHalfSize) {
                 if (L[i] <= R[j]) {
                     arr[k] = L[i];
@@ -340,15 +424,29 @@ class SortingAlgorithms {
             }
         }
 
+        /**
+         * Recursively sorts the subarray {@code arr[l..r]} in ascending order using merge sort.
+         * @param arr the array to sort
+         * @param l the starting index of the subarray (inclusive)
+         * @param r the ending index of the subarray (inclusive)
+         */
         static void mergeSort(int arr[], int l, int r) {
+            // Base case: a subarray of zero or one element is already sorted
             if (l < r) {
+                // Find the middle point to divide the array into two halves
                 int m = (l + r) / 2;
+                // Sort the left half
                 mergeSort(arr, l, m);
+                // Sort the right half
                 mergeSort(arr, m + 1, r);
+                // Merge the two sorted halves
                 merge(arr, l, m, r);
             }
         }
 
+        /**
+         * Runs merge sort on a sample array and prints the array before and after sorting.
+         */
         static void testMergeSort() {
             int arr[] = {5,4,1,0,5,95,4,-100,200,0};
             int arrSize = 10;
@@ -375,28 +473,54 @@ class SortingAlgorithms {
      * Space Complexity: O(log n) due to the recursive stack space used during the sorting
      */
     static class QuickSort {
+        /** Shared helper used for swapping elements and printing arrays. */
         static Helper obj = new Helper();
+
+        /**
+         * Recursively sorts the subarray {@code arr[low..high]} in ascending order using quick sort.
+         * @param arr the array to sort
+         * @param low the starting index of the subarray (inclusive)
+         * @param high the ending index of the subarray (inclusive)
+         */
         static void quickSort(int arr[], int low, int high) {
+            // Base case: a subarray of zero or one element is already sorted
             if (low < high) {
+                // Place the pivot at its final position and get that index
                 int pi = partition(arr, low, high);
+                // Sort the elements before and after the pivot
                 quickSort(arr, low, pi - 1);
                 quickSort(arr, pi + 1, high);
             }
         }
 
+        /**
+         * Partitions {@code arr[low..high]} around the last element as the pivot (Lomuto partition scheme).
+         * After partitioning, elements less than or equal to the pivot are on its left
+         * and elements greater than the pivot are on its right.
+         * @param arr the array to partition
+         * @param low the starting index of the subarray (inclusive)
+         * @param high the ending index of the subarray (inclusive), which holds the pivot
+         * @return the final index of the pivot
+         */
         static int partition(int arr[], int low, int high) {
             int pivot = arr[high];
+            // i marks the end of the region holding elements <= pivot
             int i = (low - 1);
             for (int j = low; j < high; j++) {
+                // Grow the "<= pivot" region and move arr[j] into it
                 if (arr[j] <= pivot) {
                     i++;
                     obj.swap(arr, i, j);
                 }
             }
+            // Put the pivot right after the "<= pivot" region
             obj.swap(arr, i + 1, high);
             return i + 1;
         }
 
+        /**
+         * Runs quick sort on a sample array and prints the array before and after sorting.
+         */
         static void testQuickSort() {
             int arr[] = {5,4,1,0,5,95,4,-100,200,0};
             int arrSize = 10;
@@ -409,7 +533,7 @@ class SortingAlgorithms {
     }
     /**
      * Main method to test the sorting algorithms.
-     * It calls the test methods for Selection Sort, Insertion Sort, Bubble Sort, and Merge Sort,
+     * It calls the test methods for Selection Sort, Insertion Sort, Bubble Sort, Merge Sort, and Quick Sort,
      * which demonstrate the sorting of a sample array using each algorithm.
      * @param args command-line arguments (not used)
      */
@@ -422,42 +546,3 @@ class SortingAlgorithms {
     }
 
 }
-
-/**
- * The SearchAndSorting class provides implementations of various sorting algorithms, including Selection Sort,
- * Insertion Sort, Bubble Sort, Merge Sort, and Quick Sort. Each sorting algorithm is implemented as a static inner
- * class with its own methods for sorting an array of integers. The main method demonstrates the usage of these
- * sorting algorithms by testing them on a sample array.
- * Complexity Analysis:
- * 1. Selection Sort:
- *    - Time Complexity: O(n^2) in all cases (best, average, and worst) due to two nested loops.
- *    - Space Complexity: O(1) as it only requires a constant amount of additional space for variables.
- * 2. Insertion Sort:
- *    - Time Complexity: O(n^2) in the worst case, O(n)     in the best case (already sorted), and O(n^2) on average.
- *    - Space Complexity: O(1) as it only requires a constant amount of additional
- *    space for variables.
- * 3. Bubble Sort:
- *    - Time Complexity: O(n^2) in the worst and average cases, O(n) in the best case (already sorted).
- *    - Space Complexity: O(1) as it only requires a constant amount of additional space for variables.
- * 4. Merge Sort:
- *   - Time Complexity: O(n log n) in all cases (best, average, and worst) due to the divide and conquer approach.
- *   - Space Complexity: O(n) as it requires additional space for temporary arrays used during merging.
- * 5. Quick Sort:
- *    - Time Complexity: O(n log n) on average, O(n^2) in the worst case (when the smallest or largest element is always chosen as the pivot).
- *    - Space Complexity: O(log n) due to the recursive stack space used during the sorting.
- * Time Complexities of Sorting Algorithms (Overview)
- * Explore the time complexities of major sorting algorithms including Insertion, Selection, Merge, Quick, and Bubble Sort. Understand best, average, and worst case scenarios to improve your problem-solving skills for coding interviews.
- *
- * Now that we’ve gone over how most famous and important sorting algorithms work, here’s a quick table that you can refer to when you are solving coding problems!
- *
- * <pre>
- * |              | Insertion | Selection | Merge      | Quick      | Bubble |
- * |--------------|-----------|-----------|------------|------------|--------|
- * | Best case    | O(n)      | O(n^2)    | O(n log n) | O(n log n) | O(n)   |
- * | Average case | O(n^2)    | O(n^2)    | O(n log n) | O(n log n) | O(n^2) |
- * | Worst case   | O(n^2)    | O(n^2)    | O(n log n) | O(n^2)     | O(n^2) |
- * </pre>
- *
- * Usage:
- *   - To use the SearchAndSorting class, simply call the main method, which will execute the test methods for each sorting algorithm.
- */
