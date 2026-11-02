@@ -1,8 +1,6 @@
 package org.educative.modules.module3.algorithms.graphs;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Breadth-first traversal of a directed graph stored as adjacency lists.
@@ -40,6 +38,10 @@ public class GraphTraversalSolution {
             if (headNode == null && tailNode == null)
                 return true;
             return false;
+        }
+
+        public int size() {
+            return size;
         }
 
         /** @return the first node, or {@code null} if the list is empty */
@@ -412,6 +414,7 @@ public class GraphTraversalSolution {
             System.out.println("DFS traversal of Graph2 : " + dfs(g2));
         }
     }
+
     /** Entry point; delegates to {@link CheckBFS#main(String[])}. */
     public static void main(String[] args) {
         CheckBFS.main(args);
