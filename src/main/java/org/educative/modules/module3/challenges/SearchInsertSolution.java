@@ -113,4 +113,13 @@ public class SearchInsertSolution {
             System.out.println("Index to Insert " + "\"7\" is " + insertPosition(arr, 7));
         }
     }
+    /**
+     * Runs examples of both approaches.
+     *
+     * @param args command-line arguments (unused)
+     */
+    public static void main(String[] args) {
+        BruteForceSearchInsert.main(args);
+        ModifiedBinarySearchInsert.main(args);
+    }
 }
