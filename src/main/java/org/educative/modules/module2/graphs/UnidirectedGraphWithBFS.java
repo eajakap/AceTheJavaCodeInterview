@@ -37,6 +37,7 @@ public class UnidirectedGraphWithBFS {
                     }
                 }
             }
+            System.out.println();
         }
     }
 
