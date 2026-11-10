@@ -2,7 +2,44 @@ package org.educative.modules.module2.hashtables;
 
 import java.util.*;
 
+/**
+ * Isomorphic Strings
+ * Given two strings s and t, determine if they are isomorphic.
+ * Two strings are isomorphic if the characters in s can be replaced to get t.
+ * All occurrences of a character must be replaced with another character while preserving the order of characters.
+ * No two characters may map to the same character, but a character may map to itself.
+ * Example 1:
+ * Input: s = "egg", t = "add"
+ * Output: true
+ * Example 2:
+ * Input: s = "foo", t = "bar"
+ * Output: false
+ * Example 3:
+ * Input: s = "paper", t = "title"
+ * Output: true
+ * Constraints:
+ * 1 <= s.length <= 5 * 10^4
+ * t.length == s.length
+ * s and t consist of any valid ascii character.
+ */
 public class IsomorphicStringsSolution {
+    /**
+     * Determines if two strings are isomorphic.
+     * Steps to solve the problem:
+     * 1. Check if the lengths of the strings are equal. If not, they cannot be isomorphic.
+     * 2. Create two hash maps to store the character mappings from s to t and from t to s.
+     * 3. Iterate through the characters of both strings simultaneously. For each character pair (charS, charT):
+     *    a. If charS is already mapped to a different character than charT, return false.
+     *    b. If charT is already mapped to a different character than charS, return false.
+     * 4. If no conflicts are found, the strings are isomorphic.
+     * 5. Return true if the strings are isomorphic, false otherwise.
+     * Time complexity: O(n), where n is the length of the strings.
+     * Space complexity: O(n), where n is the number of unique characters in the strings
+     * @param s the first string
+     * @param t the second string
+     * @return true if the strings are isomorphic, false otherwise
+     */
+
     public boolean isIsomorphic(String s, String t) {
         // Edge case: if either string is empty, they are considered isomorphic
         if (s.isEmpty() && t.isEmpty()) {
