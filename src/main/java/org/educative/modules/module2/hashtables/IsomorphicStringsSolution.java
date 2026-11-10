@@ -73,7 +73,8 @@ public class IsomorphicStringsSolution {
                 mapTToS.put(charT, charS);
             }
         }
-
+        System.out.println("Mapping from s to t: " + mapSToT);
+        System.out.println("Mapping from t to s: " + mapTToS);
         // All characters mapped consistently and bijectively
         return true;
     }
