@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Reverse a linked list in groups of size k.
+ * Time Complexity: O(n), where n is the length of the list
+ * Space Complexity: O(1)
+ */
 public class ReverseLinkedListKGroup {
     private static class ListNode {
         int val;
@@ -11,6 +16,24 @@ public class ReverseLinkedListKGroup {
         ListNode(int x) { val = x; }
     }
 
+    /**
+     * Recursive solution.
+     * Reverse the first k nodes of the list.
+     * Then recursively reverse the next k nodes and so on.
+     * Finally, connect the reversed sublists together.
+     * 1. Check if there are at least k nodes remaining
+     * 2. If fewer than k nodes remain, return head as-is
+     * 3. Reverse the first k nodes in-place
+     * 4. Connect the reversed sublists together
+     * 5. Recursively reverse the next k nodes
+     * 6. Return the head of the reversed list
+     *
+     * Time Complexity: O(n), where n is the length of the list
+     * Space Complexity: O(k)
+     * @param head
+     * @param k
+     * @return
+     */
     public ListNode reverseKGroup(ListNode head, int k) {
         // Check if there are at least k nodes remaining
         int count = 0;
