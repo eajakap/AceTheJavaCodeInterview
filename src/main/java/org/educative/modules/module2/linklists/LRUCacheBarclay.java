@@ -114,7 +114,7 @@ public class LRUCacheBarclay {
                 }
             } else {
                 Node node = cache.get(key);
-                node.value = value;
+                node.value = value; // update the value
                 removeNode(node);
                 addNodeToFront(node);
             }
