@@ -80,26 +80,27 @@ public class MergeTwoListsSolution {
         return result;
     }
 
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
         // Create a dummy node to simplify edge cases
         ListNode dummy = new ListNode(0);
         // Tail pointer tracks the end of the merged list
         ListNode tail = dummy;
 
         // Traverse both lists, always picking the smaller current node
-        while (list1 != null && list2 != null) {
-            if (list1.val <= list2.val) {
-                tail.next = list1;
-                list1 = list1.next;
+        ListNode current1 = head1, current2 = head2;
+        while (current1 != null && current2 != null) {
+            if (current1.val <= current2.val) {
+                tail.next = current1;
+                current1 = current1.next;
             } else {
-                tail.next = list2;
-                list2 = list2.next;
+                tail.next = current2;
+                current2 = current2.next;
             }
             tail = tail.next;
         }
 
         // Attach remaining nodes from whichever list is non-empty
-        tail.next = (list1 != null) ? list1 : list2;
+        tail.next = (current1 != null) ? current1 : current2;
 
         // Return head of merged list, skipping the dummy node
         return dummy.next;
