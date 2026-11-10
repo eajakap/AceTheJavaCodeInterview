@@ -3,6 +3,26 @@ package org.educative.modules.module2.graphs;
 import java.util.Arrays;
 import java.util.*;
 
+/**
+ * Problem: Path Exists in Undirected Graph
+ *
+ * Given an undirected graph represented as an edge list, determine if there is a path between two given vertices.
+ *
+ * Example 1:
+ * Input: n = 4, edges = [[0,1],[1,2],[2,3]], source = 0, destination = 3
+ * Output: true
+ * Explanation: There is a path from vertex 0 to vertex 3 through vertices 1 and 2.
+ *
+ * Example 2:
+ * Input: n = 5, edges = [[0,1],[0,2],[3,4]], source = 0, destination = 4
+ * Output: false
+ * Explanation: There is no path from vertex 0 to vertex 4.
+ *
+ * Constraints:
+ * - The graph is undirected and may contain cycles.
+ * - The number of vertices n is in the range [1, 10^5].
+ * - The number of edges is in the range [0, 10^5].
+ */
 public class PathExistsinUnidirectedGraph {
         public boolean validPath(int n, int[][] edges, int source, int destination) {
             // Build adjacency list
