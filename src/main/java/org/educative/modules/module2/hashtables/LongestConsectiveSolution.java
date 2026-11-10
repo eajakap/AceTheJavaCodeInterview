@@ -2,7 +2,28 @@ package org.educative.modules.module2.hashtables;
 
 import java.util.*;
 
+/**
+ * Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+ * For example, given the array [100, 4, 200, 1, 3, 2], the longest consecutive elements sequence is [1, 2, 3, 4].
+ * The length of this sequence is 4.
+ *
+ * Time complexity: O(n), where n is the number of elements in the array.
+ * Space complexity: O(n), where n is the number of unique elements in the array.
+ */
 class LongestConsectiveSolution {
+    /**
+     * Returns the length of the longest consecutive elements sequence in the given array.
+     * Steps:
+     * 1. Convert the array to a HashSet for O(1) lookups.
+     * 2. Iterate through each unique number in the HashSet.
+     * 3. For each number, check if it is the start of a sequence (i.e., num - 1 is not in the set).
+     * 4. If it is the start, count the length of the consecutive sequence by checking for num + 1, num + 2, etc.
+     * 5. Keep track of the maximum length found during the iteration.
+     * 6. Return the maximum length of the consecutive sequence.
+     *
+     * @param nums an array of integers
+     * @return the length of the longest consecutive elements sequence
+     */
     public int longestConsecutive(int[] nums) {
         // Convert array to a HashSet for O(1) lookups
         Set<Integer> numSet = new HashSet<>();
