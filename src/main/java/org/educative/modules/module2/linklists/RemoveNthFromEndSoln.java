@@ -36,6 +36,21 @@ public class RemoveNthFromEndSoln {
     }
 
     private static final class Solution {
+        /**
+         * Removes the nth node from the end of a linked list and returns the head of the modified list.
+         * This method uses a two-pointer technique to find the node to be removed in a single pass.
+         * It first advances the fast pointer by n + 1 steps to maintain a gap of n nodes between the fast and slow pointers.
+         * Then, both pointers are moved together until the fast pointer reaches the end of the list.
+         * At this point, the slow pointer will be just before the node to be removed.
+         * The method then adjusts the next pointer of the slow node to skip the nth node from the end,
+         * effectively removing it from the list.
+         *
+         * Time Complexity: O(n), where n is the length of the list
+         * Space Complexity: O(1)
+         * @param head
+         * @param n
+         * @return
+         */
         private ListNode removeNthFromEnd(ListNode head, int n) {
             if (n <= 0) {
                 throw new IllegalArgumentException("n must be positive");
