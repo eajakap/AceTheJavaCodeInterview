@@ -4,8 +4,38 @@ import java.util.Arrays;
 
 import java.util.*;
 
+/**
+ * Problem: Determine if a given undirected graph is bipartite.
+ * A graph is bipartite if we can split its set of nodes into two independent subsets
+ * A and B such that every edge connects a node in A to a node in B. Equivalently, a graph is bipartite
+ * if it can be colored using two colors such that no two adjacent nodes have the same color.
+ * Steps:
+ * 1. Initialize a color array to keep track of the color assigned to each node (0 = uncolored, 1 = color A, -1 = color B).
+ * 2. Iterate over all nodes in the graph to handle disconnected components.
+ * 3. For each uncolored node, perform a BFS (or DFS) to color the graph:
+ *    - Assign the starting node a color (e.g., color A).
+ *    - For each neighbor of the current node, check if it is uncolored:
+ *      - If uncolored, assign it the opposite color and add it to the queue for further processing.
+ *      - If already colored and has the same color as the current node, the graph is not bipartite; return false.
+ * 4. If all nodes are colored without conflicts, return true, indicating the graph is bipartite.
+ * Constraints:
+ * - The graph is represented as an adjacency list, where graph[i] contains the neighbors of node i.
+ * - The graph may be disconnected, so we need to check each component.
+ * Time complexity: O(V + E), where V is the number of vertices and E is the number of edges, since we visit each node and edge once.
+ * Space complexity: O(V), for the color array and the queue used in BFS.
+ */
 public class BipartiteGraph {
 
+    /**
+     * Determines if the given undirected graph is bipartite.
+     *
+     * A graph is bipartite if we can split its set of nodes into two independent subsets A and B
+     * such that every edge connects a node in A to a node in B. Equivalently, a graph is bipartite
+     * if it can be colored using two colors such that no two adjacent nodes have the same color.
+     *
+     * @param graph an adjacency list representation of the graph, where graph[i] contains the neighbors of node i
+     * @return true if the graph is bipartite, false otherwise
+     */
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
         // Color array: 0 = uncolored, 1 = color A, -1 = color B
