@@ -103,6 +103,30 @@ public class TopKFrequentMain {
         Collections.reverse(out); return out;
     }
 
+    public static List<String> topK2(List<String> xs, int k) {
+        Map<String, Long> c = new HashMap<>();
+        for (String s : xs) {
+            c.put(s, c.getOrDefault(s, 0L) + 1);
+        }
+        // Add the elements to a max heap in descending order of frequency
+        // Comparator comp below sorts the map in descending order of frequency
+        Comparator<Map.Entry<String, Long>> comp =
+                (e1, e2) -> e2.getValue().compareTo(e1.getValue());
+        PriorityQueue<Map.Entry<String, Long>> maxHeap = new PriorityQueue<>(comp);
+        for (var e : c.entrySet()) {
+            // Add the element to the heap at the appropriate position
+            maxHeap.offer(e);
+            if (maxHeap.size() > k)
+                // Remove the least frequent element if the heap size exceeds k
+                maxHeap.poll();
+        }
+        List<String> out = new ArrayList<>();
+        while (!maxHeap.isEmpty()) {
+            out.add(maxHeap.poll().getKey());
+        }
+        return out;
+    }
+
     public static void main(String[] args) {
         TopKFrequentMain topKFrequentMain = new TopKFrequentMain();
         int[][][] testCases = {
@@ -127,6 +151,9 @@ public class TopKFrequentMain {
             System.out.println(y++ + ".\tInput array: " + inputTickers);
             List<String> result3 = topKFrequentMain.topK(inputTickers, k);
             System.out.println("\tResult3\t: " + result3);
+            List<String> result4 = topKFrequentMain.topK2(inputTickers, k);
+            System.out.println("\tResult4\t: " + result4);
+
             System.out.println("-".repeat(100));
         }
     }
