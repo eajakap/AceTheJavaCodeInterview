@@ -20,14 +20,14 @@ class UnidirectedGraphWithBFSTest {
     void bfsVisitsLevelByLevel() {
         String output = ConsoleOutputCapture.capture(() -> sampleGraph().bfs("A"));
 
-        assertEquals("A B C D E F ", output);
+        assertEquals("A B C D E F \n", output);
     }
 
     @Test
     void bfsFromLeafTraversesWholeConnectedGraph() {
         String output = ConsoleOutputCapture.capture(() -> sampleGraph().bfs("F"));
 
-        assertEquals("F C A B D E ", output);
+        assertEquals("F C A B D E \n", output);
     }
 
     @Test
@@ -37,7 +37,7 @@ class UnidirectedGraphWithBFSTest {
         g.addEdge("Y", "Z");
         g.addEdge("Z", "X");
 
-        assertEquals("X Y Z ", ConsoleOutputCapture.capture(() -> g.bfs("X")));
+        assertEquals("X Y Z \n", ConsoleOutputCapture.capture(() -> g.bfs("X")));
     }
 
     @Test
@@ -47,7 +47,7 @@ class UnidirectedGraphWithBFSTest {
 
     @Test
     void mainRunsBfsFromA() {
-        assertEquals("A B C D E F ",
+        assertEquals("A B C D E F \n",
                 ConsoleOutputCapture.capture(() -> UnidirectedGraphWithBFS.main(new String[0])));
     }
 }
