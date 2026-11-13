@@ -27,7 +27,8 @@ import java.util.Queue;
  *          20(B)
  *        /     \
  *     10(R)    30(R)
- * Time Complexity: [search = O(logn), Insertion = O(logn), Deletion = O(logn), Traversal = O(n)]
+ * Time Complexity: [search = O(logn), Insertion = O(logn), Deletion = O(logn), Traversal = O(n),
+ *                   height = O(n), depth = O(logn)]
  * Space Complexity: O(n)
  */
 public class RedBlackBalancedBST<T extends Comparable<T>> {
@@ -518,6 +519,49 @@ public class RedBlackBalancedBST<T extends Comparable<T>> {
         }
     }
 
+    // =========================================================
+    // 7. HEIGHT AND DEPTH
+    //    Both are measured in edges:
+    //    height = longest path from a node down to a leaf (empty tree = -1, single node = 0)
+    //    depth  = path length from the root down to a node (root = 0)
+    //    Red-Black guarantee: height <= 2 * log2(n + 1)
+    // =========================================================
+    /**
+     * Returns the height of the tree.
+     * @return the number of edges on the longest root-to-leaf path, or -1 if the tree is empty
+     */
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node<T> node) {
+        if (node == null) {
+            return -1; // so that a leaf gets height 0
+        }
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+
+    /**
+     * Returns the depth of a value: the number of edges from the root to its node.
+     * With duplicates this is the shallowest occurrence, because every other equal
+     * value lies in the subtree of the first one found on the search path.
+     * @return the depth of the value, or -1 if it is not in the tree
+     */
+    public int depth(T data) {
+        Objects.requireNonNull(data, "null values are not allowed");
+        int depth = 0;
+        Node<T> current = root;
+        while (current != null) {
+            int cmp = data.compareTo(current.data);
+            if (cmp == 0) {
+                return depth;
+            }
+            current = cmp < 0 ? current.left : current.right;
+            depth++;
+        }
+        return -1;
+    }
+
     private void validate() {
         if (root == null) {
             return; // an empty tree is valid
@@ -702,6 +746,8 @@ public class RedBlackBalancedBST<T extends Comparable<T>> {
         System.out.println("  Post-order : " + tree.postOrder());
         System.out.println("  Level-order: " + tree.levelOrder());
         System.out.println("  contains(15)=" + tree.contains(15) + ", contains(99)=" + tree.contains(99));
+        System.out.println("  height()=" + tree.height() + ", depth(20)=" + tree.depth(20)
+                + ", depth(12)=" + tree.depth(12) + ", depth(99)=" + tree.depth(99));
         tree.printTree();
 
         // red leaf, black node with children, node with two children, root, missing value

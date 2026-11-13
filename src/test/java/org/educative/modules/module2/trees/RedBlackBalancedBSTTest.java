@@ -50,6 +50,43 @@ class RedBlackBalancedBSTTest {
     }
 
     @Test
+    void heightAndDepthAreMeasuredInEdges() {
+        RedBlackBalancedBST<Integer> tree = new RedBlackBalancedBST<>();
+        assertEquals(-1, tree.height());
+        assertEquals(-1, tree.depth(1));
+
+        tree.insert(20);
+        assertEquals(0, tree.height());
+        assertEquals(0, tree.depth(20));
+
+        for (int value : new int[]{10, 30, 5, 15, 25, 35}) {
+            tree.insert(value);
+        }
+        // Perfect tree: 20 / (10, 30) / (5, 15, 25, 35)
+        assertEquals(2, tree.height());
+        assertEquals(0, tree.depth(20));
+        assertEquals(1, tree.depth(10));
+        assertEquals(1, tree.depth(30));
+        assertEquals(2, tree.depth(5));
+        assertEquals(2, tree.depth(35));
+        assertEquals(-1, tree.depth(99));
+        assertThrows(NullPointerException.class, () -> tree.depth(null));
+    }
+
+    @Test
+    void heightStaysLogarithmicForSortedInput() {
+        // A plain BST would have height n - 1 here
+        RedBlackBalancedBST<Integer> tree = new RedBlackBalancedBST<>();
+        int n = 1000;
+        for (int value = 0; value < n; value++) {
+            tree.insert(value);
+        }
+        double bound = 2 * (Math.log(n + 1) / Math.log(2));
+        assertTrue(tree.height() <= bound, "height " + tree.height() + " exceeds " + bound);
+        assertEquals(tree.height(), maxDepth(tree, n));
+    }
+
+    @Test
     void deleteHandlesMissingValuesAndEmptiesTheTree() throws Exception {
         RedBlackBalancedBST<Integer> tree = new RedBlackBalancedBST<>(42);
         assertEquals(1, tree.size());
@@ -111,7 +148,17 @@ class RedBlackBalancedBSTTest {
 
         assertTrue(output.contains("Test 1:"));
         assertTrue(output.contains("Traversals:"));
+        assertTrue(output.contains("height()="));
         assertTrue(output.contains("delete(99) -> false"));
+    }
+
+    // The deepest node's depth equals the tree height (distinct values 0..n-1)
+    private static int maxDepth(RedBlackBalancedBST<Integer> tree, int n) {
+        int max = -1;
+        for (int value = 0; value < n; value++) {
+            max = Math.max(max, tree.depth(value));
+        }
+        return max;
     }
 
     private static void validate(RedBlackBalancedBST<?> tree) throws Exception {
