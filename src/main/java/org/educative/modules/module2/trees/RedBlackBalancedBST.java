@@ -103,7 +103,7 @@ public class RedBlackBalancedBST<T extends Comparable<T>> {
         } else {
             insertHelper(root, newNode);
             // Restore Red-Black Tree properties
-            fixInsertViolation(newNode);
+            fixInsert(newNode);
         }
     }
 
@@ -151,7 +151,7 @@ public class RedBlackBalancedBST<T extends Comparable<T>> {
     //    Right-Right|  parent is the right child, node is the right child | rotateLeft(grandParent) + recolor
     //    Right-Left |  parent is the right child, node is the left child  | rotateRight(parent), then falls into Right-Right
     // =========================================================
-    private void fixInsertViolation(Node<T> node) {
+    private void fixInsert(Node<T> node) {
         while (node != root && node.parent.color == Color.RED) {
             Node<T> parent = node.parent;
             Node<T> grandParent = parent.parent; // never null: a red parent is never the root
